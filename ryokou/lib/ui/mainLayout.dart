@@ -1,40 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:ryokou/main.dart';
+import 'package:ryokou/ui/page/accountPage.dart';
+import 'package:ryokou/ui/page/favouritePage..dart';
+import 'package:ryokou/ui/page/homePage.dart';
+import 'package:ryokou/ui/page/myTourPage.dart';
+import 'package:ryokou/ui/page/searchPage.dart';
 
 class MainLayout extends State<MyHomePage> {
-  int indexNav = 0;
+  int _indexNav = 0;
+  final List<Widget> _arrPage = [
+    const HomePage(),
+    const SearchPage(),
+    const FavouritePage(),
+    const MyTourPage(),
+    const AccountPage()
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Trang chu',
-              backgroundColor: Colors.green),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.star),
-              label: 'Yeu thich',
-              backgroundColor: Colors.green),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Tim kiem',
-              backgroundColor: Colors.green),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Tai khoan',
-              backgroundColor: Colors.green),
-        ],
-        currentIndex: indexNav,
-        onTap: (newIndex) {
-          setState(() {
-            indexNav = newIndex;
-          });
-        },
-      ),
-      body: Container(
-        alignment: Alignment.center,
-      ),
-    );
+        bottomNavigationBar: BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+                backgroundColor: Colors.green),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.search),
+                label: 'Search',
+                backgroundColor: Colors.green),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.favorite),
+                label: 'Favourite',
+                backgroundColor: Colors.green),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.tour),
+                label: 'My Tour',
+                backgroundColor: Colors.green),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Account',
+                backgroundColor: Colors.green),
+          ],
+          currentIndex: _indexNav,
+          onTap: (newIndex) {
+            setState(() {
+              _indexNav = newIndex;
+            });
+          },
+        ),
+        body: _arrPage[_indexNav]);
   }
 }
