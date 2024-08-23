@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SliderBar extends StatefulWidget {
   final int numSlider;
-  SliderBar({required this.numSlider});
+  const SliderBar({super.key, required this.numSlider});
   @override
   State<StatefulWidget> createState() => _Slider();
 }
@@ -10,9 +10,9 @@ class SliderBar extends StatefulWidget {
 class _Slider extends State<SliderBar> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 150,
-      child: ListView(
+      child: PageView(
         scrollDirection: Axis.horizontal,
         children: List.generate(widget.numSlider,
             (index) => ItemSlider(index, MediaQuery.of(context).size.width)),
@@ -23,9 +23,9 @@ class _Slider extends State<SliderBar> {
 
 Widget ItemSlider(int index, double width) {
   return Container(
-    width: width / 2,
-    margin: EdgeInsets.symmetric(horizontal: 20),
-    decoration: BoxDecoration(color: Colors.amber),
+    width: width - 40,
+    margin: const EdgeInsets.symmetric(horizontal: 20),
+    decoration: const BoxDecoration(color: Colors.amber),
     child: Text('Slider $index'),
   );
 }
