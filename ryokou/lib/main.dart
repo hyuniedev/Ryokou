@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ryokou/ui/mainLayout.dart';
+import 'package:ryokou/ui/main_layout.dart';
 
 void main() {
   runApp(const MyApp());

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ryokou/main.dart';
-import 'package:ryokou/ui/page/accountPage.dart';
-import 'package:ryokou/ui/page/favouritePage..dart';
-import 'package:ryokou/ui/page/homePage.dart';
-import 'package:ryokou/ui/page/myTourPage.dart';
-import 'package:ryokou/ui/page/searchPage.dart';
+import 'package:ryokou/ui/page/account_page.dart';
+import 'package:ryokou/ui/page/favourite_page..dart';
+import 'package:ryokou/ui/page/home_page.dart';
+import 'package:ryokou/ui/page/my_tour_page.dart';
+import 'package:ryokou/ui/page/search_page.dart';
 
 class MainLayout extends State<MyHomePage> {
   int _indexNav = 0;
