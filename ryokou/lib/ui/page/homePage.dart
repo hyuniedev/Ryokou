@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ryokou/themes/colors_Theme.dart';
+import 'package:ryokou/ui/slider/slider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -32,6 +33,10 @@ class _HomePageState extends State<HomePage> {
         toolbarHeight: 50,
         backgroundColor: ColorsTheme.primaryColor,
       ),
+      body: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: SliderBar(numSlider: 3)),
     );
   }
 }
