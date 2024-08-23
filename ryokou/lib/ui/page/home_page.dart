@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ryokou/themes/colors_Theme.dart';
+import 'package:ryokou/themes/colors_theme.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
