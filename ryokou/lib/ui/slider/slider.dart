@@ -13,15 +13,22 @@ class _Slider extends State<SliderBar> {
   late PageController _pageController;
   late Timer _timer;
   int _curPage = 0;
+  bool isInc = true;
   @override
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: _curPage);
     _timer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
-      if (_curPage < widget.numSlider - 1) {
+      if (isInc) {
         _curPage++;
+        if (_curPage == widget.numSlider - 1) {
+          isInc = false;
+        }
       } else {
-        _curPage = 0;
+        _curPage--;
+          isInc = true;
+        if (_curPage == 0) {
+        }
       }
       _pageController.animateToPage(
         _curPage,
@@ -40,7 +47,8 @@ class _Slider extends State<SliderBar> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      margin: const EdgeInsets.only(top: 10),
       height: 150,
       child: PageView(
         controller: _pageController,
@@ -49,13 +57,13 @@ class _Slider extends State<SliderBar> {
         },
         scrollDirection: Axis.horizontal,
         children: List.generate(widget.numSlider,
-            (index) => ItemSlider(index, MediaQuery.of(context).size.width)),
+            (index) => itemSlider(index, MediaQuery.of(context).size.width)),
       ),
     );
   }
 }
 
-Widget ItemSlider(int index, double width) {
+Widget itemSlider(int index, double width) {
   return Container(
     width: width - 40,
     margin: const EdgeInsets.symmetric(horizontal: 20),
