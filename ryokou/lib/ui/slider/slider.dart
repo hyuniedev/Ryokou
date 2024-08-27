@@ -18,6 +18,10 @@ class _Slider extends State<SliderBar> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: _curPage);
+    startTime();
+  }
+
+  void startTime() {
     _timer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
       if (isInc) {
         _curPage++;
@@ -26,8 +30,8 @@ class _Slider extends State<SliderBar> {
         }
       } else {
         _curPage--;
-          isInc = true;
         if (_curPage == 0) {
+          isInc = true;
         }
       }
       _pageController.animateToPage(
@@ -54,6 +58,8 @@ class _Slider extends State<SliderBar> {
         controller: _pageController,
         onPageChanged: (value) {
           _curPage = value;
+          _timer.cancel();
+          startTime();
         },
         scrollDirection: Axis.horizontal,
         children: List.generate(widget.numSlider,
