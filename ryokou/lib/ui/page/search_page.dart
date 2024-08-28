@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ryokou/themes/colors_theme.dart';
+import 'package:ryokou/ui/appbar/top_app_bar.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -12,35 +13,39 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-      preferredSize: const Size.fromHeight(100.0), // Tăng chiều cao AppBar
-      child: AppBar(
-        elevation: 1,
-        surfaceTintColor: ColorsTheme.primaryColor,
-        centerTitle: true,
-        backgroundColor: ColorsTheme.primaryColor,
-        title: Padding(
+      appBar: getAppBar(
+        Container(
+          margin: const EdgeInsets.only(bottom: 20),
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: SizedBox(
-            height: 50, // Chiều cao của TextField
-            child: Center(
-              child: TextField(
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50),
+            height: 50.0,
+            child: TextField(
+              style: TextStyle(
+                  fontSize: 20,
+                  color: ColorsTheme.primaryColor,
+                  decoration: TextDecoration.none),
+              decoration: InputDecoration(
+                hintText: 'Search...',
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                filled: true,
+                fillColor: Colors.white,
+                suffixIcon: IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.search,
+                    size: 30,
+                    color: ColorsTheme.primaryColor,
                   ),
-                  filled: true,
-                  fillColor: Colors.white,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 0),
                 ),
-                textCapitalization: TextCapitalization.sentences,
+                border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                    borderSide: BorderSide.none),
               ),
             ),
           ),
         ),
       ),
-    ));
+    );
   }
 }

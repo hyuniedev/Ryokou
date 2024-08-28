@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ryokou/main.dart';
+import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/page/account_page.dart';
 import 'package:ryokou/ui/page/favourite_page..dart';
 import 'package:ryokou/ui/page/home_page.dart';
@@ -19,27 +20,27 @@ class MainLayout extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: BottomNavigationBar(
-          items: const [
+          items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.home),
+                icon: const Icon(Icons.home),
                 label: 'Home',
-                backgroundColor: Colors.green),
+                backgroundColor: ColorsTheme.primaryColor),
             BottomNavigationBarItem(
-                icon: Icon(Icons.search),
+                icon: const Icon(Icons.search),
                 label: 'Search',
-                backgroundColor: Colors.green),
+                backgroundColor: ColorsTheme.primaryColor),
             BottomNavigationBarItem(
-                icon: Icon(Icons.favorite),
+                icon: const Icon(Icons.favorite),
                 label: 'Favourite',
-                backgroundColor: Colors.green),
+                backgroundColor: ColorsTheme.primaryColor),
             BottomNavigationBarItem(
-                icon: Icon(Icons.tour),
+                icon: const Icon(Icons.tour),
                 label: 'My Tour',
-                backgroundColor: Colors.green),
+                backgroundColor: ColorsTheme.primaryColor),
             BottomNavigationBarItem(
-                icon: Icon(Icons.person),
+                icon: const Icon(Icons.person),
                 label: 'Account',
-                backgroundColor: Colors.green),
+                backgroundColor: ColorsTheme.primaryColor),
           ],
           currentIndex: _indexNav,
           onTap: (newIndex) {

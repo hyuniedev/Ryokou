@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
 
 class ColorsTheme {
-  static var primaryColor = Colors.green;
+  static Color? primaryColor = const Color(0xFF00C5A7);
 }
