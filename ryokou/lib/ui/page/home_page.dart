@@ -17,11 +17,14 @@ class _HomePageState extends State<HomePage> {
       appBar: getAppBar(Container()),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          children: [
-            const SliderBar(numSlider: 10),
-            dealHotTime(context),
-          ],
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              const SliderBar(numSlider: 10),
+              dealHotTime(context),
+            ],
+          ),
         ),
       ),
     );
