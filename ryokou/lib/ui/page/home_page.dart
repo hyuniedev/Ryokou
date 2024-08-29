@@ -13,18 +13,16 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: getAppBar(Container()),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            children: [
-              const SliderBar(numSlider: 10),
-              dealHotTime(context),
-            ],
-          ),
+    return Container(
+      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            getAppBar(Container()),
+            const SliderBar(numSlider: 10),
+            dealHotTime(context),
+          ],
         ),
       ),
     );
