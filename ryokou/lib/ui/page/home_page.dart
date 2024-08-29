@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/appbar/top_app_bar.dart';
 import 'package:ryokou/ui/slider/slider.dart';
 
@@ -15,6 +14,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: getAppBar(Container()),
+      body: SliderBar(numSlider: 10),
     );
   }
 }
