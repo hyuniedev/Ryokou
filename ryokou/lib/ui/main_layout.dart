@@ -20,27 +20,27 @@ class MainLayout extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: BottomNavigationBar(
-          items: [
+          items: const [
             BottomNavigationBarItem(
-                icon: const Icon(Icons.home),
+                icon: Icon(Icons.home),
                 label: 'Home',
-                backgroundColor: ColorsTheme.primaryColor),
+                backgroundColor: AppColors.primaryColor),
             BottomNavigationBarItem(
-                icon: const Icon(Icons.search),
+                icon: Icon(Icons.search),
                 label: 'Search',
-                backgroundColor: ColorsTheme.primaryColor),
+                backgroundColor: AppColors.primaryColor),
             BottomNavigationBarItem(
-                icon: const Icon(Icons.favorite),
+                icon: Icon(Icons.favorite),
                 label: 'Favourite',
-                backgroundColor: ColorsTheme.primaryColor),
+                backgroundColor: AppColors.primaryColor),
             BottomNavigationBarItem(
-                icon: const Icon(Icons.tour),
+                icon: Icon(Icons.tour),
                 label: 'My Tour',
-                backgroundColor: ColorsTheme.primaryColor),
+                backgroundColor: AppColors.primaryColor),
             BottomNavigationBarItem(
-                icon: const Icon(Icons.person),
+                icon: Icon(Icons.person),
                 label: 'Account',
-                backgroundColor: ColorsTheme.primaryColor),
+                backgroundColor: AppColors.primaryColor),
           ],
           currentIndex: _indexNav,
           onTap: (newIndex) {

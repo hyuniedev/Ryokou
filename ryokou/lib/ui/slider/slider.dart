@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:ryokou/themes/colors_theme.dart';
 
 class SliderBar extends StatefulWidget {
   final int numSlider;
@@ -52,7 +53,7 @@ class _Slider extends State<SliderBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 10),
+      margin: const EdgeInsets.symmetric(vertical: 20),
       height: 150,
       child: PageView(
         controller: _pageController,
@@ -72,8 +73,9 @@ class _Slider extends State<SliderBar> {
 Widget itemSlider(int index, double width) {
   return Container(
     width: width - 40,
-    margin: const EdgeInsets.symmetric(horizontal: 20),
-    decoration: const BoxDecoration(color: Colors.amber),
-    child: Text('Slider $index'),
+    decoration: BoxDecoration(
+        border: Border.all(color: AppColors.primaryColor, width: 2),
+        borderRadius: const BorderRadius.all(Radius.circular(10))),
+    child: Center(child: Text('Slider $index')),
   );
 }
