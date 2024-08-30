@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
         scrollDirection: Axis.vertical,
         child: Column(
           children: [
-            getAppBar(Container()),
+            getAppBar(context, Container(), isHome: true),
             const SliderBar(numSlider: 10),
             dealHotTime(context),
           ],
