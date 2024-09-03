@@ -16,6 +16,7 @@ class MainLayout extends State<MyHomePage> {
     const MyTourPage(),
     const AccountPage()
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

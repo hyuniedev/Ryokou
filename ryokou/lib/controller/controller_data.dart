@@ -7,7 +7,7 @@ class DataController {
     return _instance;
   }
 
-  User? _user = null;
-  User? get user => _user;
-  set user(User? initUser) => _user = initUser;
+  User? _user;
+  User? get getUser => _user;
+  set setUser(User? initUser) => _user = initUser;
 }

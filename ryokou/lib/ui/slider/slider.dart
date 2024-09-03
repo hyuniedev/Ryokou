@@ -14,7 +14,6 @@ class _Slider extends State<SliderBar> {
   late PageController _pageController;
   late Timer _timer;
   int _curPage = 0;
-  bool isInc = true;
   @override
   void initState() {
     super.initState();
@@ -24,17 +23,7 @@ class _Slider extends State<SliderBar> {
 
   void startTime() {
     _timer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
-      if (isInc) {
-        _curPage++;
-        if (_curPage == widget.numSlider - 1) {
-          isInc = false;
-        }
-      } else {
-        _curPage--;
-        if (_curPage == 0) {
-          isInc = true;
-        }
-      }
+      _curPage++;
       _pageController.animateToPage(
         _curPage,
         duration: const Duration(milliseconds: 300),
@@ -63,16 +52,15 @@ class _Slider extends State<SliderBar> {
           startTime();
         },
         scrollDirection: Axis.horizontal,
-        children: List.generate(widget.numSlider,
-            (index) => itemSlider(index, MediaQuery.of(context).size.width)),
+        children: List.generate(widget.numSlider, (index) => itemSlider(index)),
       ),
     );
   }
 }
 
-Widget itemSlider(int index, double width) {
+Widget itemSlider(int index) {
   return Container(
-    width: width - 40,
+    margin: const EdgeInsets.symmetric(horizontal: 20),
     decoration: BoxDecoration(
         border: Border.all(color: AppColors.primaryColor, width: 2),
         borderRadius: const BorderRadius.all(Radius.circular(10))),

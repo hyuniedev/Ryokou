@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ryokou/entity/user.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/appbar/top_app_bar.dart';
 
@@ -46,6 +47,7 @@ class _SearchPageState extends State<SearchPage> {
             ),
           ),
         ),
+        (User u) {},
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14),
