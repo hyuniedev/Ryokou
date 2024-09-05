@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
             _signIn,
             isHome: true,
           ),
-          const SliderBar(numSlider: 10),
+          SliderBar(numSlider: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
