@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/entity/user.dart';
-import 'package:ryokou/themes/colors_theme.dart';
-import 'package:ryokou/ui/appbar/top_app_bar.dart';
-import 'package:ryokou/ui/page/home/dealHot.dart';
-import 'package:ryokou/ui/slider/slider.dart';
+import 'package:ryokou/ui/page/home/flash_sale.dart';
+import 'package:ryokou/ui/page/home/sugget_section.dart';
+import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
+import 'package:ryokou/ui/page/home/deal_hot.dart';
+import 'package:ryokou/ui/sections/slider/slider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -76,10 +77,20 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: [
-                dealHotTime(context),
+                const FlashSale(),
+                SuggetSection(
+                  lsDataTour: const [],
+                  lsDivide: const [],
+                  title: "Get go!",
+                ),
+                SuggetSection(
+                  lsDataTour: const [],
+                  title: 'GET GO!',
+                  lsDivide: const ['Tokyo', 'Shiba', 'Hokkaidou', 'Kansai'],
+                )
               ],
             ),
-          )
+          ),
         ],
       ),
     );

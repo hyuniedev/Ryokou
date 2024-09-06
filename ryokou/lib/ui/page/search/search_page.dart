@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ryokou/entity/user.dart';
 import 'package:ryokou/themes/colors_theme.dart';
-import 'package:ryokou/ui/appbar/top_app_bar.dart';
+import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

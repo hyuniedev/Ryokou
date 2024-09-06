@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 
-Container dealHotTime(BuildContext context) {
+Container dealHotTime(BuildContext context, int beginTime) {
   return Container(
-    margin: const EdgeInsets.only(top: 22), // Cach Slider them 10
+    margin: const EdgeInsets.symmetric(vertical: 22),
     width: MediaQuery.of(context).size.width,
     height: 65,
     decoration: BoxDecoration(
@@ -34,18 +34,18 @@ Container dealHotTime(BuildContext context) {
         ),
         Expanded(
           child: Container(
-            child: const Column(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '12H - 14H',
-                  style: TextStyle(
+                  '${beginTime}H - ${beginTime + 2}H',
+                  style: const TextStyle(
                     color: AppColors.borderDeal_Home,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(
+                const Text(
                   'Vui thả ga cùng Ryokou!!!',
                   style: TextStyle(
                     color: AppColors.borderDeal_Home,

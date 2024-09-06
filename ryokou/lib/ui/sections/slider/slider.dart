@@ -12,8 +12,15 @@ class SliderBar extends StatefulWidget {
 class _SliderBarState extends State<SliderBar> {
   int _curPage = 0;
 
-  final PageController _pageController =
-      PageController(initialPage: 0, viewportFraction: 0.75);
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _curPage = widget.numSlider ~/ 2;
+    _pageController =
+        PageController(initialPage: _curPage, viewportFraction: 0.8);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +38,7 @@ class _SliderBarState extends State<SliderBar> {
             return Transform.scale(
               scaleY: _curPage == index ? 1.0 : 0.85,
               child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
+                margin: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   border: Border.all(color: AppColors.primaryColor, width: 2),
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
