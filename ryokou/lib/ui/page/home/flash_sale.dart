@@ -60,12 +60,36 @@ class _FlashSaleState extends State<FlashSale> {
             boxTime((diffTime.inSeconds % 60).toString()),
           ],
         ),
-        const SizedBox(height: 50),
+        const SizedBox(height: 25),
         SizedBox(
-          height: 150,
+          height: 255,
           child: ListView(
             scrollDirection: Axis.horizontal,
-            children: const [ItemTour()],
+            children: const [
+              ItemTour(),
+              ItemTour(),
+              ItemTour(),
+              ItemTour(),
+              ItemTour(),
+            ],
+          ),
+        ),
+        const SizedBox(height: 15),
+        InkWell(
+          borderRadius: BorderRadius.circular(70),
+          onTap: () {},
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 6),
+            decoration: BoxDecoration(
+                border: Border.all(color: AppColors.primaryColor),
+                borderRadius: const BorderRadius.all(Radius.circular(70))),
+            child: const Text(
+              'Xem thêm',
+              style: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16),
+            ),
           ),
         )
       ],

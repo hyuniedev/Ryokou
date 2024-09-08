@@ -4,7 +4,6 @@ import 'package:ryokou/entity/user.dart';
 import 'package:ryokou/ui/page/home/flash_sale.dart';
 import 'package:ryokou/ui/page/home/sugget_section.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
-import 'package:ryokou/ui/page/home/deal_hot.dart';
 import 'package:ryokou/ui/sections/slider/slider.dart';
 
 class HomePage extends StatefulWidget {

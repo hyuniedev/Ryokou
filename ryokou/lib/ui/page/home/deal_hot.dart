@@ -33,27 +33,25 @@ Container dealHotTime(BuildContext context, int beginTime) {
           ),
         ),
         Expanded(
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '${beginTime}H - ${beginTime + 2}H',
-                  style: const TextStyle(
-                    color: AppColors.borderDeal_Home,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '${beginTime}H - ${beginTime + 2}H',
+                style: const TextStyle(
+                  color: AppColors.borderDeal_Home,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
-                const Text(
-                  'Vui thả ga cùng Ryokou!!!',
-                  style: TextStyle(
-                    color: AppColors.borderDeal_Home,
-                    fontSize: 14,
-                  ),
+              ),
+              const Text(
+                'Vui thả ga cùng Ryokou!!!',
+                style: TextStyle(
+                  color: AppColors.borderDeal_Home,
+                  fontSize: 14,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         )
       ],
