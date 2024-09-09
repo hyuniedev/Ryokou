@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "118820860176",
+    "project_id": "ryokou-7324",
+    "storage_bucket": "ryokou-7324.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118820860176:android:ead3fe97551509b192b595",
+        "android_client_info": {
+          "package_name": "com.example.ryokou"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHucUBgnXJvyYTq1ABZWKyhrNQ_8KUmOs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
