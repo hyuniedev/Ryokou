@@ -61,11 +61,10 @@ class _FlashSaleState extends State<FlashSale> {
           ],
         ),
         const SizedBox(height: 25),
-        SizedBox(
-          height: 255,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: const [
+        const SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
               ItemTour(),
               ItemTour(),
               ItemTour(),

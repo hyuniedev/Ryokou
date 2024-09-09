@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ryokou/entity/tour.dart';
+import 'package:ryokou/themes/colors_theme.dart';
+import 'package:ryokou/ui/item/itemTag.dart';
+import 'package:ryokou/ui/item/itemTour.dart';
+import 'package:ryokou/ui/page/home/enumTag/ISugget.dart';
+import 'package:ryokou/ui/page/home/enumTag/e_province.dart';
 
 class SuggetSection extends StatefulWidget {
   String title;
-  List<String> lsDivide;
+  List<ISugget> lsDivide;
   List<Tour> lsDataTour;
   SuggetSection({
     super.key,
@@ -17,12 +22,55 @@ class SuggetSection extends StatefulWidget {
 }
 
 class _SuggetSectionState extends State<SuggetSection> {
+  int indexDivided = 0;
+  void _changeTag(ISugget suggetSelected) {
+    setState(() {
+      indexDivided = widget.lsDivide.indexOf(suggetSelected);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        SingleChildScrollView(),
-        SingleChildScrollView(),
+        const SizedBox(height: 30),
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Text(
+            widget.title,
+            style: const TextStyle(
+              color: AppColors.primaryColor,
+              fontSize: 37,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: List.generate(
+              widget.lsDivide.length,
+              (index) {
+                return ItemTag(
+                  titleTag: widget.lsDivide[index],
+                  isSelected: indexDivided == index,
+                  changedTag: _changeTag,
+                );
+              },
+            ),
+          ),
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: List.generate(
+              widget.lsDataTour.length,
+              (index) {
+                return const ItemTour();
+              },
+            ),
+          ),
+        ),
       ],
     );
   }

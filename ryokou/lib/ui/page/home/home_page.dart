@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ryokou/controller/controller_data.dart';
+import 'package:ryokou/entity/tour.dart';
 import 'package:ryokou/entity/user.dart';
+import 'package:ryokou/ui/page/home/enumTag/e_month.dart';
+import 'package:ryokou/ui/page/home/enumTag/e_province.dart';
 import 'package:ryokou/ui/page/home/flash_sale.dart';
 import 'package:ryokou/ui/page/home/sugget_section.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
@@ -78,14 +81,58 @@ class _HomePageState extends State<HomePage> {
               children: [
                 const FlashSale(),
                 SuggetSection(
-                  lsDataTour: const [],
-                  lsDivide: const [],
+                  lsDataTour: [
+                    Tour(
+                        titleTour: 'Du lich suoi nuoc nong',
+                        descriptionTour: 'descriptionTour',
+                        duration: 3,
+                        location: 'Nhat Ban'),
+                    Tour(
+                        titleTour: 'Du lich suoi nuoc nong',
+                        descriptionTour: 'descriptionTour',
+                        duration: 3,
+                        location: 'Nhat Ban'),
+                    Tour(
+                        titleTour: 'Du lich suoi nuoc nong',
+                        descriptionTour: 'descriptionTour',
+                        duration: 3,
+                        location: 'Nhat Ban')
+                  ],
+                  lsDivide: const [
+                    EMonth.Thang8,
+                    EMonth.Thang9,
+                    EMonth.Thang10,
+                    EMonth.Thang11,
+                    EMonth.Thang12,
+                  ],
                   title: "Get go!",
                 ),
                 SuggetSection(
-                  lsDataTour: const [],
-                  title: 'GET GO!',
-                  lsDivide: const ['Tokyo', 'Shiba', 'Hokkaidou', 'Kansai'],
+                  lsDataTour: [
+                    Tour(
+                        titleTour: 'Du lich suoi nuoc nong',
+                        descriptionTour: 'descriptionTour',
+                        duration: 3,
+                        location: 'Nhat Ban'),
+                    Tour(
+                        titleTour: 'Du lich suoi nuoc nong',
+                        descriptionTour: 'descriptionTour',
+                        duration: 3,
+                        location: 'Nhat Ban'),
+                    Tour(
+                        titleTour: 'Du lich suoi nuoc nong',
+                        descriptionTour: 'descriptionTour',
+                        duration: 3,
+                        location: 'Nhat Ban')
+                  ],
+                  title: 'Mua le hoi',
+                  lsDivide: const [
+                    EProvince.Chiba,
+                    EProvince.Akita,
+                    EProvince.Kanagawa,
+                    EProvince.Tokyo,
+                    EProvince.Mie,
+                  ],
                 )
               ],
             ),
