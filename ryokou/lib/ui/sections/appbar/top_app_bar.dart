@@ -4,13 +4,13 @@ import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/acc/login.dart';
 
 PreferredSizeWidget getAppBar(BuildContext context, Widget childAppBar,
-    {bool isHome = false, bool haveLeading = false}) {
+    {bool isHome = false, bool haveLeading = false, double height = 100}) {
   return PreferredSize(
     preferredSize: Size.fromHeight(isHome ? 120 : 100), // chiều cao AppBar
     child: Stack(
       children: [
         Container(
-          height: isHome ? 120 : 100,
+          height: isHome ? 120 : height,
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(30),
