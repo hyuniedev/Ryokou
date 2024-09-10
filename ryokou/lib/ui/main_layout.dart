@@ -19,36 +19,37 @@ class MainLayout extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          items: const [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-                backgroundColor: AppColors.primaryColor),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.search),
-                label: 'Search',
-                backgroundColor: AppColors.primaryColor),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.favorite),
-                label: 'Favourite',
-                backgroundColor: AppColors.primaryColor),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.tour),
-                label: 'My Tour',
-                backgroundColor: AppColors.primaryColor),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Account',
-                backgroundColor: AppColors.primaryColor),
-          ],
-          currentIndex: _indexNav,
-          onTap: (newIndex) {
-            setState(() {
-              _indexNav = newIndex;
-            });
-          },
-        ),
-        body: _arrPage[_indexNav]);
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+              backgroundColor: AppColors.primaryColor),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Search',
+              backgroundColor: AppColors.primaryColor),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite),
+              label: 'Favourite',
+              backgroundColor: AppColors.primaryColor),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.tour),
+              label: 'My Tour',
+              backgroundColor: AppColors.primaryColor),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Account',
+              backgroundColor: AppColors.primaryColor),
+        ],
+        currentIndex: _indexNav,
+        onTap: (newIndex) {
+          setState(() {
+            _indexNav = newIndex;
+          });
+        },
+      ),
+      body: _arrPage[_indexNav],
+    );
   }
 }

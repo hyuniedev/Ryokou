@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ryokou/controller/controller_data.dart';
-import 'package:ryokou/entity/user.dart';
 import 'package:ryokou/themes/colors_theme.dart';
+import 'package:ryokou/ui/acc/login.dart';
 
-PreferredSizeWidget getAppBar(
-    BuildContext context, Widget childAppBar, void Function(User) onSignIn,
-    {bool isHome = false}) {
+PreferredSizeWidget getAppBar(BuildContext context, Widget childAppBar,
+    {bool isHome = false, bool haveLeading = false}) {
   return PreferredSize(
     preferredSize: Size.fromHeight(isHome ? 120 : 100), // chiều cao AppBar
     child: Stack(
@@ -20,6 +19,17 @@ PreferredSizeWidget getAppBar(
           ),
           clipBehavior: Clip.antiAlias,
           child: AppBar(
+            automaticallyImplyLeading: false,
+            leading: haveLeading
+                ? IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back_ios_outlined,
+                      color: Colors.white,
+                    ))
+                : null,
             backgroundColor: AppColors.primaryColor,
             title: childAppBar,
             toolbarHeight: isHome ? 80 : 100,
@@ -55,13 +65,10 @@ PreferredSizeWidget getAppBar(
                           ),
                           InkWell(
                             onTap: () {
-                              User u = User(
-                                  userName: 'huunien734',
-                                  password: '123456',
-                                  fullName: 'Nguyen Huu Nien',
-                                  email: 'huunien734@gmail.com',
-                                  numberphone: '0945405318');
-                              onSignIn(u);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const Login()));
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width / 2,

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/entity/tour.dart';
-import 'package:ryokou/entity/user.dart';
 import 'package:ryokou/ui/page/home/enumTag/e_month.dart';
 import 'package:ryokou/ui/page/home/enumTag/e_province.dart';
 import 'package:ryokou/ui/page/home/flash_sale.dart';
@@ -17,127 +15,122 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  void _signIn(User u) {
-    setState(() {
-      DataController().setUser = u;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Column(
-        children: [
-          getAppBar(
-            context,
-            SizedBox(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    child: Row(
+    return Scaffold(
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            getAppBar(
+              context,
+              SizedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.place,
+                            size: 30,
+                          ),
+                          Text(
+                            'Ryokou',
+                            style: TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
                       children: [
-                        Icon(
-                          Icons.place,
-                          size: 30,
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.sticky_note_2_sharp),
                         ),
-                        Text(
-                          'Ryokou',
-                          style: TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.notifications,
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.sticky_note_2_sharp),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.notifications,
-                        ),
-                      ),
+                  ],
+                ),
+              ),
+              isHome: true,
+            ),
+            SliderBar(numSlider: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  const FlashSale(),
+                  SuggetSection(
+                    lsDataTour: [
+                      Tour(
+                          titleTour: 'Du lich suoi nuoc nong',
+                          descriptionTour: 'descriptionTour',
+                          duration: 3,
+                          location: 'Nhat Ban'),
+                      Tour(
+                          titleTour: 'Du lich suoi nuoc nong',
+                          descriptionTour: 'descriptionTour',
+                          duration: 3,
+                          location: 'Nhat Ban'),
+                      Tour(
+                          titleTour: 'Du lich suoi nuoc nong',
+                          descriptionTour: 'descriptionTour',
+                          duration: 3,
+                          location: 'Nhat Ban')
                     ],
+                    lsDivide: const [
+                      EMonth.Thang8,
+                      EMonth.Thang9,
+                      EMonth.Thang10,
+                      EMonth.Thang11,
+                      EMonth.Thang12,
+                    ],
+                    title: "Get go!",
                   ),
+                  SuggetSection(
+                    lsDataTour: [
+                      Tour(
+                          titleTour: 'Du lich suoi nuoc nong',
+                          descriptionTour: 'descriptionTour',
+                          duration: 3,
+                          location: 'Nhat Ban'),
+                      Tour(
+                          titleTour: 'Du lich suoi nuoc nong',
+                          descriptionTour: 'descriptionTour',
+                          duration: 3,
+                          location: 'Nhat Ban'),
+                      Tour(
+                          titleTour: 'Du lich suoi nuoc nong',
+                          descriptionTour: 'descriptionTour',
+                          duration: 3,
+                          location: 'Nhat Ban')
+                    ],
+                    title: 'Mua le hoi',
+                    lsDivide: const [
+                      EProvince.Chiba,
+                      EProvince.Akita,
+                      EProvince.Kanagawa,
+                      EProvince.Tokyo,
+                      EProvince.Mie,
+                    ],
+                  )
                 ],
               ),
             ),
-            _signIn,
-            isHome: true,
-          ),
-          SliderBar(numSlider: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              children: [
-                const FlashSale(),
-                SuggetSection(
-                  lsDataTour: [
-                    Tour(
-                        titleTour: 'Du lich suoi nuoc nong',
-                        descriptionTour: 'descriptionTour',
-                        duration: 3,
-                        location: 'Nhat Ban'),
-                    Tour(
-                        titleTour: 'Du lich suoi nuoc nong',
-                        descriptionTour: 'descriptionTour',
-                        duration: 3,
-                        location: 'Nhat Ban'),
-                    Tour(
-                        titleTour: 'Du lich suoi nuoc nong',
-                        descriptionTour: 'descriptionTour',
-                        duration: 3,
-                        location: 'Nhat Ban')
-                  ],
-                  lsDivide: const [
-                    EMonth.Thang8,
-                    EMonth.Thang9,
-                    EMonth.Thang10,
-                    EMonth.Thang11,
-                    EMonth.Thang12,
-                  ],
-                  title: "Get go!",
-                ),
-                SuggetSection(
-                  lsDataTour: [
-                    Tour(
-                        titleTour: 'Du lich suoi nuoc nong',
-                        descriptionTour: 'descriptionTour',
-                        duration: 3,
-                        location: 'Nhat Ban'),
-                    Tour(
-                        titleTour: 'Du lich suoi nuoc nong',
-                        descriptionTour: 'descriptionTour',
-                        duration: 3,
-                        location: 'Nhat Ban'),
-                    Tour(
-                        titleTour: 'Du lich suoi nuoc nong',
-                        descriptionTour: 'descriptionTour',
-                        duration: 3,
-                        location: 'Nhat Ban')
-                  ],
-                  title: 'Mua le hoi',
-                  lsDivide: const [
-                    EProvince.Chiba,
-                    EProvince.Akita,
-                    EProvince.Kanagawa,
-                    EProvince.Tokyo,
-                    EProvince.Mie,
-                  ],
-                )
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
