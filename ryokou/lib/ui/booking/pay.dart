@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
 
 class Pay extends StatefulWidget {
@@ -22,9 +23,14 @@ class _PayState extends State<Pay> {
               getAppBar(
                 context,
                 Container(
-                  child: const Text('THANH TOÁN'),
+                  child: const Text(
+                    'THANH TOÁN',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Color(0xFFFFFFFF)),
+                  ),
                 ),
                 haveLeading: true,
+                height: 60,
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
@@ -133,6 +139,7 @@ class _PayState extends State<Pay> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            const SizedBox(height: 24),
                             Text(
                               'Chi phí',
                               style: generalBoss,
@@ -154,7 +161,42 @@ class _PayState extends State<Pay> {
                                 ],
                               ),
                             ),
-                            const Padding(padding: EdgeInsets.only(top: 16))
+                            Padding(
+                              padding: const EdgeInsets.only(top: 16),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text(
+                                    'VAT 5%',
+                                    style: generalFontsize,
+                                  ),
+                                  Text(
+                                    '60.250đ',
+                                    style: generalFontsize,
+                                  )
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              children: [
+                                Text(
+                                  'Tổng',
+                                  style: generalBoss,
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 140),
+                                  child: Text(
+                                    '1.265.250đ',
+                                    style: TextStyle(
+                                        color: AppColors.borderDeal_Home,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 22),
+                                  ),
+                                )
+                              ],
+                            )
                           ],
                         ),
                       )
