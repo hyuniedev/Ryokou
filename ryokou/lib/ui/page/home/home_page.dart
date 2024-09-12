@@ -25,45 +25,43 @@ class _HomePageState extends State<HomePage> {
             children: [
               getAppBar(
                 context,
-                SizedBox(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.place,
-                              size: 30,
-                            ),
-                            Text(
-                              'Ryokou',
-                              style: TextStyle(
-                                fontSize: 40,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Row(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      child: Row(
                         children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.sticky_note_2_sharp),
+                          Icon(
+                            Icons.place,
+                            size: 30,
                           ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.notifications,
+                          Text(
+                            'Ryokou',
+                            style: TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
                             ),
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.sticky_note_2_sharp),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.notifications,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 isHome: true,
               ),

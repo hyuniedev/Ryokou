@@ -20,6 +20,7 @@ PreferredSizeWidget getAppBar(BuildContext context, Widget childAppBar,
           clipBehavior: Clip.antiAlias,
           child: AppBar(
             automaticallyImplyLeading: false,
+            centerTitle: isHome ? false : true,
             leading: haveLeading
                 ? IconButton(
                     onPressed: () {
@@ -32,7 +33,7 @@ PreferredSizeWidget getAppBar(BuildContext context, Widget childAppBar,
                 : null,
             backgroundColor: AppColors.primaryColor,
             title: childAppBar,
-            toolbarHeight: height,
+            toolbarHeight: isHome ? 80 : height,
           ),
         ),
         !isHome

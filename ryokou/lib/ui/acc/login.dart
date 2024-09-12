@@ -28,7 +28,10 @@ class Login extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 15),
-                    Image.asset('assets/image/appbar_ryokou.png'),
+                    Image.asset(
+                      'assets/image/appbar_ryokou.png',
+                      fit: BoxFit.contain,
+                    ),
                   ],
                 ),
                 haveLeading: true,
