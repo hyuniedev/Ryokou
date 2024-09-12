@@ -33,11 +33,24 @@ class _ItemTourState extends State<ItemTour> {
                 child: Stack(
                   alignment: AlignmentDirectional.bottomStart,
                   children: [
-                    Image.network(
-                      'https://www.startravel.vn/upload/tintuc/tham-quan-du-lich-nhat-ban_28_3_2018_9_9_9.png',
-                      fit: BoxFit.cover,
-                      height: 115,
+                    SizedBox(
                       width: 150,
+                      height: 115,
+                      child: Image.network(
+                        'https://www.google.com/url?sa=i&url=https%3A%2F%2Fsakura.co%2Fblog%2Fwhat-does-sakura-mean-to-japan&psig=AOvVaw0OjAZNx4MyGP51YW2fRmH6&ust=1726221423668000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOju2YiSvYgDFQAAAAAdAAAAABAE',
+                        fit: BoxFit.cover,
+                        height: 115,
+                        width: 150,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                        errorBuilder: (context, error, stackTrace) {
+                          return Image.asset('assets/image/appbar_ryokou.png');
+                        },
+                      ),
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(

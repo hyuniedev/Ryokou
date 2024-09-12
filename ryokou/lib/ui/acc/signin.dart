@@ -21,12 +21,15 @@ class SignIn extends StatelessWidget {
                     'Ryokou',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 64,
+                      fontSize: 55,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(width: 15),
-                  Image.asset('assets/image/appbar_ryokou.png'),
+                  const SizedBox(width: 10),
+                  Image.asset(
+                    'assets/image/appbar_ryokou.png',
+                    height: 75,
+                  ),
                 ],
               ),
               haveLeading: true,

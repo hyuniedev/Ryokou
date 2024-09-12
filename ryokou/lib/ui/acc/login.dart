@@ -23,14 +23,15 @@ class Login extends StatelessWidget {
                       'Ryokou',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 64,
+                        fontSize: 55,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    const SizedBox(width: 10),
                     Image.asset(
                       'assets/image/appbar_ryokou.png',
                       fit: BoxFit.contain,
+                      height: 75,
                     ),
                   ],
                 ),
