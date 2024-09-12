@@ -2,54 +2,130 @@ import 'package:flutter/material.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 
 class ItemField extends StatelessWidget {
-  ItemField(
+  final String title;
+  final bool isRequired;
+  final bool isSexField;
+  const ItemField(
       {super.key,
       required this.title,
       this.isRequired = false,
       this.isSexField = false});
-  String title;
-  bool isRequired;
-  bool isSexField;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 20,
-            color: AppColors.primaryColor,
-          ),
+        Row(
+          mainAxisAlignment: isSexField
+              ? MainAxisAlignment.spaceBetween
+              : MainAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: AppColors.primaryColor,
+                  ),
+                ),
+                isRequired
+                    ? Text(
+                        ' *',
+                        style:
+                            TextStyle(color: Colors.amber[900], fontSize: 20),
+                      )
+                    : Container(),
+              ],
+            ),
+            isSexField ? const RadioSex() : Container()
+          ],
         ),
         const SizedBox(height: 10),
-        const TextField(
-          maxLines: 1,
-          keyboardType: TextInputType.text,
-          style: TextStyle(fontSize: 21),
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(horizontal: 15),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppColors.primaryColor,
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppColors.primaryColor,
-                width: 2.0,
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-          ),
-        ),
-        const SizedBox(height: 18)
+        isSexField
+            ? Container()
+            : const Column(
+                children: [
+                  TextField(
+                    maxLines: 1,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(fontSize: 21),
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: AppColors.primaryColor,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: AppColors.primaryColor,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 18)
+                ],
+              )
       ],
+    );
+  }
+}
+
+class RadioSex extends StatefulWidget {
+  const RadioSex({super.key});
+
+  @override
+  State<RadioSex> createState() => _RadioSexState();
+}
+
+class _RadioSexState extends State<RadioSex> {
+  int? _selectedValue;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        rdButton(1, 'Nam'),
+        const SizedBox(width: 32),
+        rdButton(2, 'Nữ'),
+        const SizedBox(width: 20)
+      ],
+    );
+  }
+
+  Widget rdButton(int value, String label) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedValue = value;
+        });
+      },
+      child: Row(
+        children: [
+          Radio(
+            fillColor: const WidgetStatePropertyAll(AppColors.primaryColor),
+            activeColor: AppColors.primaryColor,
+            value: value,
+            groupValue: _selectedValue,
+            onChanged: (newValue) {
+              setState(() {
+                _selectedValue = newValue;
+              });
+            },
+          ),
+          Text(
+            label,
+            style: const TextStyle(color: AppColors.primaryColor, fontSize: 20),
+          ),
+        ],
+      ),
     );
   }
 }

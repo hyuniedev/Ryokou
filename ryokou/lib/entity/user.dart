@@ -1,3 +1,4 @@
+import 'package:ryokou/entity/enumSex/e_sex.dart';
 import 'package:ryokou/entity/tour.dart';
 
 class User {
@@ -7,6 +8,7 @@ class User {
   late String fullName;
   late String numberphone;
   late String email;
+  late ESex sex;
   final List<Tour> _favoriteTour = [];
   List<Tour> get getFavoriteTours => _favoriteTour;
   set addFavoriteTour(Tour newTour) => _favoriteTour.add(newTour);
@@ -17,6 +19,7 @@ class User {
     required this.fullName,
     required this.email,
     required this.numberphone,
+    required this.sex,
   }) {
     id = DateTime.now().millisecond.toString();
   }

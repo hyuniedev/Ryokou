@@ -1,5 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:ryokou/ui/acc/login.dart';
+import 'package:ryokou/ui/acc/signin.dart';
 import 'package:ryokou/ui/main_layout.dart';
 
 void main() async {
@@ -13,26 +16,45 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final GoRouter router = GoRouter(routes: [
+      GoRoute(
+        path: '/',
+        builder: (context, state) => MainLayout(index: 0),
+      ),
+      GoRoute(
+        path: '/search',
+        builder: (context, state) => MainLayout(index: 1),
+      ),
+      GoRoute(
+        path: '/favorite',
+        builder: (context, state) => MainLayout(index: 2),
+      ),
+      GoRoute(
+        path: '/mytour',
+        builder: (context, state) => MainLayout(index: 3),
+      ),
+      GoRoute(
+          path: '/account',
+          builder: (context, state) => MainLayout(index: 4),
+          routes: [
+            GoRoute(
+              path: 'login',
+              builder: (context, state) => const Login(),
+            ),
+            GoRoute(
+              path: 'signin',
+              builder: (context, state) => const SignIn(),
+            )
+          ]),
+    ]);
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Scaffold(
-        body: SafeArea(
-          child: MyHomePage(title: 'Flutter Demo Home Page'),
-        ),
-      ),
+      routerConfig: router,
     );
   }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => MainLayout();
 }

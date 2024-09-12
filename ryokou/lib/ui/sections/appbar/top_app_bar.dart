@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/themes/colors_theme.dart';
-import 'package:ryokou/ui/acc/login.dart';
 
 PreferredSizeWidget getAppBar(BuildContext context, Widget childAppBar,
-    {bool isHome = false, bool haveLeading = false, double height = 100}) {
+    {bool haveLeading = false, bool isHome = false, double height = 100}) {
   return PreferredSize(
-    preferredSize: Size.fromHeight(isHome ? 120 : 100), // chiều cao AppBar
+    preferredSize: Size.fromHeight(height), // chiều cao AppBar
     child: Stack(
       children: [
         Container(
-          height: isHome ? 120 : height,
+          height: height,
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(30),
@@ -23,7 +23,7 @@ PreferredSizeWidget getAppBar(BuildContext context, Widget childAppBar,
             leading: haveLeading
                 ? IconButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      context.pop();
                     },
                     icon: const Icon(
                       Icons.arrow_back_ios_outlined,
@@ -32,7 +32,7 @@ PreferredSizeWidget getAppBar(BuildContext context, Widget childAppBar,
                 : null,
             backgroundColor: AppColors.primaryColor,
             title: childAppBar,
-            toolbarHeight: isHome ? 80 : 100,
+            toolbarHeight: height,
           ),
         ),
         !isHome
@@ -65,10 +65,7 @@ PreferredSizeWidget getAppBar(BuildContext context, Widget childAppBar,
                           ),
                           InkWell(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const Login()));
+                              context.push('/account/login');
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width / 2,

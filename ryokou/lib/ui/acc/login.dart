@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/item/itemField.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
@@ -40,8 +41,8 @@ class Login extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 50),
                       child: Image.asset('assets/image/login_imgDulich.png'),
                     ),
-                    ItemField(title: 'Tên đăng nhập'),
-                    ItemField(title: 'Mật khẩu'),
+                    const ItemField(title: 'Tên đăng nhập'),
+                    const ItemField(title: 'Mật khẩu'),
                     const SizedBox(height: 21),
                     InkWell(
                       onTap: () {},
@@ -105,7 +106,9 @@ class Login extends StatelessWidget {
                         InkWell(
                           highlightColor: Colors.transparent,
                           splashColor: Colors.transparent,
-                          onTap: () {},
+                          onTap: () {
+                            context.push('/account/signin');
+                          },
                           child: Text(
                             'Đăng ký',
                             style: TextStyle(

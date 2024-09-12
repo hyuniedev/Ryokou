@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ryokou/main.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/page/account/account_page.dart';
 import 'package:ryokou/ui/page/favourite/favourite_page..dart';
@@ -7,15 +6,23 @@ import 'package:ryokou/ui/page/home/home_page.dart';
 import 'package:ryokou/ui/page/my_tour/my_tour_page.dart';
 import 'package:ryokou/ui/page/search/search_page.dart';
 
-class MainLayout extends State<MyHomePage> {
-  int _indexNav = 0;
+class MainLayout extends StatefulWidget {
+  int index;
+  MainLayout({super.key, required this.index});
+
+  @override
+  State<MainLayout> createState() => _MainLayoutState();
+}
+
+class _MainLayoutState extends State<MainLayout> {
   final List<Widget> _arrPage = [
     const HomePage(),
     const SearchPage(),
-    const FavouritePage(),
+    const FavoritePage(),
     const MyTourPage(),
     const AccountPage()
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +38,7 @@ class MainLayout extends State<MyHomePage> {
               backgroundColor: AppColors.primaryColor),
           BottomNavigationBarItem(
               icon: Icon(Icons.favorite),
-              label: 'Favourite',
+              label: 'Favorite',
               backgroundColor: AppColors.primaryColor),
           BottomNavigationBarItem(
               icon: Icon(Icons.tour),
@@ -42,14 +49,14 @@ class MainLayout extends State<MyHomePage> {
               label: 'Account',
               backgroundColor: AppColors.primaryColor),
         ],
-        currentIndex: _indexNav,
+        currentIndex: widget.index,
         onTap: (newIndex) {
           setState(() {
-            _indexNav = newIndex;
+            widget.index = newIndex;
           });
         },
       ),
-      body: _arrPage[_indexNav],
+      body: SafeArea(child: _arrPage[widget.index]),
     );
   }
 }
