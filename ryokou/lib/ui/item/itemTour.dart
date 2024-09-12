@@ -37,7 +37,7 @@ class _ItemTourState extends State<ItemTour> {
                       width: 150,
                       height: 115,
                       child: Image.network(
-                        'https://www.google.com/url?sa=i&url=https%3A%2F%2Fsakura.co%2Fblog%2Fwhat-does-sakura-mean-to-japan&psig=AOvVaw0OjAZNx4MyGP51YW2fRmH6&ust=1726221423668000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOju2YiSvYgDFQAAAAAdAAAAABAE',
+                        'https://gamek.mediacdn.vn/133514250583805952/2024/2/15/base64-17079845417431558812892-1707984824099-17079848244541354322434-1707987122414-1707987123339757671272.png',
                         fit: BoxFit.cover,
                         height: 115,
                         width: 150,
@@ -85,12 +85,14 @@ class _ItemTourState extends State<ItemTour> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'Ngắm hoa anh đào tại Tokyo',
+                    'Ngắm hoa anh đào tại Tokyo with Nguyen Huu Nien',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 3),
                   const Row(

@@ -6,10 +6,10 @@ import 'package:ryokou/ui/item/itemTour.dart';
 import 'package:ryokou/ui/page/home/enumTag/ISugget.dart';
 
 class SuggetSection extends StatefulWidget {
-  String title;
-  List<ISugget> lsDivide;
-  List<Tour> lsDataTour;
-  SuggetSection({
+  final String title;
+  final List<ISugget> lsDivide;
+  final List<Tour> lsDataTour;
+  const SuggetSection({
     super.key,
     required this.title,
     required this.lsDivide,

@@ -107,9 +107,7 @@ class Login extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 18, color: AppColors.primaryColor),
                         ),
-                        InkWell(
-                          highlightColor: Colors.transparent,
-                          splashColor: Colors.transparent,
+                        GestureDetector(
                           onTap: () {
                             context.push('/account/signin');
                           },
@@ -119,7 +117,7 @@ class Login extends StatelessWidget {
                                 fontSize: 18,
                                 color: Colors.amber[800],
                                 decoration: TextDecoration.underline,
-                                decorationColor: Colors.amber[800]),
+                                decorationColor: Colors.amber[900]),
                           ),
                         )
                       ],

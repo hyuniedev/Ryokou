@@ -90,13 +90,15 @@ class _RadioSexState extends State<RadioSex> {
   int? _selectedValue;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        rdButton(1, 'Nam'),
-        const SizedBox(width: 32),
-        rdButton(2, 'Nữ'),
-        const SizedBox(width: 20)
-      ],
+    return SizedBox(
+      width: 200,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          rdButton(1, 'Nam'),
+          rdButton(2, 'Nữ'),
+        ],
+      ),
     );
   }
 
