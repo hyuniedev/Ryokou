@@ -4,6 +4,7 @@ import 'package:ryokou/ui/page/home/enumTag/e_month.dart';
 import 'package:ryokou/ui/page/home/enumTag/e_province.dart';
 import 'package:ryokou/ui/page/home/flash_sale.dart';
 import 'package:ryokou/ui/page/home/sugget_section.dart';
+import 'package:ryokou/ui/sections/appbar/child_app_bar_main_pages.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
 import 'package:ryokou/ui/sections/slider/slider.dart';
 
@@ -25,44 +26,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               getAppBar(
                 context,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.place,
-                            size: 30,
-                          ),
-                          Text(
-                            'Ryokou',
-                            style: TextStyle(
-                              fontSize: 40,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.sticky_note_2_sharp),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.notifications,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                childAppBarMainPages(),
                 isHome: true,
               ),
               SliderBar(numSlider: 10),
