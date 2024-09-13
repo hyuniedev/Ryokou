@@ -3,8 +3,8 @@ import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/item/itemField.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
 
-class SignIn extends StatelessWidget {
-  const SignIn({super.key});
+class Register extends StatelessWidget {
+  const Register({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

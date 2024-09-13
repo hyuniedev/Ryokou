@@ -20,7 +20,5 @@ class User {
     required this.email,
     required this.numberphone,
     required this.sex,
-  }) {
-    id = DateTime.now().millisecond.toString();
-  }
+  });
 }

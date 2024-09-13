@@ -8,15 +8,15 @@ class DataController {
     return _instance;
   }
 
+  User? _user;
+  User? get getUser => _user;
+  set setUser(User? initUser) => _user = initUser;
+
   Tour tour = Tour(
       titleTour: 'titleTour',
       descriptionTour: 'descriptionTour',
       duration: 3,
       location: 'location');
-
-  User? _user;
-  User? get getUser => _user;
-  set setUser(User? initUser) => _user = initUser;
 
   List<Tour> proposeTours = [
     Tour(

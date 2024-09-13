@@ -109,7 +109,7 @@ class Login extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            context.push('/account/signin');
+                            context.push('/account/register');
                           },
                           child: Text(
                             'Đăng ký',

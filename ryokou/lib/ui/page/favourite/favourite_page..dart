@@ -92,7 +92,7 @@ class _FavoritePage extends State<FavoritePage> {
                         InkWell(
                             borderRadius: BorderRadius.circular(10),
                             onTap: () {
-                              context.push('/account/signin');
+                              context.push('/account/register');
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width / 2.5,

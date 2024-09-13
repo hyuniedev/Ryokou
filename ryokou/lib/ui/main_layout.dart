@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/page/account/account_page.dart';
+import 'package:ryokou/ui/page/ex/homepage.dart';
 import 'package:ryokou/ui/page/favourite/favourite_page..dart';
 import 'package:ryokou/ui/page/home/home_page.dart';
 import 'package:ryokou/ui/page/my_tour/my_tour_page.dart';
@@ -19,7 +20,8 @@ class _MainLayoutState extends State<MainLayout> {
     const HomePage(),
     const SearchPage(),
     const FavoritePage(),
-    const MyTourPage(),
+    MyHomePage(),
+    // const MyTourPage(),
     const AccountPage()
   ];
 
