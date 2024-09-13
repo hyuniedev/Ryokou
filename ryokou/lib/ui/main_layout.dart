@@ -4,7 +4,6 @@ import 'package:ryokou/ui/page/account/account_page.dart';
 import 'package:ryokou/ui/page/ex/homepage.dart';
 import 'package:ryokou/ui/page/favourite/favourite_page..dart';
 import 'package:ryokou/ui/page/home/home_page.dart';
-import 'package:ryokou/ui/page/my_tour/my_tour_page.dart';
 import 'package:ryokou/ui/page/search/search_page.dart';
 
 class MainLayout extends StatefulWidget {
@@ -20,7 +19,7 @@ class _MainLayoutState extends State<MainLayout> {
     const HomePage(),
     const SearchPage(),
     const FavoritePage(),
-    MyHomePage(),
+    const MyHomePage(),
     // const MyTourPage(),
     const AccountPage()
   ];

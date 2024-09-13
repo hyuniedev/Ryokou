@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ryokou/ui/acc/login.dart';
-import 'package:ryokou/ui/acc/signin.dart';
+import 'package:ryokou/ui/acc/register.dart';
 import 'package:ryokou/ui/main_layout.dart';
 
 void main() async {
@@ -42,8 +42,8 @@ class MyApp extends StatelessWidget {
               builder: (context, state) => const Login(),
             ),
             GoRoute(
-              path: 'signin',
-              builder: (context, state) => const SignIn(),
+              path: 'register',
+              builder: (context, state) => const Register(),
             )
           ]),
     ]);

@@ -1,4 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:ryokou/entity/enumSex/e_sex.dart';
+import 'package:ryokou/entity/user.dart' as myuser;
+import 'package:ryokou/firebase/fire_accounts.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/item/itemField.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
@@ -7,6 +12,15 @@ class Register extends StatelessWidget {
   const Register({super.key});
   @override
   Widget build(BuildContext context) {
+    AuthService authService = AuthService();
+    TextEditingController tecUsername = TextEditingController();
+    TextEditingController tecFullname = TextEditingController();
+    TextEditingController tecSex = TextEditingController();
+    TextEditingController tecNumberphone = TextEditingController();
+    TextEditingController tecEmail = TextEditingController();
+    TextEditingController tecPassword = TextEditingController();
+    TextEditingController tecCheckPassword = TextEditingController();
+
     return Scaffold(
       body: SafeArea(
           child: SingleChildScrollView(
@@ -42,20 +56,119 @@ class Register extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 60, bottom: 40),
                     child: Image.asset('assets/image/logo_welcome.png'),
                   ),
-                  const ItemField(title: 'Họ và tên', isRequired: true),
-                  const ItemField(title: 'Tên đăng nhập', isRequired: true),
-                  const ItemField(
+                  ItemField(
+                      title: 'Họ và tên', isRequired: true, tec: tecFullname),
+                  ItemField(
+                    title: 'Tên đăng nhập',
+                    isRequired: true,
+                    tec: tecUsername,
+                  ),
+                  ItemField(
                     title: 'Giới tính',
                     isRequired: true,
                     isSexField: true,
+                    tec: tecSex,
                   ),
-                  const ItemField(title: 'Số điện thoại', isRequired: true),
-                  const ItemField(title: 'Email', isRequired: true),
-                  const ItemField(title: 'Mật khẩu', isRequired: true),
-                  const ItemField(title: 'Xác nhận mật khẩu', isRequired: true),
+                  ItemField(
+                    title: 'Số điện thoại',
+                    isRequired: true,
+                    tec: tecNumberphone,
+                  ),
+                  ItemField(
+                    title: 'Email',
+                    isRequired: true,
+                    tec: tecEmail,
+                  ),
+                  ItemField(
+                    title: 'Mật khẩu',
+                    isRequired: true,
+                    tec: tecPassword,
+                  ),
+                  ItemField(
+                    title: 'Xác nhận mật khẩu',
+                    isRequired: true,
+                    tec: tecCheckPassword,
+                  ),
                   const SizedBox(height: 45),
                   InkWell(
-                    onTap: () {},
+                    onTap: () async {
+                      if (tecCheckPassword.text != tecPassword.text) {
+                        // Hiển thị thông báo lỗi nếu mật khẩu không khớp
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Mật khẩu không khớp')),
+                        );
+                        return;
+                      }
+// =========================================================================
+                      if (tecUsername.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Vui lòng nhập tên người dùng')),
+                        );
+                        return;
+                      }
+
+                      if (tecPassword.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Vui lòng nhập mật khẩu')),
+                        );
+                        return;
+                      }
+
+                      if (tecFullname.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Vui lòng nhập họ và tên')),
+                        );
+                        return;
+                      }
+
+                      if (tecEmail.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Vui lòng nhập địa chỉ email')),
+                        );
+                        return;
+                      }
+
+                      if (tecNumberphone.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Vui lòng nhập số điện thoại')),
+                        );
+                        return;
+                      }
+
+                      if (tecSex.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text(
+                                  'Vui lòng chọn giới tính ${tecSex.text}')),
+                        );
+                        return;
+                      }
+//====================================================================
+                      myuser.User user = myuser.User(
+                          userName: tecUsername.text,
+                          password: tecPassword.text,
+                          fullName: tecFullname.text,
+                          email: tecEmail.text,
+                          numberphone: tecNumberphone.text,
+                          sex: tecSex.text == 'male' ? ESex.male : ESex.female);
+
+                      try {
+                        UserCredential? result =
+                            await authService.register(user);
+                        print('DANG KY THANH CONG');
+                        context.go('/');
+                      } catch (e) {
+                        // Xử lý ngoại lệ và thông báo lỗi
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Lỗi: ${e.toString()}')),
+                        );
+                      }
+                    },
                     borderRadius: BorderRadius.circular(10),
                     child: Container(
                       width: double.infinity,

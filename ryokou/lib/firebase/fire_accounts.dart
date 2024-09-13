@@ -10,6 +10,7 @@ class AuthService {
 
   Future<UserCredential?> register(myuser.User user) async {
     try {
+      print(user.fullName);
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: user.email, password: user.password);
       user.id = result.user!.uid;

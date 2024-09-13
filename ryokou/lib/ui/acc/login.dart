@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ryokou/firebase/fire_accounts.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/item/itemField.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
@@ -9,6 +11,10 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthService authService = AuthService();
+    TextEditingController tecUsername = TextEditingController();
+    TextEditingController tecPassword = TextEditingController();
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -45,11 +51,27 @@ class Login extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 50),
                       child: Image.asset('assets/image/login_imgDulich.png'),
                     ),
-                    const ItemField(title: 'Tên đăng nhập'),
-                    const ItemField(title: 'Mật khẩu'),
+                    ItemField(
+                      title: 'Tên đăng nhập',
+                      tec: tecUsername,
+                    ),
+                    ItemField(
+                      title: 'Mật khẩu',
+                      tec: tecPassword,
+                    ),
                     const SizedBox(height: 21),
                     InkWell(
-                      onTap: () {},
+                      onTap: () async {
+                        UserCredential? result = await authService.signIn(
+                            tecUsername.text, tecPassword.text);
+                        if (result != null) {
+                          context.go('/');
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Dang nhap that bai')));
+                        }
+                      },
                       borderRadius: BorderRadius.circular(10),
                       child: Container(
                         width: double.infinity,
