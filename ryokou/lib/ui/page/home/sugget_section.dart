@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/entity/tour.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/item/itemTag.dart';
@@ -65,7 +66,7 @@ class _SuggetSectionState extends State<SuggetSection> {
             children: List.generate(
               widget.lsDataTour.length,
               (index) {
-                return const ItemTour();
+                return ItemTour(tour: DataController().tour);
               },
             ),
           ),

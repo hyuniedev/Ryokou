@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:ryokou/entity/tour.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 
 class ItemTour extends StatefulWidget {
-  const ItemTour({super.key});
+  final Tour tour;
+
+  const ItemTour({super.key, required this.tour});
 
   @override
   State<ItemTour> createState() => _ItemTourState();
@@ -14,6 +17,8 @@ class _ItemTourState extends State<ItemTour> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 255,
+      width: 160,
       padding: const EdgeInsets.only(right: 20),
       child: InkWell(
         onTap: () {},
@@ -34,13 +39,10 @@ class _ItemTourState extends State<ItemTour> {
                   alignment: AlignmentDirectional.bottomStart,
                   children: [
                     SizedBox(
-                      width: 150,
                       height: 115,
                       child: Image.network(
                         'https://gamek.mediacdn.vn/133514250583805952/2024/2/15/base64-17079845417431558812892-1707984824099-17079848244541354322434-1707987122414-1707987123339757671272.png',
                         fit: BoxFit.cover,
-                        height: 115,
-                        width: 150,
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) return child;
                           return const Center(
@@ -73,7 +75,6 @@ class _ItemTourState extends State<ItemTour> {
               ),
             ),
             Container(
-              width: 150,
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 border: Border.all(color: AppColors.primaryColor, width: 1),
@@ -91,7 +92,7 @@ class _ItemTourState extends State<ItemTour> {
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
-                    maxLines: 3,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 3),
