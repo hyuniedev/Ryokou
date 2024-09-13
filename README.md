@@ -1,6 +1,10 @@
 # Ryokou
 App Ryokou for Mobile app. 
 
+Thành viên: Nguyễn Hữu Niên, Vũ Trần Kim Oanh
+# App đặt tour du lịch tại Nhật Bản
+# Tham khảo: Traveloka
+# Design: https://www.figma.com/design/xm26lpW9VNAHiyn21qTVkY/Ryokou?node-id=41-270&node-type=frame&t=gBKxVuV5dY6Z1mG6-0
 
 # Bottom Navigation Bar
     Home
