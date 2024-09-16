@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/entity/tour.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 
@@ -12,10 +13,11 @@ class ItemTour extends StatefulWidget {
 }
 
 class _ItemTourState extends State<ItemTour> {
-  bool isFavourite =
-      false; // TODO: cap nhat theo danh sach favourite cua nguoi dung
   @override
   Widget build(BuildContext context) {
+    bool isFavourite = DataController().getUser == null
+        ? false
+        : DataController().getUser!.containsFavoriteTour(widget.tour);
     return Container(
       height: 255,
       width: 160,
@@ -30,6 +32,7 @@ class _ItemTourState extends State<ItemTour> {
                 topRight: Radius.circular(10),
               ),
               child: Container(
+                width: double.infinity,
                 decoration: const BoxDecoration(
                   border: Border(
                     bottom: BorderSide(color: AppColors.primaryColor, width: 2),
@@ -41,7 +44,7 @@ class _ItemTourState extends State<ItemTour> {
                     SizedBox(
                       height: 115,
                       child: Image.network(
-                        'https://gamek.mediacdn.vn/133514250583805952/2024/2/15/base64-17079845417431558812892-1707984824099-17079848244541354322434-1707987122414-1707987123339757671272.png',
+                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgUz7AtgrWT4yVZA-5Kx4QYZAFsoX1VeZBXKHDZ47MaT7njPxOqgWtD_XsGhGIyrdrpOU&usqp=CAU',
                         fit: BoxFit.cover,
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) return child;
@@ -142,9 +145,18 @@ class _ItemTourState extends State<ItemTour> {
                       InkWell(
                         customBorder: const CircleBorder(),
                         onTap: () {
-                          setState(() {
-                            isFavourite = !isFavourite;
-                          });
+                          if (DataController().getUser != null) {
+                            setState(() {
+                              isFavourite = !isFavourite;
+                            });
+                            isFavourite
+                                ? DataController()
+                                    .getUser!
+                                    .addFavoriteTour(widget.tour)
+                                : DataController()
+                                    .getUser!
+                                    .removeFavoriteTour(widget.tour);
+                          }
                         },
                         child: Icon(
                           isFavourite

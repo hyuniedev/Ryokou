@@ -9,9 +9,22 @@ class User {
   late String numberphone;
   late String email;
   late ESex sex;
-  final List<Tour> _favoriteTour = [];
+  List<Tour> _favoriteTour = [];
   List<Tour> get getFavoriteTours => _favoriteTour;
-  set addFavoriteTour(Tour newTour) => _favoriteTour.add(newTour);
+  set setFavoriteTour(List<Tour> lsTour) => _favoriteTour = lsTour;
+  void addFavoriteTour(Tour newTour) {
+    _favoriteTour.add(newTour);
+  }
+
+  void removeFavoriteTour(Tour delTour) {
+    if (_favoriteTour.contains(delTour)) {
+      _favoriteTour.remove(delTour);
+    }
+  }
+
+  bool containsFavoriteTour(Tour findTour) {
+    return _favoriteTour.contains(findTour);
+  }
 
   User({
     required this.userName,

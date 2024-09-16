@@ -124,6 +124,7 @@ class _RadioSexState extends State<RadioSex> {
             groupValue: _selectedValue,
             onChanged: (newValue) {
               setState(() {
+                tec.text = value == 1 ? 'male' : 'female';
                 _selectedValue = newValue;
               });
             },
