@@ -1,0 +1,156 @@
+{
+  "main": {
+    "id": "7f16a3d2275bf690",
+    "type": "split",
+    "children": [
+      {
+        "id": "adc2284461a10f1d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2f48d87486b3ea20",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "README.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "28d5002645d1eae1",
+    "type": "split",
+    "children": [
+      {
+        "id": "02340b13ec900ba9",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6b4639dbfed0121b",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "8bb002c5b8930039",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "68dc35cb49bfe259",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "e6861e9977fd140f",
+    "type": "split",
+    "children": [
+      {
+        "id": "53635dd5ba80f582",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4b805366bddbbafb",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "README.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "c357c82af70d8e10",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "README.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "e8807005bee8d571",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "8e1a799f997f027d",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "README.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Mở bộ chuyển đổi nhanh": false,
+      "graph:Mở xem biểu đồ": false,
+      "canvas:Tạo bảng mới": false,
+      "daily-notes:Mở ghi chú hôm nay": false,
+      "templates:Chèn mẫu": false,
+      "command-palette:Mở khay lệnh": false
+    }
+  },
+  "active": "2f48d87486b3ea20",
+  "lastOpenFiles": [
+    "ryokou/assets/image/pajamas_question.png",
+    "ryokou/build/app/intermediates/compressed_assets/debug/out/assets/flutter_assets/kernel_blob.bin.jar",
+    "ryokou/build/app/intermediates/flutter/debug/flutter_assets/shaders/ink_sparkle.frag.spirv",
+    "ryokou/build/app/intermediates/flutter/debug/flutter_assets/8bfb1069"
+  ]
+}
