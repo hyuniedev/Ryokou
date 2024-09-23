@@ -4,7 +4,7 @@ class ItemAcc extends StatelessWidget {
   final IconData? icon;
   final String? iconPath;
   final String title;
-  final String subtitle;
+  final String? subtitle;
   final bool isLine;
   final bool isSetting;
   final VoidCallback? onTap;
@@ -16,7 +16,7 @@ class ItemAcc extends StatelessWidget {
     required this.isLine,
     this.isSetting = false,
     required this.title,
-    required this.subtitle,
+    this.subtitle,
     this.onTap,
   });
 
@@ -25,7 +25,7 @@ class ItemAcc extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -44,26 +44,32 @@ class ItemAcc extends StatelessWidget {
                 ),
               if (icon != null || iconPath != null) const SizedBox(width: 16),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                          color: Color(0xFF00C5A7),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
-                    ),
-                    Text(
-                      subtitle,
-                      style: const TextStyle(
-                        color: Color(0xFFB0EDE7),
-                        fontSize: 14,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: const TextStyle(
+                            color: Color(0xFF00C5A7),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
                       ),
-                      maxLines: null,
-                      overflow: TextOverflow.visible,
-                    )
-                  ],
+                      subtitle == null
+                          ? Container()
+                          : Text(
+                              subtitle!,
+                              style: const TextStyle(
+                                color: Color(0xFFB0EDE7),
+                                fontSize: 14,
+                              ),
+                              maxLines: null,
+                              overflow: TextOverflow.visible,
+                            ),
+                    ],
+                  ),
                 ),
               ),
               isSetting
@@ -74,9 +80,6 @@ class ItemAcc extends StatelessWidget {
                       size: 20,
                     )
             ],
-          ),
-          const SizedBox(
-            height: 8,
           ),
           if (isLine) const Divider(color: Color(0xFFB0EDE7), thickness: 1),
         ],
