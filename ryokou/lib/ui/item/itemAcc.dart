@@ -6,6 +6,7 @@ class Itemacc extends StatelessWidget {
   final String title;
   final String subtitle;
   final bool isLine;
+  final bool isSetting;
   final VoidCallback? onTap;
 
   const Itemacc({
@@ -13,6 +14,7 @@ class Itemacc extends StatelessWidget {
     this.icon,
     this.iconPath,
     required this.isLine,
+    this.isSetting = false,
     required this.title,
     required this.subtitle,
     this.onTap,
@@ -64,11 +66,13 @@ class Itemacc extends StatelessWidget {
                   ],
                 ),
               ),
-              const Icon(
-                Icons.arrow_forward_ios,
-                color: Color(0xFF00C5A7),
-                size: 20,
-              )
+              isSetting
+                  ? Image.asset('assets/image/off.png', width: 24, height: 24)
+                  : const Icon(
+                      Icons.arrow_forward_ios,
+                      color: Color(0xFF00C5A7),
+                      size: 20,
+                    )
             ],
           ),
           const SizedBox(
