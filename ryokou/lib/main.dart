@@ -6,6 +6,7 @@ import 'package:ryokou/ui/acc/register.dart';
 import 'package:ryokou/ui/main_layout.dart';
 import 'package:ryokou/ui/page/account/acc_settings.dart';
 import 'package:ryokou/ui/page/account/acc_supportCenter.dart';
+import 'package:ryokou/ui/page/account/change_password.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,6 +39,10 @@ class MyApp extends StatelessWidget {
       GoRoute(
         path: '/setting',
         builder: (context, state) => const AccSettings(),
+      ),
+      GoRoute(
+        path: '/infoUser',
+        builder: (context, state) => const ChangePassword(),
       ),
     ]);
     return MaterialApp.router(

@@ -41,13 +41,17 @@ class AccSettings extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
-                  const AccContainer(
+                  AccContainer(
                       column: Column(
                     children: [
                       ItemAcc(
-                          isLine: false,
-                          title: "Mật khẩu & Bảo mật",
-                          subtitle: "Nhấn để thay đổi mật khẩu")
+                        isLine: false,
+                        title: "Thông tin tài khoản",
+                        subtitle: "Nhấn để thay đổi thông tin tài khoản",
+                        onTap: () {
+                          context.push('/infoUser');
+                        },
+                      ),
                     ],
                   )),
                   const SizedBox(
@@ -65,17 +69,14 @@ class AccSettings extends StatelessWidget {
                         ItemAcc(
                           isLine: true,
                           title: "Điều khoản & Điều kiện",
-                          subtitle: "",
                         ),
                         ItemAcc(
                           isLine: true,
                           title: "Chính sách và quyền riêng tư",
-                          subtitle: "",
                         ),
                         ItemAcc(
                           isLine: false,
                           title: "About us",
-                          subtitle: "",
                         ),
                       ],
                     ),

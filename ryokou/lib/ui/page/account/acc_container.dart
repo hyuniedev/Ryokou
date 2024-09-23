@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ryokou/ui/item/itemAcc.dart';
 
 class AccContainer extends StatelessWidget {
   final Column column;

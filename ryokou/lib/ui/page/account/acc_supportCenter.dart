@@ -45,32 +45,26 @@ class AccSupportcenter extends StatelessWidget {
                           ItemAcc(
                             isLine: true,
                             title: "Chủ đề phổ biến",
-                            subtitle: "",
                           ),
                           ItemAcc(
                             isLine: true,
                             title: "Đặt tour trực tiếp để đảm bảo an toàn",
-                            subtitle: "",
                           ),
                           ItemAcc(
                             isLine: true,
                             title: "Cách hủy đặt tour",
-                            subtitle: "",
                           ),
                           ItemAcc(
                             isLine: true,
                             title: "Cách làm thủ tục trực tuyến",
-                            subtitle: "",
                           ),
                           ItemAcc(
                             isLine: true,
                             title: "Xác nhận & xác thực thanh toán",
-                            subtitle: "",
                           ),
                           ItemAcc(
                             isLine: false,
                             title: "Lời hứa hoàn tiền trên Ryokou",
-                            subtitle: "",
                           ),
                         ],
                       ),
@@ -91,10 +85,10 @@ class AccSupportcenter extends StatelessWidget {
                           Text(
                             'Nhắn tin cho chúng tôi',
                             style: TextStyle(
-                              color: Color(0xFFF58601),
-                              fontSize: 14,
-                              decoration: TextDecoration.underline,
-                            ),
+                                color: Color(0xFFF58601),
+                                fontSize: 14,
+                                decoration: TextDecoration.underline,
+                                decorationColor: Color(0xFFF58601)),
                           )
                         ],
                       ),
