@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/ui/booking/pay.dart';
 import 'package:ryokou/ui/item/itemAcc.dart';
@@ -108,13 +109,13 @@ class _AccountPage extends State<AccountPage> {
         const AccContainer(
             column: Column(
           children: [
-            Itemacc(
+            ItemAcc(
               isLine: true,
               title: "0 Xu ",
               subtitle: "Đổi xu lấy mã ưu đãi",
               iconPath: 'assets/image/coin.png',
             ),
-            Itemacc(
+            ItemAcc(
               isLine: false,
               title: "Mã giảm giá của tôi",
               subtitle: "Xem danh sách mã giảm giá",
@@ -134,35 +135,28 @@ class _AccountPage extends State<AccountPage> {
     return AccContainer(
       column: Column(
         children: [
-          Itemacc(
+          ItemAcc(
             isLine: true,
             title: "Trung tâm hỗ trợ",
             subtitle: "Nơi giải đáp đáp mọi thắc mắc của bạn",
             iconPath: "assets/image/ei_question.png",
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const AccSupportcenter()),
-              );
+              context.push('/support');
             },
           ),
-          const Itemacc(
+          const ItemAcc(
             isLine: true,
             title: "Liên hệ chúng tôi",
             subtitle: "Yêu cầu hỗ trợ từ dịch vụ chăm sóc khách hàng",
             iconPath: "assets/image/Tel.png",
           ),
-          Itemacc(
+          ItemAcc(
             isLine: false,
             title: "Cài đặt",
             subtitle: "Xem và tùy chỉnh cài đặt cho tài khoản",
             icon: Icons.settings,
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const AccSettings()),
-              );
+              context.push('/setting');
             },
           )
         ],

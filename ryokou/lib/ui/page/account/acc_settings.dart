@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ryokou/firebase/fire_accounts.dart';
-import 'package:ryokou/main.dart';
 import 'package:ryokou/ui/item/itemAcc.dart';
 import 'package:ryokou/ui/page/account/acc_container.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
@@ -45,7 +44,7 @@ class AccSettings extends StatelessWidget {
                   const AccContainer(
                       column: Column(
                     children: [
-                      Itemacc(
+                      ItemAcc(
                           isLine: false,
                           title: "Mật khẩu & Bảo mật",
                           subtitle: "Nhấn để thay đổi mật khẩu")
@@ -57,23 +56,23 @@ class AccSettings extends StatelessWidget {
                   const AccContainer(
                     column: Column(
                       children: [
-                        Itemacc(
+                        ItemAcc(
                           isLine: true,
                           isSetting: true,
                           title: "Ngôn ngữ",
                           subtitle: "Tiếng Việt",
                         ),
-                        Itemacc(
+                        ItemAcc(
                           isLine: true,
                           title: "Điều khoản & Điều kiện",
                           subtitle: "",
                         ),
-                        Itemacc(
+                        ItemAcc(
                           isLine: true,
                           title: "Chính sách và quyền riêng tư",
                           subtitle: "",
                         ),
-                        Itemacc(
+                        ItemAcc(
                           isLine: false,
                           title: "About us",
                           subtitle: "",

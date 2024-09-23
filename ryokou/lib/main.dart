@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:ryokou/ui/acc/login.dart';
 import 'package:ryokou/ui/acc/register.dart';
 import 'package:ryokou/ui/main_layout.dart';
+import 'package:ryokou/ui/page/account/acc_settings.dart';
+import 'package:ryokou/ui/page/account/acc_supportCenter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,24 +21,8 @@ class MyApp extends StatelessWidget {
     final GoRouter router = GoRouter(routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => MainLayout(index: 0),
+        builder: (context, state) => const MainLayout(),
       ),
-      // GoRoute(
-      //   path: '/search',
-      //   builder: (context, state) => MainLayout(index: 1),
-      // ),
-      // GoRoute(
-      //   path: '/favorite',
-      //   builder: (context, state) => MainLayout(index: 2),
-      // ),
-      // GoRoute(
-      //   path: '/mytour',
-      //   builder: (context, state) => MainLayout(index: 3),
-      // ),
-      // GoRoute(
-      //   path: '/account',
-      //   builder: (context, state) => MainLayout(index: 4),
-      // ),
       GoRoute(
         path: '/login',
         builder: (context, state) => const Login(),
@@ -44,7 +30,15 @@ class MyApp extends StatelessWidget {
       GoRoute(
         path: '/register',
         builder: (context, state) => const Register(),
-      )
+      ),
+      GoRoute(
+        path: '/support',
+        builder: (context, state) => const AccSupportcenter(),
+      ),
+      GoRoute(
+        path: '/setting',
+        builder: (context, state) => const AccSettings(),
+      ),
     ]);
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,

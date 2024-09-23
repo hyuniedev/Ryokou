@@ -7,8 +7,8 @@ import 'package:ryokou/ui/page/home/home_page.dart';
 import 'package:ryokou/ui/page/search/search_page.dart';
 
 class MainLayout extends StatefulWidget {
-  int index;
-  MainLayout({super.key, required this.index});
+  static int index = 0;
+  const MainLayout({super.key});
 
   @override
   State<MainLayout> createState() => _MainLayoutState();
@@ -50,14 +50,14 @@ class _MainLayoutState extends State<MainLayout> {
               label: 'Account',
               backgroundColor: AppColors.primaryColor),
         ],
-        currentIndex: widget.index,
+        currentIndex: MainLayout.index,
         onTap: (newIndex) {
           setState(() {
-            widget.index = newIndex;
+            MainLayout.index = newIndex;
           });
         },
       ),
-      body: SafeArea(child: _arrPage[widget.index]),
+      body: SafeArea(child: _arrPage[MainLayout.index]),
     );
   }
 }

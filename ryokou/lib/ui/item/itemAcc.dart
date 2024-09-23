@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Itemacc extends StatelessWidget {
+class ItemAcc extends StatelessWidget {
   final IconData? icon;
   final String? iconPath;
   final String title;
@@ -9,7 +9,7 @@ class Itemacc extends StatelessWidget {
   final bool isSetting;
   final VoidCallback? onTap;
 
-  const Itemacc({
+  const ItemAcc({
     super.key,
     this.icon,
     this.iconPath,
