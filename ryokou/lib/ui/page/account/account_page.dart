@@ -3,6 +3,8 @@ import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/ui/booking/pay.dart';
 import 'package:ryokou/ui/item/itemAcc.dart';
 import 'package:ryokou/ui/page/account/acc_container.dart';
+import 'package:ryokou/ui/page/account/acc_settings.dart';
+import 'package:ryokou/ui/page/account/acc_supportCenter.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
 
 class AccountPage extends StatefulWidget {
@@ -37,12 +39,32 @@ class _AccountPage extends State<AccountPage> {
                                 )
                               ],
                             )
-                          : const Row(
+                          : Row(
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.person_outline,
                                   size: 52,
                                   color: Colors.white,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${DataController().getUser?.fullName}',
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    const Text(
+                                      'Thông tin tài khoản >>',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                      ),
+                                    )
+                                  ],
                                 )
                               ],
                             ),
@@ -90,11 +112,13 @@ class _AccountPage extends State<AccountPage> {
               isLine: true,
               title: "0 Xu ",
               subtitle: "Đổi xu lấy mã ưu đãi",
+              iconPath: 'assets/image/coin.png',
             ),
             Itemacc(
               isLine: false,
               title: "Mã giảm giá của tôi",
               subtitle: "Xem danh sách mã giảm giá",
+              iconPath: 'assets/image/voucher.png',
             )
           ],
         )),
@@ -107,7 +131,7 @@ class _AccountPage extends State<AccountPage> {
   }
 
   AccContainer MadaAccContainer() {
-    return const AccContainer(
+    return AccContainer(
       column: Column(
         children: [
           Itemacc(
@@ -115,8 +139,15 @@ class _AccountPage extends State<AccountPage> {
             title: "Trung tâm hỗ trợ",
             subtitle: "Nơi giải đáp đáp mọi thắc mắc của bạn",
             iconPath: "assets/image/ei_question.png",
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AccSupportcenter()),
+              );
+            },
           ),
-          Itemacc(
+          const Itemacc(
             isLine: true,
             title: "Liên hệ chúng tôi",
             subtitle: "Yêu cầu hỗ trợ từ dịch vụ chăm sóc khách hàng",
@@ -127,6 +158,12 @@ class _AccountPage extends State<AccountPage> {
             title: "Cài đặt",
             subtitle: "Xem và tùy chỉnh cài đặt cho tài khoản",
             icon: Icons.settings,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AccSettings()),
+              );
+            },
           )
         ],
       ),
