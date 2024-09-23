@@ -31,18 +31,18 @@ class Register extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     'Ryokou',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 55,
+                      fontSize: MediaQuery.of(context).size.width * 0.14,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(width: 10),
                   Image.asset(
                     'assets/image/appbar_ryokou.png',
-                    height: 75,
+                    height: MediaQuery.of(context).size.width * 0.2,
                   ),
                 ],
               ),

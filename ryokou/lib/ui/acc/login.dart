@@ -25,11 +25,11 @@ class Login extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       'Ryokou',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 55,
+                        fontSize: MediaQuery.of(context).size.width * 0.14,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -37,7 +37,7 @@ class Login extends StatelessWidget {
                     Image.asset(
                       'assets/image/appbar_ryokou.png',
                       fit: BoxFit.contain,
-                      height: 75,
+                      height: MediaQuery.of(context).size.width * 0.2,
                     ),
                   ],
                 ),
