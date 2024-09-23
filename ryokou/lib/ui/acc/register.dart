@@ -149,7 +149,7 @@ class Register extends StatelessWidget {
                         return;
                       }
 //====================================================================
-                      myuser.User user = myuser.User(
+                      myuser.User myUser = myuser.User(
                           userName: tecUsername.text,
                           password: tecPassword.text,
                           fullName: tecFullname.text,
@@ -158,9 +158,7 @@ class Register extends StatelessWidget {
                           sex: tecSex.text == 'male' ? ESex.male : ESex.female);
 
                       try {
-                        UserCredential? result =
-                            await authService.register(user);
-                        print('DANG KY THANH CONG');
+                        User? user = await authService.register(myUser);
                         context.go('/');
                       } catch (e) {
                         // Xử lý ngoại lệ và thông báo lỗi

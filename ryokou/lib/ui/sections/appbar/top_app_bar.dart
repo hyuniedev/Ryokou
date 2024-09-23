@@ -24,7 +24,7 @@ PreferredSizeWidget getAppBar(BuildContext context, Widget childAppBar,
             leading: haveLeading
                 ? IconButton(
                     onPressed: () {
-                      context.pop();
+                      context.go('/');
                     },
                     icon: const Icon(
                       Icons.arrow_back_ios_outlined,
@@ -66,7 +66,7 @@ PreferredSizeWidget getAppBar(BuildContext context, Widget childAppBar,
                           ),
                           InkWell(
                             onTap: () {
-                              context.push('/account/login');
+                              context.go('/login');
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width / 2,

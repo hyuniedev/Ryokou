@@ -21,31 +21,30 @@ class MyApp extends StatelessWidget {
         path: '/',
         builder: (context, state) => MainLayout(index: 0),
       ),
+      // GoRoute(
+      //   path: '/search',
+      //   builder: (context, state) => MainLayout(index: 1),
+      // ),
+      // GoRoute(
+      //   path: '/favorite',
+      //   builder: (context, state) => MainLayout(index: 2),
+      // ),
+      // GoRoute(
+      //   path: '/mytour',
+      //   builder: (context, state) => MainLayout(index: 3),
+      // ),
+      // GoRoute(
+      //   path: '/account',
+      //   builder: (context, state) => MainLayout(index: 4),
+      // ),
       GoRoute(
-        path: '/search',
-        builder: (context, state) => MainLayout(index: 1),
+        path: '/login',
+        builder: (context, state) => const Login(),
       ),
       GoRoute(
-        path: '/favorite',
-        builder: (context, state) => MainLayout(index: 2),
-      ),
-      GoRoute(
-        path: '/mytour',
-        builder: (context, state) => MainLayout(index: 3),
-      ),
-      GoRoute(
-          path: '/account',
-          builder: (context, state) => MainLayout(index: 4),
-          routes: [
-            GoRoute(
-              path: 'login',
-              builder: (context, state) => const Login(),
-            ),
-            GoRoute(
-              path: 'register',
-              builder: (context, state) => const Register(),
-            )
-          ]),
+        path: '/register',
+        builder: (context, state) => const Register(),
+      )
     ]);
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,

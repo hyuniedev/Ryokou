@@ -58,7 +58,7 @@ class _FavoritePage extends State<FavoritePage> {
                         InkWell(
                             borderRadius: BorderRadius.circular(10),
                             onTap: () {
-                              context.push('/account/login');
+                              context.go('/login');
                               // DataController().setUser = User(
                               //     userName: 'userName',
                               //     password: 'password',
@@ -92,7 +92,7 @@ class _FavoritePage extends State<FavoritePage> {
                         InkWell(
                             borderRadius: BorderRadius.circular(10),
                             onTap: () {
-                              context.push('/account/register');
+                              context.push('/register');
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width / 2.5,

@@ -62,10 +62,10 @@ class Login extends StatelessWidget {
                     const SizedBox(height: 21),
                     InkWell(
                       onTap: () async {
-                        UserCredential? result = await authService.signIn(
+                        User? user = await authService.signIn(
                             tecUsername.text, tecPassword.text);
-                        if (result != null) {
-                          context.go('/');
+                        if (user != null) {
+                          context.push('/');
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -131,7 +131,7 @@ class Login extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            context.push('/account/register');
+                            context.push('/register');
                           },
                           child: Text(
                             'Đăng ký',
