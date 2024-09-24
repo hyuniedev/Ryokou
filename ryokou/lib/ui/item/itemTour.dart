@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/entity/tour.dart';
 import 'package:ryokou/themes/colors_theme.dart';
@@ -23,7 +24,9 @@ class _ItemTourState extends State<ItemTour> {
       width: 160,
       padding: const EdgeInsets.only(right: 20),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          context.push('/tourDetail/${widget.tour.id}');
+        },
         child: Column(
           children: [
             ClipRRect(
