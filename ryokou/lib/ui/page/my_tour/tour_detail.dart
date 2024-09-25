@@ -6,7 +6,9 @@ import 'package:ryokou/themes/colors_theme.dart';
 
 class TourDetail extends StatefulWidget {
   final Tour tour;
+
   const TourDetail({super.key, required this.tour});
+
   @override
   State<TourDetail> createState() => _TourDetailState();
 }
@@ -94,6 +96,20 @@ class _TourDetailState extends State<TourDetail> {
                     ],
                   ),
                   rateTour(),
+                  // Test
+                  const Column(
+                    children: [
+                      Text(
+                        'Nguye huu nien ',
+                        style: TextStyle(
+                            fontSize: 31, fontWeight: FontWeight.bold),
+                      ),
+                      Icon(
+                        Icons.home_filled,
+                        size: 31,
+                      )
+                    ],
+                  )
                 ],
               ),
             )

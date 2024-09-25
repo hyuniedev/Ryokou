@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ryokou/controller/controller_data.dart';
-import 'package:ryokou/ui/booking/pay.dart';
 import 'package:ryokou/ui/item/itemAcc.dart';
 import 'package:ryokou/ui/page/account/acc_container.dart';
-import 'package:ryokou/ui/page/account/acc_settings.dart';
-import 'package:ryokou/ui/page/account/acc_supportCenter.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
 
 class AccountPage extends StatefulWidget {

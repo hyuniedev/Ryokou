@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/page/account/account_page.dart';
-import 'package:ryokou/ui/page/ex/homepage.dart';
 import 'package:ryokou/ui/page/favourite/favourite_page..dart';
 import 'package:ryokou/ui/page/home/home_page.dart';
 import 'package:ryokou/ui/page/my_tour/tour_detail.dart';

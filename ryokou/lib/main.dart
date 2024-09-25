@@ -51,8 +51,9 @@ class MyApp extends StatelessWidget {
         path: '/tourDetail/:id',
         builder: (context, state) {
           final id = state.pathParameters['id'];
-          Tour tour =
-              DataController().proposeTours.firstWhere((tour) => id == tour.id);
+          Tour tour = DataController().proposeTours.firstWhere(
+              (tour) => id == tour.id,
+              orElse: () => DataController().tour);
           return TourDetail(tour: tour);
         },
       ),

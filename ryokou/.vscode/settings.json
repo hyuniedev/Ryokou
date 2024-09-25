@@ -8,5 +8,10 @@
       "deviceId": "7LOJ55UK4LJZWWIB",
       "program": "lib/main.dart"
     }
-  ]
+  ],
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "dart.previewFlutterUiGuides": true
 }
