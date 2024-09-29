@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/item/itemField.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
 
@@ -60,7 +59,7 @@ class ChangePassword extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.borderDeal_Home,
+                        backgroundColor: const Color(0xFFF58601),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),

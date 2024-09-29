@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/item/itemAcc.dart';
 import 'package:ryokou/ui/page/account/acc_container.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
@@ -86,10 +85,10 @@ class AccSupportcenter extends StatelessWidget {
                           Text(
                             'Nhắn tin cho chúng tôi',
                             style: TextStyle(
-                                color: AppColors.borderDeal_Home,
+                                color: Color(0xFFF58601),
                                 fontSize: 14,
                                 decoration: TextDecoration.underline,
-                                decorationColor: AppColors.borderDeal_Home),
+                                decorationColor: Color(0xFFF58601)),
                           )
                         ],
                       ),
