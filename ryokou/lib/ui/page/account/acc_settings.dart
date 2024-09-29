@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ryokou/firebase/fire_accounts.dart';
+import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/item/itemAcc.dart';
 import 'package:ryokou/ui/page/account/acc_container.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
@@ -95,13 +96,13 @@ class AccSettings extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10), // Bo góc 10
                           side: const BorderSide(
-                              color: Color(0xFF00C5A7), width: 2), // Viền màu
+                              color: AppColors.primaryColor, width: 2), // Viền màu
                         ),
                       ),
                       child: const Text(
                         "Đăng xuất",
                         style: TextStyle(
-                          color: Color(0xFF00C5A7),
+                          color: AppColors.primaryColor,
                           fontSize: 20,
                         ),
                       ),
