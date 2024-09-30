@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ryokou_service/themes/colors_theme.dart';
 
 PreferredSizeWidget getAppBar(BuildContext context, Widget childAppBar,
-    {bool haveLeading = false, double height = 100}) {
+    {bool haveLeading = false, double height = 100, bool isGener = true}) {
   return PreferredSize(
     preferredSize: Size.fromHeight(height), // chiều cao AppBar
     child: ClipRRect(
@@ -19,12 +19,12 @@ PreferredSizeWidget getAppBar(BuildContext context, Widget childAppBar,
                 onPressed: () {
                   context.go('/');
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.arrow_back_ios_outlined,
-                  color: Colors.white,
+                  color: isGener ? Colors.white : AppColor.primaryColor,
                 ))
             : null,
-        backgroundColor: AppColor.primaryColor,
+        backgroundColor: isGener ? AppColor.primaryColor : null,
         title: childAppBar,
       ),
     ),
