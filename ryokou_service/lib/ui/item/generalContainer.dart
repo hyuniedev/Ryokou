@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 
 class GeneralContainer extends StatelessWidget {
   final Widget child;
+  final bool isList;
   const GeneralContainer({
     super.key,
     required this.child,
+    this.isList = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 440,
+      height: isList ? 440 : null,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         color: Colors.white,

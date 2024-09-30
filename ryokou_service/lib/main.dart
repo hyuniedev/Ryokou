@@ -5,6 +5,7 @@ import 'package:ryokou_service/ui/acc/login.dart';
 import 'package:ryokou_service/ui/acc/register.dart';
 import 'package:ryokou_service/ui/page/listCustomer.dart';
 import 'package:ryokou_service/ui/page/listTour.dart';
+import 'package:ryokou_service/ui/page/newTour.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
     final GoRouter router = GoRouter(routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => const ListTour(),
+        builder: (context, state) => const NewTour(),
       ),
       GoRoute(
         path: '/register',
@@ -29,7 +30,6 @@ class MyApp extends StatelessWidget {
         path: '/customer',
         builder: (context, state) => const ListCustomer(),
       ),
-      
     ]);
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
