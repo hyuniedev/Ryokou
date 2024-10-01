@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ryokou_service/list/listBool.dart';
 import 'package:ryokou_service/list/listDay.dart';
+import 'package:ryokou_service/list/listHour.dart';
+import 'package:ryokou_service/list/listMinutes.dart';
 import 'package:ryokou_service/list/listProvince.dart';
 import 'package:ryokou_service/themes/colors_theme.dart';
 import 'package:ryokou_service/ui/item/countQuantity.dart';
+import 'package:ryokou_service/ui/item/generTextField.dart';
 import 'package:ryokou_service/ui/item/generalContainer.dart';
 import 'package:ryokou_service/ui/item/generalDropDown.dart';
 import 'package:ryokou_service/ui/item/itemDay.dart';
+import 'package:ryokou_service/ui/item/itemSchedule.dart';
 import 'package:ryokou_service/ui/item/parentWidget.dart';
 import 'package:ryokou_service/ui/sections/appBar/top_app_bar.dart';
 
@@ -29,11 +33,23 @@ class _NewTourState extends State<NewTour> {
   );
 
   int _newCounter = 1; // Biến để theo dõi số lượng thay đổi
+  Widget? _selectedDayContent; // Nội dung cho ngày được chọn
 
   // Hàm callback khi số lượng thay đổi
   void _onCounterChanged(int newCounter) {
     setState(() {
       _newCounter = newCounter; // Cập nhật số lượng vào biến
+    });
+  }
+
+  // Hàm callback khi một ngày được chọn
+  void _onDaySelected(String selectedDay) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() {
+          _selectedDayContent = ItemSchedule(generalStyle: generalStyle);
+        });
+      }
     });
   }
 
@@ -67,7 +83,7 @@ class _NewTourState extends State<NewTour> {
                           children: [
                             GenerRow(
                               TitleText('Tên Tour'),
-                              GenerTextField(),
+                              const GenerTextField(),
                             ),
                             const SizedBox(height: 16),
                             GenerRow(
@@ -113,7 +129,7 @@ class _NewTourState extends State<NewTour> {
                             const SizedBox(height: 16),
                             GenerRow(
                               TitleText('Giá'),
-                              GenerTextField(),
+                              const GenerTextField(),
                               container: Container(
                                 child: const Text(
                                   'vnd',
@@ -126,7 +142,7 @@ class _NewTourState extends State<NewTour> {
                             const SizedBox(height: 16),
                             GenerRow(
                               TitleText('Địa điểm tập họp'),
-                              GenerTextField(),
+                              const GenerTextField(),
                             ),
                             const SizedBox(height: 16),
                             GenerRow(
@@ -150,15 +166,32 @@ class _NewTourState extends State<NewTour> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TitleText('Lịch trình'),
-                          Expanded(
-                            // Đảm bảo cuộn dọc ngoài cùng hoạt động đúng
-                            child: ParentWidget(
-                              initialCounter:
-                                  _newCounter, // Đưa giá trị vào ParentWidget
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: ParentWidget(
+                                  initialCounter: _newCounter,
+                                  onDaySelected: _onDaySelected,
+                                ),
+                              ),
+                            ],
+                          ),
+                          GeneralContainer(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _selectedDayContent ?? const Text('helo '),
+                              ],
                             ),
                           ),
                         ],
-                      ),
+                      )
                     ],
                   ),
                 ),
@@ -185,32 +218,6 @@ class _NewTourState extends State<NewTour> {
   }
 
   // Hàm tạo TextField
-  Expanded GenerTextField() {
-    final FocusNode focusNode =
-        FocusNode(); // Tạo một FocusNode mới cho mỗi trường
-
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8.0),
-        child: TextField(
-          focusNode: focusNode,
-          maxLines: 1,
-          decoration: const InputDecoration(
-            border: InputBorder.none,
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: AppColor.primaryColor,
-              ),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.blue),
-            ),
-          ),
-          style: const TextStyle(fontSize: 16, color: Colors.black),
-        ),
-      ),
-    );
-  }
 
   // Hàm tạo TitleText
   Row TitleText(String text) {

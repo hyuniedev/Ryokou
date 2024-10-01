@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:ryokou_service/themes/colors_theme.dart'; // Giữ nguyên nếu bạn đã định nghĩa AppColor
 
 class GeneralDropdown<T> extends StatefulWidget {
-  final List<T> items; // Thêm tham số để nhận danh sách bất kỳ từ bên ngoài
-  final String hintText;
-  final ValueChanged<T?> onChanged;
+  final List<T> items; // Danh sách item
+  final String hintText; // Văn bản nhắc
+  final ValueChanged<T?> onChanged; // Callback khi chọn item
+  final bool isNeedIcon; // Tùy chọn có cần icon hay không
 
   const GeneralDropdown({
     super.key,
     required this.items,
     required this.hintText,
     required this.onChanged,
+    this.isNeedIcon = true, // Đặt giá trị mặc định cho isNeedIcon
   });
 
   @override
@@ -65,6 +67,9 @@ class _GeneralDropdownState<T> extends State<GeneralDropdown<T>> {
             widget.onChanged(newValue); // Gọi lại hàm onChanged
           },
           underline: const SizedBox(), // Bỏ đường gạch dưới mặc định
+          icon: widget.isNeedIcon
+              ? null
+              : const SizedBox.shrink(), // Hiển thị hoặc ẩn icon
         ),
       ),
     );
