@@ -1,0 +1,1 @@
+final List<String> minutes = List.generate(60, (index) => index.toString().padLeft(2, '0'));
