@@ -17,6 +17,7 @@ class TourDetail extends StatefulWidget {
 class _TourDetailState extends State<TourDetail> {
   DateTime _beginDate = DateTime.now();
   DateTime? _endDate;
+  bool moRong = false;
   @override
   Widget build(BuildContext context) {
     bool isFavourite = DataController().getUser == null
@@ -80,43 +81,72 @@ class _TourDetailState extends State<TourDetail> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Column(
-                              children: widget.tour.diemNoiBat
-                                  .map(
-                                    (txt) => Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          height: 10,
-                                          width: 10,
-                                          margin: const EdgeInsets.all(6),
-                                          decoration: const BoxDecoration(
-                                            color: Colors.black,
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            txt,
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                            ),
-                                            maxLines: 100,
-                                          ),
+                          Stack(
+                            alignment: Alignment.bottomCenter,
+                            children: [
+                              AnimatedSize(
+                                duration: const Duration(milliseconds: 200),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10.0, right: 10.0, bottom: 20),
+                                  child: moRong
+                                      ? Column(
+                                          children: widget.tour.diemNoiBat
+                                              .map(
+                                                (txt) => rowNoiBat(txt),
+                                              )
+                                              .toList(),
                                         )
+                                      : rowNoiBat(
+                                          widget.tour.diemNoiBat[0],
+                                        ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    moRong = !moRong;
+                                  });
+                                },
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      colors: [
+                                        Colors.grey.withOpacity(0.05),
+                                        Colors.grey.withOpacity(0.6),
                                       ],
                                     ),
-                                  )
-                                  .toList(),
-                            ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        moRong
+                                            ? Icons.arrow_drop_up
+                                            : Icons.arrow_drop_down,
+                                        size: 25,
+                                        color: AppColors.primaryColor,
+                                      ),
+                                      Text(
+                                        moRong ? 'Thu gọn ' : 'Mở rộng',
+                                        style: const TextStyle(
+                                            color: AppColors.primaryColor,
+                                            fontSize: 18),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ),
+                    const SizedBox(height: 15),
+                    const Divider(height: 3, thickness: 3),
                   ],
                 ),
               ),
@@ -124,6 +154,32 @@ class _TourDetailState extends State<TourDetail> {
           ),
         ),
       ),
+    );
+  }
+
+  Row rowNoiBat(String txt) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          height: 10,
+          width: 10,
+          margin: const EdgeInsets.all(6),
+          decoration: const BoxDecoration(
+            color: Colors.black,
+            shape: BoxShape.circle,
+          ),
+        ),
+        Expanded(
+          child: Text(
+            txt,
+            style: const TextStyle(
+              fontSize: 16,
+            ),
+            maxLines: 100,
+          ),
+        )
+      ],
     );
   }
 
