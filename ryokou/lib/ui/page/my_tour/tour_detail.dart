@@ -68,83 +68,7 @@ class _TourDetailState extends State<TourDetail> {
                     showScheduleDetail(context),
                     const SizedBox(height: 20),
                     const Divider(height: 3, thickness: 3),
-                    Container(
-                      padding: const EdgeInsets.only(top: 20),
-                      width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Điểm nổi bật',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Stack(
-                            alignment: Alignment.bottomCenter,
-                            children: [
-                              AnimatedSize(
-                                duration: const Duration(milliseconds: 200),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10.0, right: 10.0, bottom: 20),
-                                  child: moRong
-                                      ? Column(
-                                          children: widget.tour.diemNoiBat
-                                              .map(
-                                                (txt) => rowNoiBat(txt),
-                                              )
-                                              .toList(),
-                                        )
-                                      : rowNoiBat(
-                                          widget.tour.diemNoiBat[0],
-                                        ),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    moRong = !moRong;
-                                  });
-                                },
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                      colors: [
-                                        Colors.grey.withOpacity(0.05),
-                                        Colors.grey.withOpacity(0.6),
-                                      ],
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        moRong
-                                            ? Icons.arrow_drop_up
-                                            : Icons.arrow_drop_down,
-                                        size: 25,
-                                        color: AppColors.primaryColor,
-                                      ),
-                                      Text(
-                                        moRong ? 'Thu gọn ' : 'Mở rộng',
-                                        style: const TextStyle(
-                                            color: AppColors.primaryColor,
-                                            fontSize: 18),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+                    diemNoiBat(context),
                     const SizedBox(height: 15),
                     const Divider(height: 3, thickness: 3),
                   ],
@@ -153,6 +77,76 @@ class _TourDetailState extends State<TourDetail> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Container diemNoiBat(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(top: 20),
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Điểm nổi bật',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              AnimatedSize(
+                duration: const Duration(milliseconds: 200),
+                child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 10.0, right: 10.0, bottom: 20),
+                    child: Text(
+                      widget.tour.diemNoiBat,
+                      maxLines: moRong ? null : 5,
+                      style: const TextStyle(fontSize: 16),
+                    )),
+              ),
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    moRong = !moRong;
+                  });
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.grey.withOpacity(0.05),
+                        Colors.grey.withOpacity(0.6),
+                      ],
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        moRong ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                        size: 25,
+                        color: AppColors.primaryColor,
+                      ),
+                      Text(
+                        moRong ? 'Thu gọn ' : 'Mở rộng',
+                        style: const TextStyle(
+                            color: AppColors.primaryColor, fontSize: 18),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
