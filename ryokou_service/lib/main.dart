@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-// ignore: unused_import
 import 'package:go_router/go_router.dart';
+import 'package:ryokou_service/entity/tour.dart';
 import 'package:ryokou_service/ui/acc/login.dart';
 import 'package:ryokou_service/ui/acc/register.dart';
 import 'package:ryokou_service/ui/page/listCustomer.dart';
@@ -11,7 +11,6 @@ void main() {
   runApp(const MyApp());
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -21,7 +20,9 @@ class MyApp extends StatelessWidget {
     final GoRouter router = GoRouter(routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => const NewTour(),
+        builder: (context, state) => NewTour(
+          tour: Tour.empty(),
+        ),
       ),
       GoRoute(
         path: '/register',
