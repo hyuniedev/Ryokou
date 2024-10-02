@@ -8,7 +8,7 @@ import 'package:ryokou_service/ui/page/listCustomer.dart';
 import 'package:ryokou_service/ui/page/listTour.dart';
 import 'package:ryokou_service/ui/page/newTour.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
@@ -21,7 +21,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GoRouter router = GoRouter(routes: [
-      GoRoute(path: '/',builder: (context, state) => const Login(),),
+      GoRoute(
+        path: '/',
+        builder: (context, state) => NewTour(tour: Tour.empty(),),
+      ),
+      GoRoute(
+        path: '/login',
+        builder: (context, state) => Login(),
+      ),
       GoRoute(
         path: '/newtour',
         builder: (context, state) => NewTour(

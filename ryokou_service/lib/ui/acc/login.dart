@@ -1,13 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ryokou_service/controller/account_controller.dart';
+import 'package:ryokou_service/entity/company.dart';
 import 'package:ryokou_service/themes/colors_theme.dart';
 import 'package:ryokou_service/ui/item/itemField.dart';
 import 'package:ryokou_service/ui/sections/appBar/chill_app_bar.dart';
 import 'package:ryokou_service/ui/sections/appBar/top_app_bar.dart';
 
 class Login extends StatelessWidget {
-  const Login({super.key});
-
+  Login({super.key});
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     TextEditingController tecUsername = TextEditingController();
@@ -40,8 +45,32 @@ class Login extends StatelessWidget {
                     ),
                     const SizedBox(height: 21),
                     InkWell(
-                      onTap: () {
-                        
+                      onTap: () async {
+                        try {
+                          UserCredential? result =
+                              await _auth.signInWithEmailAndPassword(
+                                  email: tecUsername.text,
+                                  password: tecPassword.text);
+                          DocumentSnapshot doc = await _firestore
+                              .collection('companys')
+                              .doc(result.user!.uid)
+                              .get();
+                          if (doc.exists) {
+                            Map<String, dynamic>? data =
+                                doc.data() as Map<String, dynamic>?;
+                            AccountController().setCompany = Company(
+                              id: result.user!.uid,
+                              name: data?['name'],
+                              username: data?['username'],
+                              numberphone: data?['numberphone'],
+                              email: data?['email'],
+                              password: tecPassword.text,
+                            );
+                          } else {}
+                          context.go('/');
+                        } catch (e) {
+                          print('Co loi: $e');
+                        }
                       },
                       borderRadius: BorderRadius.circular(10),
                       child: Container(

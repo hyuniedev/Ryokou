@@ -122,7 +122,6 @@ class Register extends StatelessWidget {
                       }
 
                       try {
-                        
                         UserCredential result =
                             await _auth.createUserWithEmailAndPassword(
                                 email: tecEmail.text,
@@ -140,12 +139,12 @@ class Register extends StatelessWidget {
                         // Lưu dữ liệu vào Firestore
                         await _firestore
                             .collection('companys')
-                            .doc(_company!.id)
+                            .doc(_company.id)
                             .set({
-                          'username': _company!.username,
-                          'name': _company!.name,
-                          'numberphone': _company!.numberphone,
-                          'email': _company!.email,
+                          'username': _company.username,
+                          'name': _company.name,
+                          'numberphone': _company.numberphone,
+                          'email': _company.email,
                         });
                         
                         AccountController().setCompany = _company;
