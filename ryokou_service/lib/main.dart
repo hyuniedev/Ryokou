@@ -21,15 +21,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GoRouter router = GoRouter(routes: [
+      GoRoute(path: '/',builder: (context, state) => const Login(),),
       GoRoute(
-        path: '/',
+        path: '/newtour',
         builder: (context, state) => NewTour(
           tour: Tour.empty(),
         ),
       ),
       GoRoute(
         path: '/register',
-        builder: (context, state) => const Register(),
+        builder: (context, state) => Register(),
       ),
       GoRoute(
         path: '/customer',
