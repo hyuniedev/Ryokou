@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:ryokou_service/entity/schedule.dart';
+import 'package:ryokou_service/entity/to_do_onDay.dart';
+import 'package:ryokou_service/entity/tour.dart';
+import 'package:ryokou_service/enum/eDay.dart';
 import 'package:ryokou_service/list/listBool.dart';
 import 'package:ryokou_service/list/listDay.dart';
-import 'package:ryokou_service/list/listHour.dart';
-import 'package:ryokou_service/list/listMinutes.dart';
 import 'package:ryokou_service/list/listProvince.dart';
 import 'package:ryokou_service/themes/colors_theme.dart';
 import 'package:ryokou_service/ui/item/countQuantity.dart';
 import 'package:ryokou_service/ui/item/generTextField.dart';
 import 'package:ryokou_service/ui/item/generalContainer.dart';
 import 'package:ryokou_service/ui/item/generalDropDown.dart';
-import 'package:ryokou_service/ui/item/itemDay.dart';
-import 'package:ryokou_service/ui/item/itemSchedule.dart';
-import 'package:ryokou_service/ui/item/parentWidget.dart';
+import 'package:ryokou_service/ui/item/itemTag.dart';
+import 'package:ryokou_service/ui/item/itemToDo.dart';
 import 'package:ryokou_service/ui/sections/appBar/top_app_bar.dart';
 
 class NewTour extends StatefulWidget {
-  const NewTour({super.key});
+  final Tour tour;
+
+  const NewTour({super.key, required this.tour});
 
   @override
   State<NewTour> createState() => _NewTourState();
 }
 
 class _NewTourState extends State<NewTour> {
+  late Tour _curTour;
+  late Schedule selectedSchedule;
   TextStyle generalStyle = const TextStyle(
     color: AppColor.primaryColor,
     fontSize: 16,
@@ -32,24 +37,43 @@ class _NewTourState extends State<NewTour> {
     fontSize: 16,
   );
 
-  int _newCounter = 1; // Biến để theo dõi số lượng thay đổi
-  Widget? _selectedDayContent; // Nội dung cho ngày được chọn
+  int _newCounter = 1;
+  int _selectedDayIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _curTour = widget.tour;
+    _curTour.addSchedule(Schedule(day: Eday.values[0].toString(), todo: []));
+    selectedSchedule = _curTour.schedule[0];
+  }
 
   // Hàm callback khi số lượng thay đổi
   void _onCounterChanged(int newCounter) {
     setState(() {
-      _newCounter = newCounter; // Cập nhật số lượng vào biến
+      if (newCounter > _newCounter) {
+        for (int i = _newCounter; i < newCounter; i++) {
+          _curTour
+              .addSchedule(Schedule(day: Eday.values[i].toString(), todo: []));
+        }
+      } else if (newCounter < _newCounter) {
+        for (int i = newCounter; i < _newCounter; i++) {
+          _curTour.removeSchedule(
+              Schedule(day: Eday.values[i].toString(), todo: []));
+        }
+      }
+      _newCounter = newCounter;
+
+      if (_selectedDayIndex >= newCounter) {
+        _selectedDayIndex = newCounter - 1;
+      }
     });
   }
 
-  // Hàm callback khi một ngày được chọn
-  void _onDaySelected(String selectedDay) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        setState(() {
-          _selectedDayContent = ItemSchedule(generalStyle: generalStyle);
-        });
-      }
+  void _changedTag(int index) {
+    setState(() {
+      _selectedDayIndex = index;
+      selectedSchedule = _curTour.schedule[_selectedDayIndex];
     });
   }
 
@@ -62,7 +86,7 @@ class _NewTourState extends State<NewTour> {
             FocusScope.of(context).unfocus(); // Đóng bàn phím khi ấn ra ngoài
           },
           child: SingleChildScrollView(
-            scrollDirection: Axis.vertical, // Cho phép cuộn dọc toàn màn hình
+            scrollDirection: Axis.vertical,
             child: Column(
               children: [
                 getAppBar(
@@ -103,8 +127,7 @@ class _NewTourState extends State<NewTour> {
                               TitleText('Thời lượng tour(ngày)'),
                               Expanded(
                                 child: CountQuantity(
-                                  onCounterChanged:
-                                      _onCounterChanged, // Truyền callback để nhận số lượng
+                                  onCounterChanged: _onCounterChanged,
                                 ),
                               ),
                             ),
@@ -173,23 +196,59 @@ class _NewTourState extends State<NewTour> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Row(
-                            children: [
-                              Expanded(
-                                child: ParentWidget(
-                                  initialCounter: _newCounter,
-                                  onDaySelected: _onDaySelected,
-                                ),
-                              ),
-                            ],
+                            children: List.generate(_newCounter, (index) {
+                              return ItemTag(
+                                titleTag: Eday.values[index],
+                                isSelected: _selectedDayIndex == index,
+                                changedTag: (value) => _changedTag(index),
+                              );
+                            }),
                           ),
                           GeneralContainer(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _selectedDayContent ?? const Text('helo '),
+                                SizedBox(
+                                  height: 300,
+                                  child: ListView.builder(
+                                    itemCount: selectedSchedule.todo.length,
+                                    itemBuilder: (context, index) {
+                                      ToDoOnDay todo =
+                                          selectedSchedule.todo[index];
+                                      return ItemToDo(toDo: todo);
+                                    },
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    const Spacer(),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          selectedSchedule.todo.add(ToDoOnDay(
+                                            date: DateTime.now(),
+                                            content: 'New Task',
+                                          ));
+                                        });
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: AppColor.primaryColor,
+                                        shape: const CircleBorder(),
+                                        padding: EdgeInsets.zero,
+                                      ),
+                                      child: const Text(
+                                        '+',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 40,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
-                          ),
+                          )
                         ],
                       )
                     ],
@@ -216,8 +275,6 @@ class _NewTourState extends State<NewTour> {
       ],
     );
   }
-
-  // Hàm tạo TextField
 
   // Hàm tạo TitleText
   Row TitleText(String text) {
