@@ -59,18 +59,6 @@ class _FavoritePage extends State<FavoritePage> {
                             borderRadius: BorderRadius.circular(10),
                             onTap: () {
                               context.go('/login');
-                              // DataController().setUser = User(
-                              //     userName: 'userName',
-                              //     password: 'password',
-                              //     fullName: 'fullName',
-                              //     email: 'email',
-                              //     numberphone: 'numberphone',
-                              //     sex: ESex.female);
-                              // for (var element
-                              //     in DataController().proposeTours) {
-                              //   DataController().getUser!.addFavoriteTour =
-                              //       element;
-                              // }
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width / 2.5,

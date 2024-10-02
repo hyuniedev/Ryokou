@@ -131,6 +131,7 @@ class _ItemTourState extends State<ItemTour> {
                       fontSize: 14,
                       color: Colors.grey,
                       decoration: TextDecoration.lineThrough,
+                      decorationColor: Colors.grey,
                     ),
                   ),
                   const SizedBox(height: 3),
