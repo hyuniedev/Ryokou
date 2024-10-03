@@ -12,6 +12,7 @@ class ItemToDo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController tecTextToDo = TextEditingController();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -53,7 +54,9 @@ class ItemToDo extends StatelessWidget {
             ],
           ),
         ),
-        const GenerTextField()
+        GenerTextField(
+          tec: tecTextToDo,
+        ),
       ],
     );
   }
