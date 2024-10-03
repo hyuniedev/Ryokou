@@ -12,7 +12,20 @@
           "package_name": "com.example.ryokou"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "118820860176-qtnlh91lrur6i75btsf7clmth2e2igs4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ryokou",
+            "certificate_hash": "c422e5182f6372fb439e825bc0792605d375dc69"
+          }
+        },
+        {
+          "client_id": "118820860176-9kgsk4v5kklok0deii2nko95a71go2pg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBHucUBgnXJvyYTq1ABZWKyhrNQ_8KUmOs"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "118820860176-9kgsk4v5kklok0deii2nko95a71go2pg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "118820860176-pj6ukioace9qpvmfp9cobt2ibgf8j7mf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ryokouService"
+              }
+            }
+          ]
         }
       }
     },
@@ -31,7 +56,20 @@
           "package_name": "com.example.ryokou_service"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "118820860176-t02fj6i0f02bh5b0qj0cr8goo83kt3fh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ryokou_service",
+            "certificate_hash": "c422e5182f6372fb439e825bc0792605d375dc69"
+          }
+        },
+        {
+          "client_id": "118820860176-9kgsk4v5kklok0deii2nko95a71go2pg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBHucUBgnXJvyYTq1ABZWKyhrNQ_8KUmOs"
@@ -39,7 +77,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "118820860176-9kgsk4v5kklok0deii2nko95a71go2pg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "118820860176-pj6ukioace9qpvmfp9cobt2ibgf8j7mf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ryokouService"
+              }
+            }
+          ]
         }
       }
     }

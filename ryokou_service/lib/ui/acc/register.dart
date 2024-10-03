@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ryokou_service/controller/account_controller.dart';
 import 'package:ryokou_service/entity/company.dart';
 import 'package:ryokou_service/main.dart';
@@ -13,10 +14,10 @@ import 'package:ryokou_service/ui/sections/appBar/top_app_bar.dart';
 class Register extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final GoogleSignIn _ggSignin = GoogleSignIn(); 
   Register({super.key});
   @override
   Widget build(BuildContext context) {
-    TextEditingController tecUsername = TextEditingController();
     TextEditingController tecFullname = TextEditingController();
     TextEditingController tecNumberphone = TextEditingController();
     TextEditingController tecEmail = TextEditingController();
@@ -45,11 +46,6 @@ class Register extends StatelessWidget {
                       title: 'Tên doanh nghiệp',
                       isRequired: true,
                       tec: tecFullname),
-                  ItemField(
-                    title: 'Tên đăng nhập',
-                    isRequired: true,
-                    tec: tecUsername,
-                  ),
                   ItemField(
                     title: 'Số điện thoại',
                     isRequired: true,
@@ -81,13 +77,6 @@ class Register extends StatelessWidget {
                         return;
                       }
 // =========================================================================
-                      if (tecUsername.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Vui lòng nhập tên doanh nghiệp')),
-                        );
-                        return;
-                      }
 
                       if (tecPassword.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -130,7 +119,6 @@ class Register extends StatelessWidget {
                         Company _company = Company(
                           id: result.user!.uid,
                           name: tecFullname.text,
-                          username: tecUsername.text,
                           numberphone: tecNumberphone.text,
                           email: tecEmail.text,
                           password: tecPassword.text,
@@ -141,7 +129,6 @@ class Register extends StatelessWidget {
                             .collection('companys')
                             .doc(_company.id)
                             .set({
-                          'username': _company.username,
                           'name': _company.name,
                           'numberphone': _company.numberphone,
                           'email': _company.email,
@@ -181,7 +168,36 @@ class Register extends StatelessWidget {
                   const SizedBox(height: 27),
                   InkWell(
                     borderRadius: BorderRadius.circular(10),
-                    onTap: () {},
+                    onTap: () async {
+                        try {
+                          GoogleSignInAccount? ggAccount = await _ggSignin.signIn();
+                        if(ggAccount == null){
+                          return;
+                        }
+                        GoogleSignInAuthentication ggSignInAcc = await ggAccount.authentication;
+                        OAuthCredential credential =  GoogleAuthProvider.credential(idToken: ggSignInAcc.idToken, accessToken: ggSignInAcc.accessToken);
+                        UserCredential userCredential = await _auth.signInWithCredential(credential);
+                        User? user = userCredential.user;
+                        Company company;
+                        DocumentSnapshot doc = await _firestore.collection('companys').doc(user!.uid).get();
+                        if(!doc.exists){
+                          company = Company(id: user.uid, name: user.displayName, numberphone: user?.phoneNumber, email: tecEmail.text, password: tecPassword.text);
+                          await _firestore.collection('companys').doc(user.uid).set({
+                          'id' : company.id,
+                          'name' : company.name,
+                          'numberphone' : company.numberphone,
+                          'email' : company.email
+                        });
+                        }else{
+                          Map<String,dynamic>? data = doc.data() as Map<String,dynamic>?;
+                          company = Company(email: data?['email'],id: data?['id'], name: data?['name'], numberphone: data?['numberphone']);
+                        }
+                        AccountController().setCompany = company;
+                        context.go('/newtour');
+                        } catch (e) {
+                          print('Error Register: $e');
+                        }
+                      },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 7),
                       decoration: BoxDecoration(
