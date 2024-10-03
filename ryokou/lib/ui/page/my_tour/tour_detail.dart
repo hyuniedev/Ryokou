@@ -15,6 +15,7 @@ class TourDetail extends StatefulWidget {
 }
 
 class _TourDetailState extends State<TourDetail> {
+  int indexRateTour = -1;
   DateTime _beginDate = DateTime.now();
   DateTime? _endDate;
   bool moRong = false;
@@ -71,6 +72,116 @@ class _TourDetailState extends State<TourDetail> {
                     diemNoiBat(context),
                     const SizedBox(height: 15),
                     const Divider(height: 3, thickness: 3),
+                    const SizedBox(height: 15),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Rating & review',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Row(
+                            children: [
+                              Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.star,
+                                    size: 70,
+                                    color: AppColors.primaryColor,
+                                  ),
+                                  Text(
+                                    '4.2',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(width: 6),
+                              Text(
+                                'Tuyệt vời ',
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primaryColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 15),
+                          Column(
+                            children: [itemRate(context), itemRate(context)],
+                          ),
+                          InkWell(
+                            onTap: () {},
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: const Text(
+                                'Xem them',
+                                style: TextStyle(
+                                  color: AppColors.primaryColor,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.account_circle,
+                                size: 35,
+                                color: AppColors.primaryColor,
+                              ),
+                              const SizedBox(width: 10),
+                              Column(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(30),
+                                      ),
+                                      border: Border.all(
+                                          color: AppColors.primaryColor,
+                                          width: 2),
+                                    ),
+                                    child: Row(
+                                      children: List.generate(
+                                        5,
+                                        (index) {
+                                          return IconButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                indexRateTour = index;
+                                              });
+                                            },
+                                            icon: Icon(
+                                              index <= indexRateTour
+                                                  ? Icons.star_rate
+                                                  : Icons.star_rate_outlined,
+                                              color: AppColors.primaryColor,
+                                              size: 27,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -78,6 +189,54 @@ class _TourDetailState extends State<TourDetail> {
           ),
         ),
       ),
+    );
+  }
+
+  Column itemRate(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Divider(height: 3, thickness: 1),
+        const SizedBox(height: 10),
+        const Row(
+          children: [
+            Icon(
+              Icons.account_circle,
+              size: 30,
+              color: AppColors.primaryColor,
+            ),
+            SizedBox(width: 10),
+            Text(
+              'Ten nguoi dung',
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            SizedBox(width: MediaQuery.of(context).size.width * 0.1),
+            const Text(
+              '5.0/5',
+              style: TextStyle(
+                color: AppColors.primaryColor,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 7),
+        const Text(
+          'Tour nhu cut! Lua dao!',
+          style: TextStyle(
+            fontSize: 15,
+            color: Colors.black,
+          ),
+        ),
+        const SizedBox(height: 10),
+      ],
     );
   }
 
@@ -122,8 +281,8 @@ class _TourDetailState extends State<TourDetail> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Colors.grey.withOpacity(0.05),
-                        Colors.grey.withOpacity(0.6),
+                        Colors.grey.withOpacity(0),
+                        Colors.grey.withOpacity(0.2),
                       ],
                     ),
                   ),

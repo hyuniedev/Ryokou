@@ -192,7 +192,15 @@ class Register extends StatelessWidget {
                   const SizedBox(height: 27),
                   InkWell(
                     borderRadius: BorderRadius.circular(10),
-                    onTap: () {},
+                    onTap: () async {
+                      User? user = await authService.signinWithGoogleAccount();
+                      if (user != null) {
+                        context.push('/');
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Dang ky that bai')));
+                      }
+                    },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 7),
                       decoration: BoxDecoration(
