@@ -11,8 +11,10 @@ import 'package:ryokou_service/ui/item/countQuantity.dart';
 import 'package:ryokou_service/ui/item/generTextField.dart';
 import 'package:ryokou_service/ui/item/generalContainer.dart';
 import 'package:ryokou_service/ui/item/generalDropDown.dart';
+import 'package:ryokou_service/ui/item/itemField.dart';
 import 'package:ryokou_service/ui/item/itemTag.dart';
 import 'package:ryokou_service/ui/item/itemToDo.dart';
+import 'package:ryokou_service/ui/item/uploadImage.dart';
 import 'package:ryokou_service/ui/sections/appBar/top_app_bar.dart';
 
 class NewTour extends StatefulWidget {
@@ -79,6 +81,8 @@ class _NewTourState extends State<NewTour> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController tecPointo = TextEditingController();
+    TextEditingController tecKisoku = TextEditingController();
     return Scaffold(
       body: SafeArea(
         child: GestureDetector(
@@ -98,160 +102,221 @@ class _NewTourState extends State<NewTour> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      GeneralContainer(
-                        isList: false,
-                        child: Column(
-                          children: [
-                            GenerRow(
-                              TitleText('Tên Tour'),
-                              const GenerTextField(),
-                            ),
-                            const SizedBox(height: 16),
-                            GenerRow(
-                              TitleText('Tỉnh/thành phố'),
-                              Expanded(
-                                child: GeneralDropdown<String>(
-                                  items: provinces,
-                                  hintText: 'Chọn tỉnh/TP',
-                                  onChanged: (String? newValue) {
-                                    print('Selected: $newValue');
-                                  },
-                                ),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        GeneralContainer(
+                          isList: false,
+                          child: Column(
+                            children: [
+                              GenerRow(
+                                TitleText('Tên Tour'),
+                                const GenerTextField(),
                               ),
-                            ),
-                            const SizedBox(height: 16),
-                            GenerRow(
-                              TitleText('Thời lượng tour(ngày)'),
-                              Expanded(
-                                child: CountQuantity(
-                                  onCounterChanged: _onCounterChanged,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            GenerRow(
-                              TitleText('Ngày bắt đầu'),
-                              Container(),
-                            ),
-                            const SizedBox(height: 16),
-                            GenerRow(
-                              TitleText('Thời lượng duy trì'),
-                              Expanded(
-                                child: GeneralDropdown<String>(
-                                  items: days,
-                                  hintText: 'Chọn thời lượng',
-                                  onChanged: (String? newValue) {
-                                    print('Selected: $newValue');
-                                  },
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            GenerRow(
-                              TitleText('Giá'),
-                              const GenerTextField(),
-                              container: Container(
-                                child: const Text(
-                                  'vnd',
-                                  style: TextStyle(
-                                    color: AppColor.primaryColor,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            GenerRow(
-                              TitleText('Địa điểm tập họp'),
-                              const GenerTextField(),
-                            ),
-                            const SizedBox(height: 16),
-                            GenerRow(
-                              TitleText('Dịch vụ đưa đón miễn phí'),
-                              Expanded(
-                                child: GeneralDropdown<String>(
-                                  items: YesNo,
-                                  hintText: 'Không',
-                                  onChanged: (String? newValue) {
-                                    print('Selected: $newValue');
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TitleText('Lịch trình'),
-                        ],
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Row(
-                            children: List.generate(_newCounter, (index) {
-                              return ItemTag(
-                                titleTag: Eday.values[index],
-                                isSelected: _selectedDayIndex == index,
-                                changedTag: (value) => _changedTag(index),
-                              );
-                            }),
-                          ),
-                          GeneralContainer(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 300,
-                                  child: ListView.builder(
-                                    itemCount: selectedSchedule.todo.length,
-                                    itemBuilder: (context, index) {
-                                      ToDoOnDay todo =
-                                          selectedSchedule.todo[index];
-                                      return ItemToDo(toDo: todo);
+                              const SizedBox(height: 16),
+                              GenerRow(
+                                TitleText('Tỉnh/thành phố'),
+                                Expanded(
+                                  child: GeneralDropdown<String>(
+                                    items: provinces,
+                                    hintText: 'Chọn tỉnh/TP',
+                                    onChanged: (String? newValue) {
+                                      print('Selected: $newValue');
                                     },
                                   ),
                                 ),
-                                Row(
-                                  children: [
-                                    const Spacer(),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          selectedSchedule.todo.add(ToDoOnDay(
-                                            date: DateTime.now(),
-                                            content: 'New Task',
-                                          ));
-                                        });
+                              ),
+                              const SizedBox(height: 16),
+                              GenerRow(
+                                TitleText('Thời lượng tour(ngày)'),
+                                Expanded(
+                                  child: CountQuantity(
+                                    onCounterChanged: _onCounterChanged,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              GenerRow(
+                                TitleText('Ngày bắt đầu'),
+                                Container(),
+                              ),
+                              const SizedBox(height: 16),
+                              GenerRow(
+                                TitleText('Thời lượng duy trì'),
+                                Expanded(
+                                  child: GeneralDropdown<String>(
+                                    items: days,
+                                    hintText: 'Chọn thời lượng',
+                                    onChanged: (String? newValue) {
+                                      print('Selected: $newValue');
+                                    },
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              GenerRow(
+                                TitleText('Giá'),
+                                const GenerTextField(),
+                                container: Container(
+                                  child: const Text(
+                                    'vnd',
+                                    style: TextStyle(
+                                      color: AppColor.primaryColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              GenerRow(
+                                TitleText('Địa điểm tập họp'),
+                                const GenerTextField(),
+                              ),
+                              const SizedBox(height: 16),
+                              GenerRow(
+                                TitleText('Dịch vụ đưa đón miễn phí'),
+                                Expanded(
+                                  child: GeneralDropdown<String>(
+                                    items: YesNo,
+                                    hintText: 'Không',
+                                    onChanged: (String? newValue) {
+                                      print('Selected: $newValue');
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TitleText('Lịch trình'),
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: List.generate(_newCounter, (index) {
+                                  return ItemTag(
+                                    titleTag: Eday.values[index],
+                                    isSelected: _selectedDayIndex == index,
+                                    changedTag: (value) => _changedTag(index),
+                                  );
+                                }),
+                              ),
+                            ),
+                            GeneralContainer(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 300,
+                                    width: double.infinity,
+                                    child: ListView.builder(
+                                      itemCount: selectedSchedule.todo.length,
+                                      itemBuilder: (context, index) {
+                                        ToDoOnDay todo =
+                                            selectedSchedule.todo[index];
+                                        return ItemToDo(toDo: todo);
                                       },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: AppColor.primaryColor,
-                                        shape: const CircleBorder(),
-                                        padding: EdgeInsets.zero,
-                                      ),
-                                      child: const Text(
-                                        '+',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 40,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Spacer(),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            selectedSchedule.todo.add(ToDoOnDay(
+                                              date: DateTime.now(),
+                                              content: 'New Task',
+                                            ));
+                                          });
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              AppColor.primaryColor,
+                                          shape: const CircleBorder(),
+                                          padding: EdgeInsets.zero,
+                                        ),
+                                        child: const Text(
+                                          '+',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 40,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TitleText('Điểm nổi bật'),
+                            ItemField(
+                                title: '', isGener: false, tec: tecPointo),
+                            const SizedBox(
+                              height: 16,
                             ),
-                          )
-                        ],
-                      )
-                    ],
+                            TitleText('Điều khoản và dịch vụ của tour'),
+                            ItemField(
+                                title: '', isGener: false, tec: tecKisoku),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TitleText('Hình ảnh Tour'),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            const UploadImage(),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Center(
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColor.secondColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                shadowColor:
+                                    const Color.fromARGB(255, 179, 158, 131),
+                                elevation: 5,
+                              ),
+                              onPressed: () {},
+                              child: const Text(
+                                'Xác nhận',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              )),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],
