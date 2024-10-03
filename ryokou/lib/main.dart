@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       ),
       GoRoute(
         path: '/register',
-        builder: (context, state) => const Register(),
+        builder: (context, state) => Register(),
       ),
       GoRoute(
         path: '/support',

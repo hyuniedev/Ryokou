@@ -47,7 +47,6 @@ class AuthService {
   Future<void> saveData(myuser.User user) async {
     await _firestore.collection('users').doc(user.id).set({
       'uid': user.id,
-      'username': user.userName,
       'fullname': user.fullName,
       'numberphone': user.numberphone,
       'email': user.email,
@@ -80,7 +79,6 @@ class AuthService {
       if (doc.exists) {
         Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
         DataController().setUser = myuser.User(
-            userName: "username",
             password: password,
             fullName: data?['fullname'],
             email: email,

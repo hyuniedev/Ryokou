@@ -13,7 +13,6 @@ class ItemField extends StatelessWidget {
     this.isSexField = false,
     required this.tec,
   });
-
   @override
   Widget build(BuildContext context) {
     return Column(

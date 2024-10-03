@@ -3,7 +3,6 @@ import 'package:ryokou/entity/tour.dart';
 
 class User {
   String? id;
-  String? userName;
   String? password;
   String? fullName;
   String? numberphone;
@@ -28,7 +27,6 @@ class User {
 
   User({
     this.id,
-    this.userName,
     this.password,
     this.fullName,
     required this.email,
