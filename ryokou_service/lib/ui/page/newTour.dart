@@ -11,6 +11,7 @@ import 'package:ryokou_service/ui/item/countQuantity.dart';
 import 'package:ryokou_service/ui/item/generTextField.dart';
 import 'package:ryokou_service/ui/item/generalContainer.dart';
 import 'package:ryokou_service/ui/item/generalDropDown.dart';
+import 'package:ryokou_service/ui/item/itemCalendar.dart';
 import 'package:ryokou_service/ui/item/itemField.dart';
 import 'package:ryokou_service/ui/item/itemTag.dart';
 import 'package:ryokou_service/ui/item/itemToDo.dart';
@@ -29,6 +30,12 @@ class NewTour extends StatefulWidget {
 class _NewTourState extends State<NewTour> {
   late Tour _curTour;
   late Schedule selectedSchedule;
+
+  TextEditingController tecName = TextEditingController();
+  TextEditingController tecgatheringPlace = TextEditingController();
+  TextEditingController tecCost = TextEditingController();
+  TextEditingController tecPointo = TextEditingController();
+  TextEditingController tecKisoku = TextEditingController();
   TextStyle generalStyle = const TextStyle(
     color: AppColor.primaryColor,
     fontSize: 16,
@@ -81,8 +88,6 @@ class _NewTourState extends State<NewTour> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController tecPointo = TextEditingController();
-    TextEditingController tecKisoku = TextEditingController();
     return Scaffold(
       body: SafeArea(
         child: GestureDetector(
@@ -113,7 +118,9 @@ class _NewTourState extends State<NewTour> {
                             children: [
                               GenerRow(
                                 TitleText('Tên Tour'),
-                                const GenerTextField(),
+                                GenerTextField(
+                                  tec: tecName,
+                                ),
                               ),
                               const SizedBox(height: 16),
                               GenerRow(
@@ -140,7 +147,9 @@ class _NewTourState extends State<NewTour> {
                               const SizedBox(height: 16),
                               GenerRow(
                                 TitleText('Ngày bắt đầu'),
-                                Container(),
+                                Container(
+                                  child: const ItemCalendar(),
+                                ),
                               ),
                               const SizedBox(height: 16),
                               GenerRow(
@@ -158,7 +167,9 @@ class _NewTourState extends State<NewTour> {
                               const SizedBox(height: 16),
                               GenerRow(
                                 TitleText('Giá'),
-                                const GenerTextField(),
+                                GenerTextField(
+                                  tec: tecCost,
+                                ),
                                 container: Container(
                                   child: const Text(
                                     'vnd',
@@ -171,7 +182,9 @@ class _NewTourState extends State<NewTour> {
                               const SizedBox(height: 16),
                               GenerRow(
                                 TitleText('Địa điểm tập họp'),
-                                const GenerTextField(),
+                                GenerTextField(
+                                  tec: tecgatheringPlace,
+                                ),
                               ),
                               const SizedBox(height: 16),
                               GenerRow(

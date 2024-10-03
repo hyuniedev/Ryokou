@@ -10,7 +10,7 @@ class ItemField extends StatelessWidget {
     super.key,
     required this.title,
     this.isRequired = false,
-    this.isGener = false,
+    this.isGener = true,
     required this.tec,
   });
 

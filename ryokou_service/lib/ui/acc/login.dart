@@ -11,8 +11,8 @@ import 'package:ryokou_service/ui/sections/appBar/top_app_bar.dart';
 
 class Login extends StatelessWidget {
   Login({super.key});
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     TextEditingController tecUsername = TextEditingController();
@@ -36,7 +36,7 @@ class Login extends StatelessWidget {
                       child: Image.asset('assets/image/loginImg.png'),
                     ),
                     ItemField(
-                      title: 'Tên đăng nhập',
+                      title: 'Email đăng nhập',
                       tec: tecUsername,
                     ),
                     ItemField(
@@ -51,10 +51,13 @@ class Login extends StatelessWidget {
                               await _auth.signInWithEmailAndPassword(
                                   email: tecUsername.text,
                                   password: tecPassword.text);
+
+                          print('DEN DAY ROI 0');
                           DocumentSnapshot doc = await _firestore
                               .collection('companys')
                               .doc(result.user!.uid)
                               .get();
+
                           if (doc.exists) {
                             Map<String, dynamic>? data =
                                 doc.data() as Map<String, dynamic>?;
