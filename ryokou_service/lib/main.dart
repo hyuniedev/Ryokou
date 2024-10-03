@@ -23,10 +23,12 @@ class MyApp extends StatelessWidget {
     final GoRouter router = GoRouter(routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => NewTour(tour: Tour.empty(),),
+        builder: (context, state) => NewTour(
+          tour: Tour.empty(),
+        ),
       ),
       GoRoute(
-        path: '/login',
+        path: '/fb',
         builder: (context, state) => Login(),
       ),
       GoRoute(
