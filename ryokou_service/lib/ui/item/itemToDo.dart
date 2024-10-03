@@ -36,7 +36,11 @@ class ItemToDo extends StatelessWidget {
                 style: TextStyle(
                   color: AppColor.primaryColor,
                   fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
+              ),
+              const SizedBox(
+                width: 2,
               ),
               Expanded(
                 child: GeneralDropdown(
@@ -49,7 +53,7 @@ class ItemToDo extends StatelessWidget {
             ],
           ),
         ),
-        const Expanded(child: GenerTextField())
+        const GenerTextField()
       ],
     );
   }
