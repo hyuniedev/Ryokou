@@ -103,30 +103,52 @@ class Login extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       onTap: () async {
                         try {
-                          GoogleSignInAccount? ggAccount = await _ggSignin.signIn();
-                        if(ggAccount == null){
-                          return;
-                        }
-                        GoogleSignInAuthentication ggSignInAcc = await ggAccount.authentication;
-                        OAuthCredential credential =  GoogleAuthProvider.credential(idToken: ggSignInAcc.idToken, accessToken: ggSignInAcc.accessToken);
-                        UserCredential userCredential = await _auth.signInWithCredential(credential);
-                        User? user = userCredential.user;
-                        Company company;
-                        DocumentSnapshot doc = await _firestore.collection('companys').doc(user!.uid).get();
-                        if(!doc.exists){
-                          company = Company(id: user?.uid, name: user?.displayName, numberphone: user?.phoneNumber, email: tecUsername.text, password: tecPassword.text);
-                          await _firestore.collection('companys').doc(user.uid).set({
-                          'id' : company.id,
-                          'name' : company.name,
-                          'numberphone' : company.numberphone,
-                          'email' : company.email
-                        });
-                        }else{
-                          Map<String,dynamic>? data = doc.data() as Map<String,dynamic>?;
-                          company = Company(email: data?['email'],id: data?['id'], name: data?['name'], numberphone: data?['numberphone']);
-                        }
-                        AccountController().setCompany = company;
-                        context.go('/newtour');
+                          GoogleSignInAccount? ggAccount =
+                              await _ggSignin.signIn();
+                          if (ggAccount == null) {
+                            return;
+                          }
+                          GoogleSignInAuthentication ggSignInAcc =
+                              await ggAccount.authentication;
+                          OAuthCredential credential =
+                              GoogleAuthProvider.credential(
+                                  idToken: ggSignInAcc.idToken,
+                                  accessToken: ggSignInAcc.accessToken);
+                          UserCredential userCredential =
+                              await _auth.signInWithCredential(credential);
+                          User? user = userCredential.user;
+                          Company company;
+                          DocumentSnapshot doc = await _firestore
+                              .collection('companys')
+                              .doc(user!.uid)
+                              .get();
+                          if (!doc.exists) {
+                            company = Company(
+                                id: user.uid,
+                                name: user.displayName,
+                                numberphone: user.phoneNumber,
+                                email: tecUsername.text,
+                                password: tecPassword.text);
+                            await _firestore
+                                .collection('companys')
+                                .doc(user.uid)
+                                .set({
+                              'id': company.id,
+                              'name': company.name,
+                              'numberphone': company.numberphone,
+                              'email': company.email
+                            });
+                          } else {
+                            Map<String, dynamic>? data =
+                                doc.data() as Map<String, dynamic>?;
+                            company = Company(
+                                email: data?['email'],
+                                id: data?['id'],
+                                name: data?['name'],
+                                numberphone: data?['numberphone']);
+                          }
+                          AccountController().setCompany = company;
+                          context.go('/listTour');
                         } catch (e) {
                           print('Error Login: $e');
                         }

@@ -5,6 +5,7 @@ import 'package:ryokou_service/entity/tour.dart';
 import 'package:ryokou_service/ui/acc/login.dart';
 import 'package:ryokou_service/ui/acc/register.dart';
 import 'package:ryokou_service/ui/page/listCustomer.dart';
+import 'package:ryokou_service/ui/page/listTour.dart';
 import 'package:ryokou_service/ui/page/newTour.dart';
 
 void main() async {
@@ -21,9 +22,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final GoRouter router = GoRouter(routes: [
       GoRoute(
-        path: '/as',
-        builder: (context, state) => NewTour(
-        ),
+        path: '/listTour',
+        builder: (context, state) => const ListTour(),
       ),
       GoRoute(
         path: '/',

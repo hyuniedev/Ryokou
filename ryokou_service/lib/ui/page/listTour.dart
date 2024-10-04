@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ryokou_service/themes/colors_theme.dart';
 import 'package:ryokou_service/ui/item/generalContainer.dart';
 import 'package:ryokou_service/ui/item/itemListGeneral.dart';
@@ -103,7 +104,7 @@ class _ListTourState extends State<ListTour> {
                   height: 64, 
                   child: ElevatedButton(
                     onPressed: () {
-                      
+                      context.push('/newTour');
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColor.primaryColor,
