@@ -1,5 +1,5 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:ryokou_service/entity/schedule.dart';
 import 'package:ryokou_service/entity/to_do_onDay.dart';
 import 'package:ryokou_service/entity/tour.dart';
@@ -7,6 +7,7 @@ import 'package:ryokou_service/enum/eDay.dart';
 import 'package:ryokou_service/list/listBool.dart';
 import 'package:ryokou_service/list/listDay.dart';
 import 'package:ryokou_service/list/listProvince.dart';
+import 'package:ryokou_service/list/listSale.dart';
 import 'package:ryokou_service/themes/colors_theme.dart';
 import 'package:ryokou_service/ui/item/countQuantity.dart';
 import 'package:ryokou_service/ui/item/generTextField.dart';
@@ -20,20 +21,20 @@ import 'package:ryokou_service/ui/item/uploadImage.dart';
 import 'package:ryokou_service/ui/sections/appBar/top_app_bar.dart';
 
 class NewTour extends StatefulWidget {
-  final Tour tour;
 
-  const NewTour({super.key, required this.tour});
+  const NewTour({super.key});
 
   @override
   State<NewTour> createState() => _NewTourState();
 }
 
 class _NewTourState extends State<NewTour> {
-  late Tour _curTour;
+   Tour _curTour = Tour.empty();
   late Schedule selectedSchedule;
-
+  DateTime selectedDayBegin = DateTime.now();
+  List<File> lsFile =  [];
   String? selectedCity;
-  String? selectedDuration;
+  String? selectedMaintain;
   String? selectedService;
   TextEditingController tecName = TextEditingController();
   TextEditingController tecgatheringPlace = TextEditingController();
@@ -49,14 +50,13 @@ class _NewTourState extends State<NewTour> {
     color: AppColor.secondColor,
     fontSize: 16,
   );
-
+  int _sale = 0;
   int _newCounter = 1;
   int _selectedDayIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    _curTour = widget.tour;
     _curTour.addSchedule(Schedule(day: Eday.values[0].toString(), todo: []));
     selectedSchedule = _curTour.schedule[0];
   }
@@ -153,7 +153,7 @@ class _NewTourState extends State<NewTour> {
                               GenerRow(
                                 TitleText('Ngày bắt đầu'),
                                 Container(
-                                  child: const ItemCalendar(),
+                                  child: ItemCalendar(dateTime: selectedDayBegin,),
                                 ),
                               ),
                               const SizedBox(height: 16),
@@ -164,7 +164,7 @@ class _NewTourState extends State<NewTour> {
                                     items: days,
                                     hintText: 'Chọn thời lượng',
                                     onChanged: (String? newValue) {
-                                      selectedDuration = newValue;
+                                      selectedMaintain = newValue;
                                       print('Selected: $newValue');
                                     },
                                   ),
@@ -184,6 +184,18 @@ class _NewTourState extends State<NewTour> {
                                       fontSize: 16,
                                       color: AppColor.primaryColor,
                                     ),
+                                  ),
+                                ),
+                              ),
+                              GenerRow(
+                                TitleText('Sale'),
+                                Expanded(
+                                  child: GeneralDropdown<int>(
+                                    items: lsSale,
+                                    hintText: 'Chọn % sale',
+                                    onChanged: (int? newValue) {
+                                      _sale = newValue!;
+                                    },
                                   ),
                                 ),
                               ),
@@ -313,7 +325,7 @@ class _NewTourState extends State<NewTour> {
                             const SizedBox(
                               height: 20,
                             ),
-                            const UploadImage(),
+                             UploadImage(lsImage: lsFile,),
                           ],
                         ),
                         const SizedBox(
@@ -330,7 +342,18 @@ class _NewTourState extends State<NewTour> {
                                     const Color.fromARGB(255, 179, 158, 131),
                                 elevation: 5,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                _curTour.name = tecName.text;
+                                _curTour.city = selectedCity!;
+                                _curTour.maintainTime = int.parse(selectedMaintain!.substring(0,2));
+                                _curTour.durations = _newCounter;
+                                _curTour.start = selectedDayBegin;
+                                _curTour.cost = int.parse(tecCost.text);
+                                _curTour.sale = _sale;
+                                _curTour.gatheringPlace = tecgatheringPlace.text;
+                                _curTour.freeService = selectedService!;
+                                
+                              },
                               child: const Text(
                                 'Xác nhận',
                                 style: TextStyle(

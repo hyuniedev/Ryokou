@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ryokou/themes/colors_theme.dart';
 
 Widget childAppBarMainPages() {
   return Row(
@@ -14,7 +13,7 @@ Widget childAppBarMainPages() {
               child: Image.asset(
                 'assets/image/logoRyokou.jpg',
                 fit: BoxFit.fill,
-                scale: 7.5,
+                scale: 5,
               ),
             ),
             const SizedBox(width: 10),
@@ -36,6 +35,7 @@ Widget childAppBarMainPages() {
             icon: const Icon(
               Icons.sticky_note_2_sharp,
               color: Colors.white,
+              size: 30,
             ),
           ),
           IconButton(
@@ -43,6 +43,7 @@ Widget childAppBarMainPages() {
             icon: const Icon(
               Icons.notifications,
               color: Colors.white,
+              size: 30,
             ),
           ),
         ],

@@ -6,7 +6,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:ryokou_service/themes/colors_theme.dart';
 
 class UploadImage extends StatefulWidget {
-  const UploadImage({super.key});
+  late List<File> lsImage;
+   UploadImage({super.key,required this.lsImage});
 
   @override
   _UploadImageWidgetState createState() => _UploadImageWidgetState();
@@ -22,6 +23,7 @@ class _UploadImageWidgetState extends State<UploadImage> {
     if (pickedFile != null) {
       setState(() {
         _imageFiles.add(File(pickedFile.path)); // Thêm ảnh vào danh sách
+        widget.lsImage = _imageFiles;
       });
     }
   }

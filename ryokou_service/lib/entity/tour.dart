@@ -8,6 +8,7 @@ class Tour {
   late DateTime _start;
   late int _maintainTime;
   late int _cost;
+  late int _sale;
   late String _gatheringPlace;
   late String _freeService;
   late String _pointo;
@@ -22,6 +23,7 @@ class Tour {
     required DateTime start,
     required int maintainTime,
     required int cost,
+    required int sale,
     required String gatheringPlace,
     required String freeService,
     required String pointo,
@@ -34,6 +36,7 @@ class Tour {
         _start = start,
         _maintainTime = maintainTime,
         _cost = cost,
+        _sale = sale,
         _gatheringPlace = gatheringPlace,
         _freeService = freeService,
         _pointo = pointo,
@@ -49,6 +52,7 @@ class Tour {
     _start = DateTime.now();
     _maintainTime = 0;
     _cost = 0;
+    _sale = 0;
     _gatheringPlace = '';
     _freeService = '';
     _pointo = '';
@@ -64,6 +68,7 @@ class Tour {
   DateTime get start => _start;
   int get maintainTime => _maintainTime;
   int get cost => _cost;
+  int get sale => _sale;
   String get gatheringPlace => _gatheringPlace;
   String get freeService => _freeService;
   String get pointo => _pointo;
@@ -97,6 +102,10 @@ class Tour {
 
   set cost(int value) {
     _cost = value;
+  }
+  
+  set sale(int value) {
+    _sale = value;
   }
 
   set gatheringPlace(String value) {

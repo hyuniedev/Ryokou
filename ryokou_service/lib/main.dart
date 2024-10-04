@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
       GoRoute(
         path: '/as',
         builder: (context, state) => NewTour(
-          tour: Tour.empty(),
         ),
       ),
       GoRoute(
@@ -33,7 +32,6 @@ class MyApp extends StatelessWidget {
       GoRoute(
         path: '/newtour',
         builder: (context, state) => NewTour(
-          tour: Tour.empty(),
         ),
       ),
       GoRoute(

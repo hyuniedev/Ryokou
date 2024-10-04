@@ -4,7 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:ryokou_service/themes/colors_theme.dart';
 
 class ItemCalendar extends StatefulWidget {
-  const ItemCalendar({super.key});
+  DateTime dateTime;
+  ItemCalendar({super.key,required this.dateTime});
 
   @override
   State<ItemCalendar> createState() => _ItemCalendarState();
@@ -48,6 +49,7 @@ class _ItemCalendarState extends State<ItemCalendar> {
                             setState(() {
                               beginDate = value; // Cập nhật ngày bắt đầu
                               dateText = beginDate; // Cập nhật ngày hiển thị
+                              widget.dateTime = beginDate;
                             });
                           },
                         ),
