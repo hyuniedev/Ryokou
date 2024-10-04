@@ -37,7 +37,8 @@ class _ItemToDoState extends State<ItemToDo> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SizedBox(
+        Container(
+          margin: EdgeInsets.only(bottom: 10),
           width: 100,
           height: 50,
           child: Row(

@@ -30,13 +30,10 @@ Widget childAppBarMainPages() {
       ),
       Row(
         children: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.sticky_note_2_sharp,
-              color: Colors.white,
-              size: 30,
-            ),
+          const ImageIcon(
+            AssetImage('assets/image/voucherLogo.png'),
+            color: Colors.white,
+            size: 30,
           ),
           IconButton(
             onPressed: () {},

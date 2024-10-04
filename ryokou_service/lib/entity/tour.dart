@@ -7,7 +7,7 @@ class Tour {
   late int _durations;
   late DateTime _start;
   late int _maintainTime;
-  late int _cost;
+  late String _cost;
   late int _sale;
   late String _gatheringPlace;
   late String _freeService;
@@ -22,7 +22,7 @@ class Tour {
     required int durations,
     required DateTime start,
     required int maintainTime,
-    required int cost,
+    required String cost,
     required int sale,
     required String gatheringPlace,
     required String freeService,
@@ -51,7 +51,7 @@ class Tour {
     _durations = 0;
     _start = DateTime.now();
     _maintainTime = 0;
-    _cost = 0;
+    _cost = '';
     _sale = 0;
     _gatheringPlace = '';
     _freeService = '';
@@ -67,7 +67,7 @@ class Tour {
   int get durations => _durations;
   DateTime get start => _start;
   int get maintainTime => _maintainTime;
-  int get cost => _cost;
+  String get cost => _cost;
   int get sale => _sale;
   String get gatheringPlace => _gatheringPlace;
   String get freeService => _freeService;
@@ -100,7 +100,7 @@ class Tour {
     _maintainTime = value;
   }
 
-  set cost(int value) {
+  set cost(String value) {
     _cost = value;
   }
   

@@ -12,6 +12,7 @@ import 'package:ryokou/ui/page/account/acc_supportCenter.dart';
 import 'package:ryokou/ui/page/account/change_password.dart';
 import 'package:ryokou/ui/page/my_tour/tour_detail.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

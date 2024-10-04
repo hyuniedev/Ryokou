@@ -21,7 +21,6 @@ import 'package:ryokou_service/ui/item/uploadImage.dart';
 import 'package:ryokou_service/ui/sections/appBar/top_app_bar.dart';
 
 class NewTour extends StatefulWidget {
-
   const NewTour({super.key});
 
   @override
@@ -29,13 +28,13 @@ class NewTour extends StatefulWidget {
 }
 
 class _NewTourState extends State<NewTour> {
-   Tour _curTour = Tour.empty();
+  Tour _curTour = Tour.empty();
   late Schedule selectedSchedule;
   DateTime selectedDayBegin = DateTime.now();
-  List<File> lsFile =  [];
+  List<File> lsFile = [];
   String? selectedCity;
   String? selectedMaintain;
-  String? selectedService;
+  String? selectedService = YesNo[1];
   TextEditingController tecName = TextEditingController();
   TextEditingController tecgatheringPlace = TextEditingController();
   TextEditingController tecCost = TextEditingController();
@@ -153,7 +152,9 @@ class _NewTourState extends State<NewTour> {
                               GenerRow(
                                 TitleText('Ngày bắt đầu'),
                                 Container(
-                                  child: ItemCalendar(dateTime: selectedDayBegin,),
+                                  child: ItemCalendar(
+                                    dateTime: selectedDayBegin,
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 16),
@@ -187,9 +188,11 @@ class _NewTourState extends State<NewTour> {
                                   ),
                                 ),
                               ),
+                              const SizedBox(height: 16),
                               GenerRow(
                                 TitleText('Sale'),
-                                Expanded(
+                                Container(
+                                  width: 130,
                                   child: GeneralDropdown<int>(
                                     items: lsSale,
                                     hintText: 'Chọn % sale',
@@ -247,53 +250,54 @@ class _NewTourState extends State<NewTour> {
                                 }),
                               ),
                             ),
-                            GeneralContainer(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 300,
-                                    width: double.infinity,
-                                    child: ListView.builder(
-                                      itemCount: selectedSchedule.todo.length,
-                                      itemBuilder: (context, index) {
-                                        ToDoOnDay todo =
-                                            selectedSchedule.todo[index];
-                                        return ItemToDo(toDo: todo);
-                                      },
+                            Stack(
+                              alignment: Alignment.bottomRight,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(10),
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 300,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    border: Border.all(
+                                        color: AppColor.primaryColor, width: 2),
+                                  ),
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                    child: Column(
+                                      children: List.generate(
+                                        selectedSchedule.todo.length,
+                                        (index) {
+                                          ToDoOnDay toDo =
+                                              selectedSchedule.todo[index];
+                                          return ItemToDo(toDo: toDo);
+                                        },
+                                      ),
                                     ),
                                   ),
-                                  Row(
-                                    children: [
-                                      const Spacer(),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            selectedSchedule.todo.add(ToDoOnDay(
-                                              date: DateTime.now(),
-                                              content: 'New Task',
-                                            ));
-                                          });
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor:
-                                              AppColor.primaryColor,
-                                          shape: const CircleBorder(),
-                                          padding: EdgeInsets.zero,
-                                        ),
-                                        child: const Text(
-                                          '+',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 40,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      bottom: 20, right: 20),
+                                  child: FloatingActionButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        selectedSchedule.addToDo(ToDoOnDay(
+                                          date: DateTime.now(),
+                                          content: 'New task'));
+                                      });
+                                    },
+                                    backgroundColor: AppColor.primaryColor,
+                                    child: Icon(
+                                      Icons.add,
+                                      size: 30,
+                                      color: Colors.white,
+                                    ),
+                                    shape: CircleBorder(),
                                   ),
-                                ],
-                              ),
-                            )
+                                )
+                              ],
+                            ),
                           ],
                         ),
                         const SizedBox(
@@ -325,7 +329,9 @@ class _NewTourState extends State<NewTour> {
                             const SizedBox(
                               height: 20,
                             ),
-                             UploadImage(lsImage: lsFile,),
+                            UploadImage(
+                              lsImage: lsFile,
+                            ),
                           ],
                         ),
                         const SizedBox(
@@ -344,15 +350,41 @@ class _NewTourState extends State<NewTour> {
                               ),
                               onPressed: () {
                                 _curTour.name = tecName.text;
+                                print("Name: ${_curTour.name}");
+
                                 _curTour.city = selectedCity!;
-                                _curTour.maintainTime = int.parse(selectedMaintain!.substring(0,2));
+                                print("City: ${_curTour.city}");
+
+                                _curTour.maintainTime = int.parse(
+                                    selectedMaintain!.substring(0, 2));
+                                print(
+                                    "Maintain Time: ${_curTour.maintainTime}");
+
                                 _curTour.durations = _newCounter;
+                                print("Durations: $_newCounter");
+
                                 _curTour.start = selectedDayBegin;
-                                _curTour.cost = int.parse(tecCost.text);
+                                print("Start Day: $selectedDayBegin");
+
+                                _curTour.cost = tecCost.text;
+                                print("Cost: ${_curTour.cost}");
+
                                 _curTour.sale = _sale;
-                                _curTour.gatheringPlace = tecgatheringPlace.text;
+                                print("Sale: $_sale");
+
+                                _curTour.gatheringPlace =
+                                    tecgatheringPlace.text;
+                                print(
+                                    "Gathering Place: ${_curTour.gatheringPlace}");
+
                                 _curTour.freeService = selectedService!;
-                                
+                                print("Free Service: ${_curTour.freeService}");
+
+                                _curTour.pointo = tecPointo.text;
+                                print("Pointo: ${_curTour.pointo}");
+
+                                _curTour.kisoku = tecKisoku.text;
+                                print("Kisoku: ${_curTour.kisoku}");
                               },
                               child: const Text(
                                 'Xác nhận',
