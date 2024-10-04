@@ -31,213 +31,364 @@ class _TourDetailState extends State<TourDetail> {
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title: topIcon(),
+          leading: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Container(
+              height: 30,
+              width: 30,
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(50))),
+              child: InkWell(
+                customBorder: const CircleBorder(),
+                onTap: () {
+                  context.pop();
+                },
+                child: const Icon(
+                  Icons.arrow_back_ios_outlined,
+                  color: AppColors.borderDeal_Home,
+                  size: 20,
+                ),
+              ),
+            ),
+          ),
         ),
         body: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Image.network(
-                  'https://i.pinimg.com/564x/c0/84/96/c084965248640ae5fd1eceb00044a0c7.jpg',
-                  fit: BoxFit.cover,
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.25,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Image.asset('assets/image/appbar_ryokou.png');
-                  },
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Image.network(
+                      'https://i.pinimg.com/564x/c0/84/96/c084965248640ae5fd1eceb00044a0c7.jpg',
+                      fit: BoxFit.cover,
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.25,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset('assets/image/appbar_ryokou.png');
+                      },
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 6),
+                      child: Column(
+                        children: [
+                          titleTour(isFavourite, tour),
+                          rateTour(),
+                          const SizedBox(height: 5),
+                          factoryTour(),
+                          const SizedBox(height: 20),
+                          tongQuan(),
+                          const SizedBox(height: 15),
+                          const Divider(height: 3, thickness: 3),
+                          const SizedBox(height: 15),
+                          chooseDay(context),
+                          (_beginDate.difference(DateTime.now()) <
+                                  const Duration(seconds: 10))
+                              ? Container()
+                              : displayDay_Begin_End(context),
+                          const SizedBox(height: 15),
+                          showScheduleDetail(context),
+                          const SizedBox(height: 20),
+                          const Divider(height: 3, thickness: 3),
+                          diemNoiBat(context),
+                          const SizedBox(height: 15),
+                          const Divider(height: 3, thickness: 3),
+                          const SizedBox(height: 15),
+                          RateAndReview(context),
+                          const SizedBox(height: 15),
+                          const Divider(height: 3, thickness: 3),
+                          const SizedBox(height: 15),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Những điều khoản và dịch vụ',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(height: 5),
+                                const Text(
+                                  '\t\tMiễn phí hủy; bạn có thể được hoàn tiền toàn bộ hoặc một phần cho các vé đã chọn nếu hủy đặt chỗ',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                const Text(
+                                  'Thêm thông tin',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                themThongTin(context, 'Thông tin thêm'),
+                                const SizedBox(height: 15),
+                                themThongTin(
+                                    context, ' Liên hệ nhà cung cấp dịch vụ'),
+                                const SizedBox(height: 100),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                  child: Column(
-                    children: [
-                      titleTour(isFavourite, tour),
-                      rateTour(),
-                      const SizedBox(height: 5),
-                      factoryTour(),
-                      const SizedBox(height: 20),
-                      tongQuan(),
-                      const SizedBox(height: 15),
-                      const Divider(height: 3, thickness: 3),
-                      const SizedBox(height: 15),
-                      chooseDay(context),
-                      (_beginDate.difference(DateTime.now()) <
-                              const Duration(seconds: 10))
-                          ? Container()
-                          : displayDay_Begin_End(context),
-                      const SizedBox(height: 15),
-                      showScheduleDetail(context),
-                      const SizedBox(height: 20),
-                      const Divider(height: 3, thickness: 3),
-                      diemNoiBat(context),
-                      const SizedBox(height: 15),
-                      const Divider(height: 3, thickness: 3),
-                      const SizedBox(height: 15),
-                      SizedBox(
-                        width: double.infinity,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 3),
+                      decoration: const BoxDecoration(
+                          color: AppColors.primaryColor,
+                          borderRadius:
+                              BorderRadius.only(topRight: Radius.circular(10))),
+                      child: const Text(
+                        'Một chuyến đi thú vị trong tầm tay bạn',
+                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                    ),
+                    const Divider(
+                      height: 2,
+                      color: AppColors.primaryColor,
+                      thickness: 2,
+                    ),
+                    Container(
+                      decoration: const BoxDecoration(color: Colors.white),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text(
-                              'Rating & review',
+                              '899.000đ',
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 22,
                                 fontWeight: FontWeight.bold,
+                                color: AppColors.borderDeal_Home,
                               ),
                             ),
-                            const Row(
-                              children: [
-                                Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.star,
-                                      size: 70,
-                                      color: AppColors.primaryColor,
-                                    ),
-                                    Text(
-                                      '4.2',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                                SizedBox(width: 6),
-                                Text(
-                                  'Tuyệt vời ',
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.primaryColor,
+                                backgroundColor: AppColors.primaryColor,
+                              ),
+                              onPressed: () {},
+                              child: const Text(
+                                'Chọn',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  InkWell themThongTin(BuildContext context, String title) {
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: AppColors.primaryColor,
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const Icon(
+              Icons.arrow_right_rounded,
+              size: 35,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  SizedBox RateAndReview(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Rating & review',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const Row(
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Icon(
+                    Icons.star,
+                    size: 70,
+                    color: AppColors.primaryColor,
+                  ),
+                  Text(
+                    '4.2',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              SizedBox(width: 6),
+              Text(
+                'Tuyệt vời ',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primaryColor,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 15),
+          Column(
+            children: [itemRate(context), itemRate(context)],
+          ),
+          InkWell(
+            onTap: () {},
+            child: Container(
+              alignment: Alignment.center,
+              child: const Text(
+                'Xem them',
+                style: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          DataController().getUser == null
+              ? Container()
+              : Container(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.account_circle,
+                        size: 55,
+                        color: AppColors.primaryColor,
+                      ),
+                      const SizedBox(width: 15),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                const SizedBox(width: 20),
+                                Row(
+                                  children: List.generate(
+                                    5,
+                                    (index) {
+                                      return InkWell(
+                                        customBorder: const StarBorder(),
+                                        onTap: () {
+                                          setState(() {
+                                            indexRateTour = index;
+                                          });
+                                        },
+                                        child: Icon(
+                                          indexRateTour < index
+                                              ? Icons.star_outline_rounded
+                                              : Icons.star_rounded,
+                                          color: AppColors.primaryColor,
+                                          size: 28,
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 15),
-                            Column(
-                              children: [itemRate(context), itemRate(context)],
-                            ),
-                            InkWell(
-                              onTap: () {},
-                              child: Container(
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  'Xem them',
-                                  style: TextStyle(
+                            const SizedBox(height: 5),
+                            TextField(
+                              maxLines: 1,
+                              keyboardType: TextInputType.text,
+                              style: const TextStyle(fontSize: 21),
+                              decoration: InputDecoration(
+                                suffixIcon: IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(
+                                    Icons.send,
                                     color: AppColors.primaryColor,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                    color: AppColors.primaryColor,
-                                    width: 2,
-                                  )),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Icon(
-                                    Icons.account_circle,
-                                    size: 35,
+                                contentPadding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                border: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(40)),
+                                ),
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
                                     color: AppColors.primaryColor,
                                   ),
-                                  const SizedBox(width: 15),
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          DataController().getUser != null
-                                              ? DataController()
-                                                  .getUser!
-                                                  .fullName!
-                                              : "Vui long Dang nhap/Dang ky",
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColors.primaryColor,
-                                          ),
-                                        ),
-                                        Row(
-                                          children: List.generate(
-                                            5,
-                                            (index) {
-                                              return IconButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    indexRateTour = index;
-                                                  });
-                                                },
-                                                icon: Icon(
-                                                  index <= indexRateTour
-                                                      ? Icons.star_rate
-                                                      : Icons
-                                                          .star_rate_outlined,
-                                                  color: AppColors.primaryColor,
-                                                  size: 28,
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                        TextField(
-                                          maxLines: 1,
-                                          keyboardType: TextInputType.text,
-                                          style: const TextStyle(fontSize: 21),
-                                          decoration: InputDecoration(
-                                            suffixIcon: IconButton(
-                                              onPressed: () {},
-                                              icon: const Icon(
-                                                Icons.send,
-                                                color: AppColors.primaryColor,
-                                              ),
-                                            ),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 15),
-                                            border: const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10)),
-                                            ),
-                                            enabledBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppColors.primaryColor,
-                                              ),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10)),
-                                            ),
-                                            focusedBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppColors.primaryColor,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(10),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(40)),
+                                ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: AppColors.primaryColor,
+                                    width: 2.0,
                                   ),
-                                ],
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(40),
+                                  ),
+                                ),
                               ),
                             ),
                           ],
@@ -246,10 +397,7 @@ class _TourDetailState extends State<TourDetail> {
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
+        ],
       ),
     );
   }
@@ -336,33 +484,20 @@ class _TourDetailState extends State<TourDetail> {
                     moRong = !moRong;
                   });
                 },
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.grey.withOpacity(0),
-                        Colors.grey.withOpacity(0.2),
-                      ],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      moRong ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                      size: 25,
+                      color: AppColors.primaryColor,
                     ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        moRong ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                        size: 25,
-                        color: AppColors.primaryColor,
-                      ),
-                      Text(
-                        moRong ? 'Thu gọn ' : 'Mở rộng',
-                        style: const TextStyle(
-                            color: AppColors.primaryColor, fontSize: 18),
-                      ),
-                    ],
-                  ),
+                    Text(
+                      moRong ? 'Thu gọn ' : 'Mở rộng',
+                      style: const TextStyle(
+                          color: AppColors.primaryColor, fontSize: 18),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -702,24 +837,21 @@ class _TourDetailState extends State<TourDetail> {
             color: AppColors.borderDeal_Home,
           ),
         ),
-        Row(
-          children: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.share,
-                color: AppColors.borderDeal_Home,
-              ),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.comment,
-                color: AppColors.borderDeal_Home,
-              ),
-            ),
-          ],
-        )
+        Text(
+          widget.tour.titleTour,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.share,
+            color: AppColors.borderDeal_Home,
+          ),
+        ),
       ],
     );
   }
