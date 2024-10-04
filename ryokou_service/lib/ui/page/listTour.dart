@@ -114,7 +114,7 @@ class _ListTourState extends State<ListTour> {
                       '+',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 40, // Giảm kích thước chữ cho phù hợp
+                        fontSize: 40, 
                       ),
                     ),
                   ),

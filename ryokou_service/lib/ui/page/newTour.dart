@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ryokou_service/entity/schedule.dart';
 import 'package:ryokou_service/entity/to_do_onDay.dart';
 import 'package:ryokou_service/entity/tour.dart';
@@ -31,6 +32,9 @@ class _NewTourState extends State<NewTour> {
   late Tour _curTour;
   late Schedule selectedSchedule;
 
+  String? selectedCity;
+  String? selectedDuration;
+  String? selectedService;
   TextEditingController tecName = TextEditingController();
   TextEditingController tecgatheringPlace = TextEditingController();
   TextEditingController tecCost = TextEditingController();
@@ -130,6 +134,7 @@ class _NewTourState extends State<NewTour> {
                                     items: provinces,
                                     hintText: 'Chọn tỉnh/TP',
                                     onChanged: (String? newValue) {
+                                      selectedCity = newValue;
                                       print('Selected: $newValue');
                                     },
                                   ),
@@ -159,27 +164,30 @@ class _NewTourState extends State<NewTour> {
                                     items: days,
                                     hintText: 'Chọn thời lượng',
                                     onChanged: (String? newValue) {
+                                      selectedDuration = newValue;
                                       print('Selected: $newValue');
                                     },
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 16),
+                              const SizedBox(height: 20),
                               GenerRow(
                                 TitleText('Giá'),
                                 GenerTextField(
                                   tec: tecCost,
+                                  keyboardType: TextInputType.number,
                                 ),
                                 container: Container(
                                   child: const Text(
-                                    'vnd',
+                                    'VND',
                                     style: TextStyle(
+                                      fontSize: 16,
                                       color: AppColor.primaryColor,
                                     ),
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 16),
+                              const SizedBox(height: 20),
                               GenerRow(
                                 TitleText('Địa điểm tập họp'),
                                 GenerTextField(
@@ -194,6 +202,7 @@ class _NewTourState extends State<NewTour> {
                                     items: YesNo,
                                     hintText: 'Không',
                                     onChanged: (String? newValue) {
+                                      selectedService = newValue;
                                       print('Selected: $newValue');
                                     },
                                   ),

@@ -6,13 +6,34 @@ import 'package:ryokou_service/themes/colors_theme.dart';
 import 'package:ryokou_service/ui/item/generTextField.dart';
 import 'package:ryokou_service/ui/item/generalDropDown.dart';
 
-class ItemToDo extends StatelessWidget {
+class ItemToDo extends StatefulWidget {
   final ToDoOnDay toDo;
+
   const ItemToDo({super.key, required this.toDo});
 
   @override
+  _ItemToDoState createState() => _ItemToDoState();
+}
+
+class _ItemToDoState extends State<ItemToDo> {
+  // Khởi tạo giá trị mặc định cho giờ và phút
+  late String selectedHour; // Khai báo biến giờ
+  late String selectedMinute; // Khai báo biến phút
+
+  // TextEditingController cho nội dung to-do
+  TextEditingController tecTextToDo = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Đặt giá trị mặc định cho selectedHour và selectedMinute
+    selectedHour = hours.isNotEmpty ? hours[0] : '00'; // Nếu hours không rỗng
+    selectedMinute =
+        minutes.isNotEmpty ? minutes[0] : '00'; // Nếu minutes không rỗng
+  }
+
+  @override
   Widget build(BuildContext context) {
-    TextEditingController tecTextToDo = TextEditingController();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -22,11 +43,19 @@ class ItemToDo extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                child: GeneralDropdown(
+                child: GeneralDropdown<String>(
                   isNeedIcon: false,
                   items: hours,
                   hintText: '',
-                  onChanged: (String? newValue) {},
+                  // Gán giá trị mặc định
+                  onChanged: (String? newValue) {
+                    if (newValue != null && hours.contains(newValue)) {
+                      setState(() {
+                        selectedHour = newValue; // Cập nhật khi có thay đổi
+                      });
+                    }
+                  },
+                  value: selectedHour, // Gán giá trị hiện tại
                 ),
               ),
               const SizedBox(
@@ -44,11 +73,19 @@ class ItemToDo extends StatelessWidget {
                 width: 2,
               ),
               Expanded(
-                child: GeneralDropdown(
+                child: GeneralDropdown<String>(
                   isNeedIcon: false,
                   items: minutes,
                   hintText: '',
-                  onChanged: (String? newValue) {},
+                  // Gán giá trị mặc định
+                  onChanged: (String? newValue) {
+                    if (newValue != null && minutes.contains(newValue)) {
+                      setState(() {
+                        selectedMinute = newValue; // Cập nhật khi có thay đổi
+                      });
+                    }
+                  },
+                  value: selectedMinute, // Gán giá trị hiện tại
                 ),
               ),
             ],
