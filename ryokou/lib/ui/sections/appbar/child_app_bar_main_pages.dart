@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:ryokou/themes/colors_theme.dart';
 
 Widget childAppBarMainPages() {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      const SizedBox(
+      SizedBox(
         child: Row(
           children: [
-            Icon(
-              Icons.place,
-              size: 30,
+            ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(100)),
+              child: Image.asset(
+                'assets/image/logoRyokou.jpg',
+                fit: BoxFit.fill,
+                scale: 7.5,
+              ),
             ),
-            Text(
+            const SizedBox(width: 10),
+            const Text(
               'Ryokou',
               style: TextStyle(
                 fontSize: 40,
@@ -27,12 +33,16 @@ Widget childAppBarMainPages() {
         children: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.sticky_note_2_sharp),
+            icon: const Icon(
+              Icons.sticky_note_2_sharp,
+              color: Colors.white,
+            ),
           ),
           IconButton(
             onPressed: () {},
             icon: const Icon(
               Icons.notifications,
+              color: Colors.white,
             ),
           ),
         ],

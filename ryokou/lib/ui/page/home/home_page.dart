@@ -18,82 +18,80 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            children: [
-              getAppBar(
-                context,
-                childAppBarMainPages(),
-                isHome: true,
+    return Scaffold(
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            getAppBar(
+              context,
+              childAppBarMainPages(),
+              isHome: true,
+            ),
+            SliderBar(numSlider: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  const FlashSale(),
+                  SuggetSection(
+                    lsDataTour: [
+                      Tour(
+                          titleTour: 'Du lich suoi nuoc nong',
+                          descriptionTour: 'descriptionTour',
+                          duration: 3,
+                          location: 'Nhat Ban'),
+                      Tour(
+                          titleTour: 'Du lich suoi nuoc nong',
+                          descriptionTour: 'descriptionTour',
+                          duration: 3,
+                          location: 'Nhat Ban'),
+                      Tour(
+                          titleTour: 'Du lich suoi nuoc nong',
+                          descriptionTour: 'descriptionTour',
+                          duration: 3,
+                          location: 'Nhat Ban')
+                    ],
+                    lsDivide: const [
+                      EMonth.Thang8,
+                      EMonth.Thang9,
+                      EMonth.Thang10,
+                      EMonth.Thang11,
+                      EMonth.Thang12,
+                    ],
+                    title: "Get go!",
+                  ),
+                  SuggetSection(
+                    lsDataTour: [
+                      Tour(
+                          titleTour: 'Du lich suoi nuoc nong',
+                          descriptionTour: 'descriptionTour',
+                          duration: 3,
+                          location: 'Nhat Ban'),
+                      Tour(
+                          titleTour: 'Du lich suoi nuoc nong',
+                          descriptionTour: 'descriptionTour',
+                          duration: 3,
+                          location: 'Nhat Ban'),
+                      Tour(
+                          titleTour: 'Du lich suoi nuoc nong',
+                          descriptionTour: 'descriptionTour',
+                          duration: 3,
+                          location: 'Nhat Ban')
+                    ],
+                    title: 'Mua le hoi',
+                    lsDivide: const [
+                      EProvince.Chiba,
+                      EProvince.Akita,
+                      EProvince.Kanagawa,
+                      EProvince.Tokyo,
+                      EProvince.Mie,
+                    ],
+                  )
+                ],
               ),
-              SliderBar(numSlider: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  children: [
-                    const FlashSale(),
-                    SuggetSection(
-                      lsDataTour: [
-                        Tour(
-                            titleTour: 'Du lich suoi nuoc nong',
-                            descriptionTour: 'descriptionTour',
-                            duration: 3,
-                            location: 'Nhat Ban'),
-                        Tour(
-                            titleTour: 'Du lich suoi nuoc nong',
-                            descriptionTour: 'descriptionTour',
-                            duration: 3,
-                            location: 'Nhat Ban'),
-                        Tour(
-                            titleTour: 'Du lich suoi nuoc nong',
-                            descriptionTour: 'descriptionTour',
-                            duration: 3,
-                            location: 'Nhat Ban')
-                      ],
-                      lsDivide: const [
-                        EMonth.Thang8,
-                        EMonth.Thang9,
-                        EMonth.Thang10,
-                        EMonth.Thang11,
-                        EMonth.Thang12,
-                      ],
-                      title: "Get go!",
-                    ),
-                    SuggetSection(
-                      lsDataTour: [
-                        Tour(
-                            titleTour: 'Du lich suoi nuoc nong',
-                            descriptionTour: 'descriptionTour',
-                            duration: 3,
-                            location: 'Nhat Ban'),
-                        Tour(
-                            titleTour: 'Du lich suoi nuoc nong',
-                            descriptionTour: 'descriptionTour',
-                            duration: 3,
-                            location: 'Nhat Ban'),
-                        Tour(
-                            titleTour: 'Du lich suoi nuoc nong',
-                            descriptionTour: 'descriptionTour',
-                            duration: 3,
-                            location: 'Nhat Ban')
-                      ],
-                      title: 'Mua le hoi',
-                      lsDivide: const [
-                        EProvince.Chiba,
-                        EProvince.Akita,
-                        EProvince.Kanagawa,
-                        EProvince.Tokyo,
-                        EProvince.Mie,
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

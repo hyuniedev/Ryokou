@@ -15,73 +15,70 @@ class AccountPage extends StatefulWidget {
 class _AccountPage extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            children: [
-              getAppBar(
-                context,
-                Container(
-                  child: Column(
-                    children: [
-                      DataController().getUser == null
-                          ? const Row(
-                              children: [
-                                ImageIcon(
-                                  AssetImage(
-                                      'assets/image/pajamas_question.png'),
-                                  color: Colors.white,
-                                  size: 46,
-                                )
-                              ],
-                            )
-                          : Row(
-                              children: [
-                                const Icon(
-                                  Icons.person_outline,
-                                  size: 52,
-                                  color: Colors.white,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '${DataController().getUser?.fullName}',
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    const Text(
-                                      'Thông tin tài khoản >>',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                    ],
-                  ),
-                ),
-                isHome: DataController().getUser == null ? true : false,
-              ),
+    return Scaffold(
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            getAppBar(
+              context,
               Container(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 24, horizontal: 12),
-                  child: DataController().getUser == null
-                      ? MadaAccContainer()
-                      : UserAccContainer(),
+                child: Column(
+                  children: [
+                    DataController().getUser == null
+                        ? const Row(
+                            children: [
+                              ImageIcon(
+                                AssetImage('assets/image/pajamas_question.png'),
+                                color: Colors.white,
+                                size: 46,
+                              )
+                            ],
+                          )
+                        : Row(
+                            children: [
+                              const Icon(
+                                Icons.person_outline,
+                                size: 52,
+                                color: Colors.white,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${DataController().getUser?.fullName}',
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const Text(
+                                    'Thông tin tài khoản >>',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                  ],
                 ),
               ),
-            ],
-          ),
+              isHome: DataController().getUser == null ? true : false,
+            ),
+            Container(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 24, horizontal: 12),
+                child: DataController().getUser == null
+                    ? MadaAccContainer()
+                    : UserAccContainer(),
+              ),
+            ),
+          ],
         ),
       ),
     );

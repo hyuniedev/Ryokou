@@ -56,27 +56,28 @@ class _FavoritePage extends State<FavoritePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         InkWell(
-                            borderRadius: BorderRadius.circular(10),
-                            onTap: () {
-                              context.go('/login');
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width / 2.5,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                      color: AppColors.primaryColor)),
-                              child: const Center(
-                                child: Text(
-                                  'Đăng nhập',
-                                  style: TextStyle(
-                                      fontSize: 21,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.primaryColor),
-                                ),
+                          borderRadius: BorderRadius.circular(10),
+                          onTap: () {
+                            context.go('/login');
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width / 2.5,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                border:
+                                    Border.all(color: AppColors.primaryColor)),
+                            child: const Center(
+                              child: Text(
+                                'Đăng nhập',
+                                style: TextStyle(
+                                    fontSize: 21,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.primaryColor),
                               ),
-                            )),
+                            ),
+                          ),
+                        ),
                         InkWell(
                             borderRadius: BorderRadius.circular(10),
                             onTap: () {
