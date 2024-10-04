@@ -21,7 +21,7 @@ class ItemListGeneral extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (isListTour) {
-          // context.push('/customer');
+          
           showModalBottomSheet(
               context: context,
               builder: (BuildContext context) {
