@@ -1,7 +1,7 @@
 import 'package:ryokou_service/entity/schedule.dart';
 
 class Tour {
-  // Biến private
+  late String _id;
   late String _name;
   late String _city;
   late int _durations;
@@ -10,9 +10,12 @@ class Tour {
   late int _cost;
   late String _gatheringPlace;
   late String _freeService;
+  late String _pointo;
+  late String _kisoku;
   List<Schedule> _schedule = [];
 
   Tour({
+    required String id,
     required String name,
     required String city,
     required int durations,
@@ -21,8 +24,11 @@ class Tour {
     required int cost,
     required String gatheringPlace,
     required String freeService,
+    required String pointo,
+    required String kisoku,
     required List<Schedule> schedule,
-  })  : _name = name,
+  })  : _id = id,
+        _name = name,
         _city = city,
         _durations = durations,
         _start = start,
@@ -30,21 +36,28 @@ class Tour {
         _cost = cost,
         _gatheringPlace = gatheringPlace,
         _freeService = freeService,
+        _pointo = pointo,
+        _kisoku = kisoku,
         _schedule = schedule;
 
+
   Tour.empty() {
-    _schedule = []; // Khởi tạo danh sách rỗng cho _schedule
-  }
-
-  void addSchedule(Schedule newSchedule) {
-    _schedule.add(newSchedule);
-  }
-
-  void removeSchedule(Schedule oldSchdule) {
-    _schedule.remove(oldSchdule);
+    _id = '';
+    _name = '';
+    _city = '';
+    _durations = 0;
+    _start = DateTime.now();
+    _maintainTime = 0;
+    _cost = 0;
+    _gatheringPlace = '';
+    _freeService = '';
+    _pointo = '';
+    _kisoku = '';
+    _schedule = [];
   }
 
   // Getters
+  String get id => _id;
   String get name => _name;
   String get city => _city;
   int get durations => _durations;
@@ -53,9 +66,15 @@ class Tour {
   int get cost => _cost;
   String get gatheringPlace => _gatheringPlace;
   String get freeService => _freeService;
+  String get pointo => _pointo;
+  String get kisoku => _kisoku;
   List<Schedule> get schedule => _schedule;
 
   // Setters
+  set id(String value) {
+    _id = value;
+  }
+
   set name(String value) {
     _name = value;
   }
@@ -88,7 +107,24 @@ class Tour {
     _freeService = value;
   }
 
+  set pointo(String value) {
+    _pointo = value;
+  }
+
+  set kisoku(String value) {
+    _kisoku = value;
+  }
+
   set schedule(List<Schedule> value) {
     _schedule = value;
+  }
+
+
+  void addSchedule(Schedule newSchedule) {
+    _schedule.add(newSchedule);
+  }
+
+  void removeSchedule(Schedule oldSchedule) {
+    _schedule.remove(oldSchedule);
   }
 }

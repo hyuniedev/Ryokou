@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ryokou_service/main.dart';
 import 'package:ryokou_service/themes/colors_theme.dart';
 import 'package:ryokou_service/ui/item/item_customer_detais.dart';
+import 'package:ryokou_service/ui/item/tourChoose.dart';
 
 class ItemListGeneral extends StatelessWidget {
   final String name;
@@ -19,9 +20,13 @@ class ItemListGeneral extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Chuyển hướng dựa trên giá trị của isLine
         if (isListTour) {
-          context.push('/customer');
+          // context.push('/customer');
+          showModalBottomSheet(
+              context: context,
+              builder: (BuildContext context) {
+                return const TourChoose();
+              });
         } else {
           showDialog(
             context: context,

@@ -6,6 +6,7 @@ class GeneralDropdown<T> extends StatefulWidget {
   final String hintText; // Văn bản nhắc
   final ValueChanged<T?> onChanged; // Callback khi chọn item
   final bool isNeedIcon; // Tùy chọn có cần icon hay không
+  final T? value; // Giá trị hiện tại của dropdown
 
   const GeneralDropdown({
     super.key,
@@ -13,6 +14,7 @@ class GeneralDropdown<T> extends StatefulWidget {
     required this.hintText,
     required this.onChanged,
     this.isNeedIcon = true, // Đặt giá trị mặc định cho isNeedIcon
+    this.value, // Khởi tạo giá trị hiện tại
   });
 
   @override
@@ -21,6 +23,12 @@ class GeneralDropdown<T> extends StatefulWidget {
 
 class _GeneralDropdownState<T> extends State<GeneralDropdown<T>> {
   T? selectedItem;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedItem = widget.value; // Gán giá trị hiện tại vào selectedItem
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,32 +52,31 @@ class _GeneralDropdownState<T> extends State<GeneralDropdown<T>> {
               const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         ),
         child: DropdownButton<T>(
-          borderRadius: BorderRadius.circular(10),
-          value: selectedItem,
           isExpanded: true, // Để dropdown mở rộng chiều ngang
           isDense: true,
-          hint: Text(widget.hintText), // Văn bản nhắc khi không có gì được chọn
+          hint: Text(widget.hintText),
+          value: selectedItem,
           items: widget.items.map((T item) {
             return DropdownMenuItem<T>(
               value: item,
               child: Text(
-                item.toString(), // Chuyển item thành chuỗi để hiển thị
+                item.toString(),
                 style: const TextStyle(
-                  fontSize: 14, // Kích thước văn bản
+                  fontSize: 14,
                 ),
               ),
             );
           }).toList(),
           onChanged: (T? newValue) {
             setState(() {
-              selectedItem = newValue;
+              selectedItem = newValue; 
             });
-            widget.onChanged(newValue); // Gọi lại hàm onChanged
+            widget.onChanged(newValue); 
           },
-          underline: const SizedBox(), // Bỏ đường gạch dưới mặc định
+          underline: const SizedBox(), 
           icon: widget.isNeedIcon
               ? null
-              : const SizedBox.shrink(), // Hiển thị hoặc ẩn icon
+              : const SizedBox.shrink(),
         ),
       ),
     );
