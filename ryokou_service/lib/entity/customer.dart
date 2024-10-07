@@ -24,4 +24,7 @@ class Customer {
   set email(String value) {
     _email = value;
   }
+  factory Customer.fromJson(Map<String, dynamic> json){
+    return Customer(ten: json['name'], sdt: json['numberphone'], email: json['email']);
+  }
 }

@@ -26,11 +26,11 @@ class MyApp extends StatelessWidget {
         builder: (context, state) => const ListTour(),
       ),
       GoRoute(
-        path: '/login',
+        path: '/',
         builder: (context, state) => Login(),
       ),
       GoRoute(
-        path: '/',
+        path: '/newTour',
         builder: (context, state) => NewTour(
         ),
       ),

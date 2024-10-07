@@ -121,18 +121,13 @@ class Register extends StatelessWidget {
                           name: tecFullname.text,
                           numberphone: tecNumberphone.text,
                           email: tecEmail.text,
-                          password: tecPassword.text,
                         );
 
                         // Lưu dữ liệu vào Firestore
                         await _firestore
                             .collection('companys')
                             .doc(_company.id)
-                            .set({
-                          'name': _company.name,
-                          'numberphone': _company.numberphone,
-                          'email': _company.email,
-                        });
+                            .set(_company.toJson());
                         
                         AccountController().setCompany = _company;
                         
@@ -181,16 +176,11 @@ class Register extends StatelessWidget {
                         Company company;
                         DocumentSnapshot doc = await _firestore.collection('companys').doc(user!.uid).get();
                         if(!doc.exists){
-                          company = Company(id: user.uid, name: user.displayName, numberphone: user?.phoneNumber, email: tecEmail.text, password: tecPassword.text);
-                          await _firestore.collection('companys').doc(user.uid).set({
-                          'id' : company.id,
-                          'name' : company.name,
-                          'numberphone' : company.numberphone,
-                          'email' : company.email
-                        });
+                          company = Company(id: user.uid, name: user.displayName, numberphone: user?.phoneNumber, email: tecEmail.text);
+                          await _firestore.collection('companys').doc(user.uid).set(company.toJson());
                         }else{
-                          Map<String,dynamic>? data = doc.data() as Map<String,dynamic>?;
-                          company = Company(email: data?['email'],id: data?['id'], name: data?['name'], numberphone: data?['numberphone']);
+                          Map<String,dynamic> data = doc.data() as Map<String,dynamic>;
+                          company = Company.fromJson(data);
                         }
                         AccountController().setCompany = company;
                         context.go('/newtour');

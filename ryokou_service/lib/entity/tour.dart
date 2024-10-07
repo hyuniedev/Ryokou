@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:ryokou_service/entity/schedule.dart';
 
 class Tour {
@@ -10,10 +14,11 @@ class Tour {
   late String _cost;
   late int _sale;
   late String _gatheringPlace;
-  late String _freeService;
+  late bool _freeService;
   late String _pointo;
   late String _kisoku;
   List<Schedule> _schedule = [];
+  List<File> _lsFile = [];
 
   Tour({
     required String id,
@@ -25,10 +30,11 @@ class Tour {
     required String cost,
     required int sale,
     required String gatheringPlace,
-    required String freeService,
+    required bool freeService,
     required String pointo,
     required String kisoku,
     required List<Schedule> schedule,
+    required List<File> lsFile,
   })  : _id = id,
         _name = name,
         _city = city,
@@ -41,7 +47,8 @@ class Tour {
         _freeService = freeService,
         _pointo = pointo,
         _kisoku = kisoku,
-        _schedule = schedule;
+        _schedule = schedule,
+        _lsFile = lsFile;
 
 
   Tour.empty() {
@@ -54,10 +61,11 @@ class Tour {
     _cost = '';
     _sale = 0;
     _gatheringPlace = '';
-    _freeService = '';
+    _freeService = false;
     _pointo = '';
     _kisoku = '';
     _schedule = [];
+    _lsFile = [];
   }
 
   // Getters
@@ -70,10 +78,11 @@ class Tour {
   String get cost => _cost;
   int get sale => _sale;
   String get gatheringPlace => _gatheringPlace;
-  String get freeService => _freeService;
+  bool get freeService => _freeService;
   String get pointo => _pointo;
   String get kisoku => _kisoku;
   List<Schedule> get schedule => _schedule;
+  List<File> get lsFile => _lsFile;
 
   // Setters
   set id(String value) {
@@ -112,7 +121,7 @@ class Tour {
     _gatheringPlace = value;
   }
 
-  set freeService(String value) {
+  set freeService(bool value) {
     _freeService = value;
   }
 
@@ -128,6 +137,9 @@ class Tour {
     _schedule = value;
   }
 
+  set lsFile(List<File> value){
+    _lsFile = value;
+  }
 
   void addSchedule(Schedule newSchedule) {
     _schedule.add(newSchedule);
@@ -136,4 +148,39 @@ class Tour {
   void removeSchedule(Schedule oldSchedule) {
     _schedule.remove(oldSchedule);
   }
+
+  Future<Map<String,dynamic>> toJson() async{
+    List<String?> lsUrlImage = await Future.wait(_lsFile.map((i)=>uploadImage(i))) ;
+    return{
+      'name' : _name,
+      'city' : _city,
+      'durations' : _durations,
+      'start' : Timestamp.fromDate(_start),
+      'maintainTime' : _maintainTime,
+      'cost' : cost,
+      'sale' : _sale,
+      'gatheringPlace' : _gatheringPlace,
+      'freeService' : _freeService,
+      'pointo' : _pointo,
+      'kisoku' : _kisoku,
+      'schedule' : _schedule.map((sche)=>sche.toJson()).toList(),
+      'lsFile' : lsUrlImage,
+    };
+  }
+  Future<String?> uploadImage(File image) async{
+    try {
+      FirebaseStorage storage = FirebaseStorage.instance;
+      Reference ref = storage.ref().child('images/${DateTime.now().microsecondsSinceEpoch}.jpg');
+
+      UploadTask upload = ref.putFile(image);
+      TaskSnapshot taskSnapshot = await upload;
+
+      String urlDownload = await taskSnapshot.ref.getDownloadURL();
+      return urlDownload;
+    } catch (e) {
+      print('Error uploading image: $e');
+      return null;
+    }
+  }
+  
 }

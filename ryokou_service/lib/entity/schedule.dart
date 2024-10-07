@@ -27,4 +27,14 @@ class Schedule {
   void addToDo(ToDoOnDay newToDo) {
     _todo.add(newToDo);
   }
+  Map<String, dynamic> toJson(){
+    return{
+      'day' : _day,
+      'lsTodo' : _todo.map((e) => e.toJson()).toList(),
+    };
+  }
+  factory Schedule.fromJson(Map<String, dynamic> json){
+    var ls = json['todo'] as List;
+    return Schedule(day: json['day'], todo: ls.map((e)=>ToDoOnDay.fromJson(e)).toList());
+  }
 }

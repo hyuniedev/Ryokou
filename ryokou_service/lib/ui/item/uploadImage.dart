@@ -22,15 +22,14 @@ class _UploadImageWidgetState extends State<UploadImage> {
 
     if (pickedFile != null) {
       setState(() {
-        _imageFiles.add(File(pickedFile.path)); // Thêm ảnh vào danh sách
-        widget.lsImage = _imageFiles;
+        widget.lsImage.add(File(pickedFile.path)); // Thêm ảnh vào danh sách
       });
     }
   }
 
   void _removeImage(int index) {
     setState(() {
-      _imageFiles.removeAt(index);
+      widget.lsImage.removeAt(index);
     });
   }
 

@@ -1,26 +1,44 @@
-import 'package:flutter/material.dart';
 
 class ToDoOnDay {
-  late DateTime _date;
+  late String _hour;
+  late String _minute;
   late String _content;
 
   ToDoOnDay({
-    required DateTime date,
+    required String hour,
+    required String minute,
     required String content,
-  })  : _date = date,
+  })  : _hour = hour,
+        _minute = minute,
         _content = content;
 
   ToDoOnDay.empty();
   // Getters
-  DateTime get date => _date;
+  String get hour => _hour;
+  String get minute => _minute;
   String get content => _content;
 
   // Setters
-  set date(DateTime value) {
-    _date = value;
+  set hour(String value) {
+    _hour = value;
   }
-
+  set minute(String value) {
+    _minute = value;
+  }
   set content(String value) {
     _content = value;
   }
+
+  Map<String, dynamic> toJson(){
+    return {
+      'hour' : _hour,
+      'minute' : _minute,
+      'content' : _content,
+    };
+  }
+
+  factory ToDoOnDay.fromJson(Map<String,dynamic> json){
+    return ToDoOnDay(hour: json['hour'], minute: json['minute'], content: json['content']);
+  }
+
 }

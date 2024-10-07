@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ryokou_service/entity/schedule.dart';
 import 'package:ryokou_service/entity/to_do_onDay.dart';
@@ -20,6 +21,8 @@ import 'package:ryokou_service/ui/item/itemToDo.dart';
 import 'package:ryokou_service/ui/item/uploadImage.dart';
 import 'package:ryokou_service/ui/sections/appBar/top_app_bar.dart';
 
+import 'package:go_router/go_router.dart';
+
 class NewTour extends StatefulWidget {
   const NewTour({super.key});
 
@@ -28,13 +31,14 @@ class NewTour extends StatefulWidget {
 }
 
 class _NewTourState extends State<NewTour> {
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
   Tour _curTour = Tour.empty();
   late Schedule selectedSchedule;
   DateTime selectedDayBegin = DateTime.now();
   List<File> lsFile = [];
   String? selectedCity;
   String? selectedMaintain;
-  String? selectedService = YesNo[1];
+  bool? selectedService = false;
   TextEditingController tecName = TextEditingController();
   TextEditingController tecgatheringPlace = TextEditingController();
   TextEditingController tecCost = TextEditingController();
@@ -217,7 +221,7 @@ class _NewTourState extends State<NewTour> {
                                     items: YesNo,
                                     hintText: 'Không',
                                     onChanged: (String? newValue) {
-                                      selectedService = newValue;
+                                      selectedService = (newValue==YesNo[0])?true:false;
                                       print('Selected: $newValue');
                                     },
                                   ),
@@ -283,7 +287,8 @@ class _NewTourState extends State<NewTour> {
                                     onPressed: () {
                                       setState(() {
                                         selectedSchedule.addToDo(ToDoOnDay(
-                                          date: DateTime.now(),
+                                          hour: '00',
+                                          minute: '00',
                                           content: 'New task'));
                                       });
                                     },
@@ -348,7 +353,7 @@ class _NewTourState extends State<NewTour> {
                                     const Color.fromARGB(255, 179, 158, 131),
                                 elevation: 5,
                               ),
-                              onPressed: () {
+                              onPressed: () async{
                                 _curTour.name = tecName.text;
                                 print("Name: ${_curTour.name}");
 
@@ -385,6 +390,12 @@ class _NewTourState extends State<NewTour> {
 
                                 _curTour.kisoku = tecKisoku.text;
                                 print("Kisoku: ${_curTour.kisoku}");
+
+                                _curTour.lsFile = lsFile;
+                                print('Size list File: ${_curTour.lsFile.length}');
+
+                                await _firestore.collection('tours').add(await _curTour.toJson());
+                                context.go('/listTour');
                               },
                               child: const Text(
                                 'Xác nhận',

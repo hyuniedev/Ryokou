@@ -53,6 +53,7 @@ class _ItemToDoState extends State<ItemToDo> {
                     if (newValue != null && hours.contains(newValue)) {
                       setState(() {
                         selectedHour = newValue; // Cập nhật khi có thay đổi
+                        widget.toDo.hour = selectedHour;
                       });
                     }
                   },
@@ -83,6 +84,7 @@ class _ItemToDoState extends State<ItemToDo> {
                     if (newValue != null && minutes.contains(newValue)) {
                       setState(() {
                         selectedMinute = newValue; // Cập nhật khi có thay đổi
+                        widget.toDo.minute = selectedMinute;
                       });
                     }
                   },
@@ -94,6 +96,7 @@ class _ItemToDoState extends State<ItemToDo> {
         ),
         GenerTextField(
           tec: tecTextToDo,
+          onChanged: (p0) => widget.toDo.content = tecTextToDo.text,
         ),
       ],
     );

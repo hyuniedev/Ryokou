@@ -54,22 +54,22 @@ class Login extends StatelessWidget {
                                   email: tecUsername.text,
                                   password: tecPassword.text);
 
-                          print('DEN DAY ROI 0');
                           DocumentSnapshot doc = await _firestore
                               .collection('companys')
                               .doc(result.user!.uid)
                               .get();
 
                           if (doc.exists) {
-                            Map<String, dynamic>? data =
-                                doc.data() as Map<String, dynamic>?;
-                            AccountController().setCompany = Company(
-                              id: result.user!.uid,
-                              name: data?['name'],
-                              numberphone: data?['numberphone'],
-                              email: data?['email'],
-                              password: tecPassword.text,
-                            );
+                            Map<String, dynamic> data =
+                                doc.data() as Map<String, dynamic>;
+                                AccountController().setCompany = Company.fromJson(data);
+                            // AccountController().setCompany = Company(
+                            //   id: result.user!.uid,
+                            //   name: data?['name'],
+                            //   numberphone: data?['numberphone'],
+                            //   email: data?['email'],
+                            //   password: tecPassword.text,
+                            // );
                           } else {}
                           context.go('/newtour');
                         } catch (e) {
@@ -127,25 +127,15 @@ class Login extends StatelessWidget {
                                 id: user.uid,
                                 name: user.displayName,
                                 numberphone: user.phoneNumber,
-                                email: tecUsername.text,
-                                password: tecPassword.text);
+                                email: tecUsername.text);
                             await _firestore
                                 .collection('companys')
                                 .doc(user.uid)
-                                .set({
-                              'id': company.id,
-                              'name': company.name,
-                              'numberphone': company.numberphone,
-                              'email': company.email
-                            });
+                                .set(company.toJson());
                           } else {
-                            Map<String, dynamic>? data =
-                                doc.data() as Map<String, dynamic>?;
-                            company = Company(
-                                email: data?['email'],
-                                id: data?['id'],
-                                name: data?['name'],
-                                numberphone: data?['numberphone']);
+                            Map<String, dynamic> data =
+                                doc.data() as Map<String, dynamic>;
+                            company = Company.fromJson(data);
                           }
                           AccountController().setCompany = company;
                           context.go('/listTour');
