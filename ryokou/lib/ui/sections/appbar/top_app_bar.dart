@@ -66,7 +66,7 @@ PreferredSizeWidget getAppBar(BuildContext context, Widget childAppBar,
                           ),
                           InkWell(
                             onTap: () {
-                              context.go('/login');
+                              context.push('/login');
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width / 2,

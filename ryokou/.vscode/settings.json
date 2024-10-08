@@ -13,5 +13,6 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
   },
-  "dart.previewFlutterUiGuides": true
+  "dart.previewFlutterUiGuides": true,
+  "java.configuration.updateBuildConfiguration": "interactive"
 }
