@@ -22,11 +22,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final GoRouter router = GoRouter(routes: [
       GoRoute(
-        path: '/listTour',
+        path: '/',
         builder: (context, state) => const ListTour(),
       ),
       GoRoute(
-        path: '/',
+        path: '/as',
         builder: (context, state) => Login(),
       ),
       GoRoute(

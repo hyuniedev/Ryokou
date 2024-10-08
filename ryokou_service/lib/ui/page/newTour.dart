@@ -33,7 +33,7 @@ class NewTour extends StatefulWidget {
 class _NewTourState extends State<NewTour> {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   Tour _curTour = Tour.empty();
-  late Schedule selectedSchedule;
+  // late Schedule selectedSchedule;
   DateTime selectedDayBegin = DateTime.now();
   List<File> lsFile = [];
   String? selectedCity;
@@ -54,42 +54,58 @@ class _NewTourState extends State<NewTour> {
     fontSize: 16,
   );
   int _sale = 0;
-  int _newCounter = 1;
   int _selectedDayIndex = 0;
 
   @override
   void initState() {
     super.initState();
     _curTour.addSchedule(Schedule(day: Eday.values[0].toString(), todo: []));
-    selectedSchedule = _curTour.schedule[0];
+    // selectedSchedule = _curTour.schedule[0];
   }
 
-  // Hàm callback khi số lượng thay đổi
-  void _onCounterChanged(int newCounter) {
+  void _changeThoiLuong(int newValueThoiLuong){
+    print('newValueThoiLuong: ${newValueThoiLuong>_curTour.schedule.length}');
     setState(() {
-      if (newCounter > _newCounter) {
-        for (int i = _newCounter; i < newCounter; i++) {
-          _curTour
-              .addSchedule(Schedule(day: Eday.values[i].toString(), todo: []));
+      if(newValueThoiLuong<_curTour.schedule.length){
+        while(newValueThoiLuong!=_curTour.schedule.length){
+          _curTour.schedule.remove(_curTour.schedule.last);
         }
-      } else if (newCounter < _newCounter) {
-        for (int i = newCounter; i < _newCounter; i++) {
-          _curTour.removeSchedule(
-              Schedule(day: Eday.values[i].toString(), todo: []));
+      }else if(newValueThoiLuong>_curTour.schedule.length){
+        print('HyuNie 1');
+        while(newValueThoiLuong!=_curTour.schedule.length){
+          print('HyuNie 2');
+          _curTour.schedule.add(Schedule(day: Eday.values[_curTour.schedule.length].text, todo: []));
         }
-      }
-      _newCounter = newCounter;
-
-      if (_selectedDayIndex >= newCounter) {
-        _selectedDayIndex = newCounter - 1;
       }
     });
+    print('length schedules: ${_curTour.schedule.length}');
   }
+  // Hàm callback khi số lượng thay đổi
+  // void _onCounterChanged(int newCounter) {
+  //   setState(() {
+  //     if (newCounter > _newCounter) {
+  //       for (int i = _newCounter; i < newCounter; i++) {
+  //         _curTour
+  //             .addSchedule(Schedule(day: Eday.values[i].toString(), todo: []));
+  //       }
+  //     } else if (newCounter < _newCounter) {
+  //       for (int i = newCounter; i < _newCounter; i++) {
+  //         _curTour.removeSchedule(
+  //             Schedule(day: Eday.values[i].toString(), todo: []));
+  //       }
+  //     }
+  //     _newCounter = newCounter;
+
+  //     if (_selectedDayIndex >= newCounter) {
+  //       _selectedDayIndex = newCounter - 1;
+  //     }
+  //   });
+  // }
 
   void _changedTag(int index) {
     setState(() {
       _selectedDayIndex = index;
-      selectedSchedule = _curTour.schedule[_selectedDayIndex];
+      // selectedSchedule = _curTour.schedule[_selectedDayIndex];
     });
   }
 
@@ -148,7 +164,7 @@ class _NewTourState extends State<NewTour> {
                                 TitleText('Thời lượng tour(ngày)'),
                                 Expanded(
                                   child: CountQuantity(
-                                    onCounterChanged: _onCounterChanged,
+                                    onCounterChanged: _changeThoiLuong,
                                   ),
                                 ),
                               ),
@@ -245,7 +261,7 @@ class _NewTourState extends State<NewTour> {
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Row(
-                                children: List.generate(_newCounter, (index) {
+                                children: List.generate(_curTour.schedule.length, (index) {
                                   return ItemTag(
                                     titleTag: Eday.values[index],
                                     isSelected: _selectedDayIndex == index,
@@ -270,11 +286,9 @@ class _NewTourState extends State<NewTour> {
                                     scrollDirection: Axis.vertical,
                                     child: Column(
                                       children: List.generate(
-                                        selectedSchedule.todo.length,
+                                        _curTour.schedule[_selectedDayIndex].todo.length,
                                         (index) {
-                                          ToDoOnDay toDo =
-                                              selectedSchedule.todo[index];
-                                          return ItemToDo(toDo: toDo);
+                                          return ItemToDo(toDo: _curTour.schedule[_selectedDayIndex].todo[index]);
                                         },
                                       ),
                                     ),
@@ -286,10 +300,12 @@ class _NewTourState extends State<NewTour> {
                                   child: FloatingActionButton(
                                     onPressed: () {
                                       setState(() {
-                                        selectedSchedule.addToDo(ToDoOnDay(
+                                        _curTour.schedule[_selectedDayIndex].addToDo(ToDoOnDay(
+                                          id: DateTime.now().microsecondsSinceEpoch.toString(),
                                           hour: '00',
                                           minute: '00',
-                                          content: 'New task'));
+                                          content: 'New task'),);
+                                        _curTour.schedule.forEach((element) => print('Co: ${element.todo.length}'),);
                                       });
                                     },
                                     backgroundColor: AppColor.primaryColor,
@@ -365,8 +381,8 @@ class _NewTourState extends State<NewTour> {
                                 print(
                                     "Maintain Time: ${_curTour.maintainTime}");
 
-                                _curTour.durations = _newCounter;
-                                print("Durations: $_newCounter");
+                                _curTour.durations = _curTour.schedule.length;
+                                print("Durations: $_curTour.schedule.length");
 
                                 _curTour.start = selectedDayBegin;
                                 print("Start Day: $selectedDayBegin");

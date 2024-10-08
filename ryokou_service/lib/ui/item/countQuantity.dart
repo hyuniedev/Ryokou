@@ -14,6 +14,7 @@ class _CountQuantityState extends State<CountQuantity> {
 
   void _incrementCounter() {
     setState(() {
+      print('Counter: $_counter');
       _counter++;
       widget.onCounterChanged(_counter); // Gọi callback khi thay đổi
     });

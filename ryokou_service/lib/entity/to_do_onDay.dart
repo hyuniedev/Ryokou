@@ -1,14 +1,17 @@
 
 class ToDoOnDay {
+  late String? _id;
   late String _hour;
   late String _minute;
   late String _content;
 
   ToDoOnDay({
+    String? id,
     required String hour,
     required String minute,
     required String content,
-  })  : _hour = hour,
+  })  : _id = id,
+        _hour = hour,
         _minute = minute,
         _content = content;
 
