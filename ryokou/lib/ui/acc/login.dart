@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ryokou/firebase/fire_accounts.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/item/itemField.dart';
+import 'package:ryokou/ui/progress_anim/loading.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
 
 class Login extends StatefulWidget {
@@ -74,7 +75,15 @@ class _LoginState extends State<Login> {
                         onTap: () async {
                           User? user = await authService.signIn(
                               tecUsername.text, tecPassword.text);
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return const Loading();
+                            },
+                          );
                           if (user != null) {
+                            Navigator.of(context).pop();
                             context.push('/');
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -110,7 +119,17 @@ class _LoginState extends State<Login> {
                         onTap: () async {
                           User? user =
                               await authService.signinWithGoogleAccount();
+
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return const Loading();
+                            },
+                          );
                           if (user != null) {
+                            Navigator.of(context).pop();
+
                             context.push('/');
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
