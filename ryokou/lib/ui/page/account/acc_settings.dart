@@ -4,6 +4,7 @@ import 'package:ryokou/firebase/fire_accounts.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/item/itemAcc.dart';
 import 'package:ryokou/ui/page/account/acc_container.dart';
+import 'package:ryokou/ui/progress_anim/loading.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
 
 class AccSettings extends StatelessWidget {
@@ -88,15 +89,28 @@ class AccSettings extends StatelessWidget {
                   Center(
                     child: ElevatedButton(
                       onPressed: () {
-                        auth.signOut();
-                        context.push('/');
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return const Loading(
+                              isLogOut: true,
+                            );
+                          },
+                        );
+                        Future.delayed(const Duration(seconds: 1), () {
+                          auth.signOut();
+                          context.pop();
+                          context.go('/');
+                        });
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white, // Nền trắng
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10), // Bo góc 10
                           side: const BorderSide(
-                              color: AppColors.primaryColor, width: 2), // Viền màu
+                              color: AppColors.primaryColor,
+                              width: 2), // Viền màu
                         ),
                       ),
                       child: const Text(

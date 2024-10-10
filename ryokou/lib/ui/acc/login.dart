@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/firebase/fire_accounts.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/item/itemField.dart';
@@ -73,8 +76,6 @@ class _LoginState extends State<Login> {
                       const SizedBox(height: 21),
                       InkWell(
                         onTap: () async {
-                          User? user = await authService.signIn(
-                              tecUsername.text, tecPassword.text);
                           showDialog(
                             context: context,
                             barrierDismissible: false,
@@ -82,13 +83,31 @@ class _LoginState extends State<Login> {
                               return const Loading();
                             },
                           );
+                          User? user = await authService.signIn(
+                              tecUsername.text, tecPassword.text);
                           if (user != null) {
-                            Navigator.of(context).pop();
-                            context.push('/');
+                            context.pop();
+                            await AlertSucess(context);
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Dang nhap that bai')));
+                            context.pop();
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Đăng nhập thất bại'),
+                                  content: const Text(
+                                      'Tên người dùng hoặc mật khẩu không chính xác.'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        context.pop();
+                                      },
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           }
                         },
                         borderRadius: BorderRadius.circular(10),
@@ -119,7 +138,6 @@ class _LoginState extends State<Login> {
                         onTap: () async {
                           User? user =
                               await authService.signinWithGoogleAccount();
-
                           showDialog(
                             context: context,
                             barrierDismissible: false,
@@ -128,13 +146,30 @@ class _LoginState extends State<Login> {
                             },
                           );
                           if (user != null) {
-                            Navigator.of(context).pop();
-
-                            context.push('/');
+                            context.pop();
+                            await AlertSucess(context);
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Dang nhap that bai')));
+                            Future.delayed(const Duration(seconds: 5), () {
+                              context.pop();
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Đăng nhập thất bại'),
+                                    content: const Text(
+                                        'Tài khoản Google của bạn không được xác nhận thành công'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          context.pop();
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            });
                           }
                         },
                         child: Container(
@@ -191,6 +226,37 @@ class _LoginState extends State<Login> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<dynamic> AlertSucess(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        Future.delayed(const Duration(seconds: 2), () {
+          context.pop();
+          FocusScope.of(context).unfocus();
+          context.push('/');
+        });
+        return const AlertDialog(
+          title: Column(
+            children: [
+              Icon(
+                Icons.check_circle,
+                color: AppColors.primaryColor,
+                size: 46,
+              ),
+              SizedBox(
+                height: 32,
+              ),
+              Text(
+                'Đăng nhập thành công!',
+                style: TextStyle(fontSize: 18),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

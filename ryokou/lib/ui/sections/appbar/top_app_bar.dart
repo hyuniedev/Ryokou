@@ -58,7 +58,7 @@ PreferredSizeWidget getAppBar(BuildContext context, Widget childAppBar,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           const Text(
-                            'Đăng kì thánh viên! Hưởng nhiều ưu đãi',
+                            'Đăng kì thành viên! Hưởng nhiều ưu đãi',
                             style: TextStyle(
                               color: AppColors.primaryColor,
                               fontWeight: FontWeight.bold,
@@ -100,7 +100,7 @@ PreferredSizeWidget getAppBar(BuildContext context, Widget childAppBar,
                             width: 10,
                           ),
                           Text(
-                            'Cháo mừng ${DataController().getUser?.fullName}!',
+                            'Chào mừng ${DataController().getUser?.fullName}!',
                             style: const TextStyle(
                               color: AppColors.primaryColor,
                               fontSize: 21,
