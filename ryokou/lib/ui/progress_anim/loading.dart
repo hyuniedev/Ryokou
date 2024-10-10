@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 
 class Loading extends StatefulWidget {
-  const Loading({super.key});
+  final bool isLogOut;
+
+  const Loading({
+    super.key,
+    this.isLogOut = false,
+  });
 
   @override
   _LoadingState createState() => _LoadingState();
@@ -15,7 +20,7 @@ class _LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 1),
+      duration: const Duration(seconds: 5),
       vsync: this,
     )..repeat();
   }
@@ -33,7 +38,7 @@ class _LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(40.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -43,13 +48,13 @@ class _LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
                 strokeWidth: 3.0,
                 valueColor:
                     AlwaysStoppedAnimation<Color>(AppColors.primaryColor),
-                backgroundColor: AppColors.fillDeal_Home
+                backgroundColor: AppColors.fillDeal_Home,
               ),
             ),
             const SizedBox(height: 20),
-            const Text(
-              '読み込み中',
-              style: TextStyle(
+            Text(
+              !widget.isLogOut ? '読み込み中' : 'ログアウト中',
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),
