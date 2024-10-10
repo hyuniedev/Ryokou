@@ -1,3 +1,4 @@
+import 'package:ryokou_service/controller/data_controller.dart';
 import 'package:ryokou_service/entity/tour.dart';
 
 class Company {
@@ -9,13 +10,13 @@ class Company {
   String? get numberphone => _numberphone;
   late String _email;
   String get email => _email;
-  List<Tour> _lsTour = [];
-  List<Tour> get lsTour => _lsTour;
-  set lsTour(List<Tour> value){
+  List<String> _lsTour = [];
+  List<String> get lsTour => _lsTour;
+  set lsTour(List<String> value){
     _lsTour = value;
   }
   Company(
-      { String? id,
+      { required String? id,
        String? name,
        String? numberphone,
        required String email,})
@@ -23,7 +24,7 @@ class Company {
         _name = name,
         _email = email,
         _numberphone = numberphone;
-  void addTour(Tour newTour) {
+  void addTour(String newTour) {
     _lsTour.add(newTour);
   }
 
@@ -33,10 +34,20 @@ class Company {
       'name' : name,
       'email' : email,
       'numberphone' : numberphone,
-      'tours' : lsTour.map((e) => e.id,)
+      'tours' : _lsTour,
     };
   }
-  factory Company.fromJson(Map<String,dynamic> json){
-    return Company(id: json['id'],email: json['email'], name: json['name'], numberphone: json['numberphone']);
-  }
+
+  factory Company.fromJson(Map<String, dynamic> json)  {
+  return Company(
+    id: json['id'],
+    email: json['email'],
+    name: json['name'] ?? '', 
+    numberphone: json['numberphone'] ?? '', 
+  )
+  ..lsTour = (json['tours'] != null) 
+    ? (json['tours'] as List<dynamic>).map((e) => e.toString()).toList()
+    : [];
+}
+
 }

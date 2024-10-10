@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ryokou_service/entity/tour.dart';
 import 'package:ryokou_service/ui/acc/login.dart';
 import 'package:ryokou_service/ui/acc/register.dart';
 import 'package:ryokou_service/ui/page/listCustomer.dart';
@@ -17,7 +16,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     final GoRouter router = GoRouter(routes: [
@@ -31,7 +29,7 @@ class MyApp extends StatelessWidget {
       ),
       GoRoute(
         path: '/newTour',
-        builder: (context, state) => NewTour(
+        builder: (context, state) => const NewTour(
         ),
       ),
       GoRoute(

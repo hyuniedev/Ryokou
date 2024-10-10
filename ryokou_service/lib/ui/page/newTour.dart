@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:ryokou_service/controller/account_controller.dart';
 import 'package:ryokou_service/entity/schedule.dart';
 import 'package:ryokou_service/entity/to_do_onDay.dart';
 import 'package:ryokou_service/entity/tour.dart';
@@ -409,15 +410,25 @@ class _NewTourState extends State<NewTour> {
 
                                 _curTour.lsFile = lsFile;
                                 print('Size list File: ${_curTour.lsFile.length}');
+                                
+                                AccountController().getCompany?.lsTour.add(_curTour.id);
 
-                                await _firestore.collection('tours').add(await _curTour.toJson());
+                                try {
+                                  DocumentReference doc = await _firestore.collection('tours').add(await _curTour.toJson());
+                                  AccountController().getCompany?.lsTour.add(doc.id);
+
+                                  await _firestore.collection('companys').doc(AccountController().getCompany?.id).set(AccountController().getCompany!.toJson());
+                                
+                                } catch (e) {
+                                  print('A some error: $e');
+                                }
                                 context.go('/listTour');
                               },
                               child: const Text(
                                 'Xác nhận',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 20),
-                              )),
+                              ),),
                         )
                       ],
                     ),

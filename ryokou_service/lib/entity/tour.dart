@@ -150,6 +150,31 @@ class Tour {
     _schedule.remove(oldSchedule);
   }
 
+  factory Tour.fromJson(Map<String, dynamic> json) {
+    return Tour(
+      id: '',
+      name: json['name'] ?? '',
+      city: json['city'] ?? '',
+      durations: json['durations'] ?? 0,
+      start: (json['start'] as Timestamp).toDate(),
+      maintainTime: json['maintainTime'] ?? 0,
+      cost: json['cost'] ?? '',
+      sale: json['sale'] ?? 0,
+      gatheringPlace: json['gatheringPlace'] ?? '',
+      freeService: json['freeService'] ?? false,
+      pointo: json['pointo'] ?? '',
+      kisoku: json['kisoku'] ?? '',
+
+      // Kiểm tra xem "schedule" có null không, nếu null thì gán danh sách rỗng
+      schedule: (json['schedule'] != null)
+          ? (json['schedule'] as List<dynamic>)
+              .map((item) => Schedule.fromJson(item as Map<String, dynamic>))
+              .toList()
+          : [],
+          lsFile: [],
+    );
+  }
+
   Future<Map<String,dynamic>> toJson() async{
     List<String?> lsUrlImage = await Future.wait(_lsFile.map((i)=>uploadImage(i))) ;
     return{

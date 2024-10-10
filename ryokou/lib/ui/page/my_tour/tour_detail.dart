@@ -153,9 +153,9 @@ class _TourDetailState extends State<TourDetail> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(height: 5),
-                                const Text(
-                                  '\t\tMiễn phí hủy; bạn có thể được hoàn tiền toàn bộ hoặc một phần cho các vé đã chọn nếu hủy đặt chỗ',
-                                  style: TextStyle(
+                                Text(
+                                  '\t\t${widget.tour.kisoku}',
+                                  style: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
                                   ),

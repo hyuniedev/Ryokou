@@ -71,7 +71,7 @@ class Login extends StatelessWidget {
                             //   password: tecPassword.text,
                             // );
                           } else {}
-                          context.go('/newtour');
+                          context.go('/listTour');
                         } catch (e) {
                           print('Co loi: $e');
                         }
@@ -118,25 +118,31 @@ class Login extends StatelessWidget {
                               await _auth.signInWithCredential(credential);
                           User? user = userCredential.user;
                           Company company;
+                          print('Check bug 1');
                           DocumentSnapshot doc = await _firestore
                               .collection('companys')
                               .doc(user!.uid)
                               .get();
+                              print('Check bug 2');
                           if (!doc.exists) {
+                            print('Check bug 2.1');
                             company = Company(
                                 id: user.uid,
                                 name: user.displayName,
                                 numberphone: user.phoneNumber,
                                 email: tecUsername.text);
+                                print('Check bug 3');
                             await _firestore
                                 .collection('companys')
                                 .doc(user.uid)
                                 .set(company.toJson());
+                                print('Check bug 5');
                           } else {
-                            Map<String, dynamic> data =
-                                doc.data() as Map<String, dynamic>;
-                            company = Company.fromJson(data);
+                            print('Check bug 7');
+                            company = Company.fromJson(doc.data() as Map<String, dynamic>);
+                            print('Check bug 4');
                           }
+                          print('Check bug 6');
                           AccountController().setCompany = company;
                           context.go('/listTour');
                         } catch (e) {
