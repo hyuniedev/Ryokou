@@ -9,12 +9,10 @@ import 'package:ryokou/ui/page/home/enumTag/ISugget.dart';
 class SuggetSection extends StatefulWidget {
   final String title;
   final List<ISugget> lsDivide;
-  final List<Tour> lsDataTour;
   const SuggetSection({
     super.key,
     required this.title,
     required this.lsDivide,
-    required this.lsDataTour,
   });
 
   @override
@@ -63,12 +61,17 @@ class _SuggetSectionState extends State<SuggetSection> {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: List.generate(
-              widget.lsDataTour.length,
-              (index) {
-                return ItemTour(tour: DataController().tour);
-              },
-            ),
+            children: DataController()
+                .lsTour
+                .map((item) => Row(
+                      children: [
+                        item == DataController().lsTour.first
+                            ? Container()
+                            : const SizedBox(width: 20),
+                        ItemTour(tour: item)
+                      ],
+                    ))
+                .toList(),
           ),
         ),
       ],

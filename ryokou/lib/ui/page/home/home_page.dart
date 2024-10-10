@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/entity/tour.dart';
 import 'package:ryokou/ui/page/home/enumTag/e_month.dart';
 import 'package:ryokou/ui/page/home/enumTag/e_province.dart';
@@ -29,30 +30,13 @@ class _HomePageState extends State<HomePage> {
               isHome: true,
             ),
             SliderBar(numSlider: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  const FlashSale(),
+                  FlashSale(),
                   SuggetSection(
-                    lsDataTour: [
-                      Tour(
-                          titleTour: 'Du lich suoi nuoc nong',
-                          descriptionTour: 'descriptionTour',
-                          duration: 3,
-                          location: 'Nhat Ban'),
-                      Tour(
-                          titleTour: 'Du lich suoi nuoc nong',
-                          descriptionTour: 'descriptionTour',
-                          duration: 3,
-                          location: 'Nhat Ban'),
-                      Tour(
-                          titleTour: 'Du lich suoi nuoc nong',
-                          descriptionTour: 'descriptionTour',
-                          duration: 3,
-                          location: 'Nhat Ban')
-                    ],
-                    lsDivide: const [
+                    lsDivide: [
                       EMonth.Thang8,
                       EMonth.Thang9,
                       EMonth.Thang10,
@@ -62,25 +46,8 @@ class _HomePageState extends State<HomePage> {
                     title: "Get go!",
                   ),
                   SuggetSection(
-                    lsDataTour: [
-                      Tour(
-                          titleTour: 'Du lich suoi nuoc nong',
-                          descriptionTour: 'descriptionTour',
-                          duration: 3,
-                          location: 'Nhat Ban'),
-                      Tour(
-                          titleTour: 'Du lich suoi nuoc nong',
-                          descriptionTour: 'descriptionTour',
-                          duration: 3,
-                          location: 'Nhat Ban'),
-                      Tour(
-                          titleTour: 'Du lich suoi nuoc nong',
-                          descriptionTour: 'descriptionTour',
-                          duration: 3,
-                          location: 'Nhat Ban')
-                    ],
                     title: 'Mua le hoi',
-                    lsDivide: const [
+                    lsDivide: [
                       EProvince.Chiba,
                       EProvince.Akita,
                       EProvince.Kanagawa,

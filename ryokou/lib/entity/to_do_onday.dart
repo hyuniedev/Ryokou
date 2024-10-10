@@ -1,4 +1,3 @@
-
 class ToDoOnDay {
   late String? _id;
   late String _hour;
@@ -25,23 +24,25 @@ class ToDoOnDay {
   set hour(String value) {
     _hour = value;
   }
+
   set minute(String value) {
     _minute = value;
   }
+
   set content(String value) {
     _content = value;
   }
 
-  Map<String, dynamic> toJson(){
+  Map<String, dynamic> toJson() {
     return {
-      'hour' : _hour,
-      'minute' : _minute,
-      'content' : _content,
+      'hour': _hour,
+      'minute': _minute,
+      'content': _content,
     };
   }
 
-  factory ToDoOnDay.fromJson(Map<String,dynamic> json){
-    return ToDoOnDay(hour: json['hour'], minute: json['minute'], content: json['content']);
+  factory ToDoOnDay.fromJson(Map<String, dynamic> json) {
+    return ToDoOnDay(
+        hour: json['hour'], minute: json['minute'], content: json['content']);
   }
-
 }

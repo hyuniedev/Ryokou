@@ -7,9 +7,9 @@ import 'package:ryokou_service/ui/item/generTextField.dart';
 import 'package:ryokou_service/ui/item/generalDropDown.dart';
 
 class ItemToDo extends StatefulWidget {
-  final ToDoOnDay toDo;
+   ToDoOnDay toDo;
 
-  const ItemToDo({super.key, required this.toDo});
+   ItemToDo({super.key, required this.toDo});
 
   @override
   _ItemToDoState createState() => _ItemToDoState();
@@ -27,9 +27,10 @@ class _ItemToDoState extends State<ItemToDo> {
   void initState() {
     super.initState();
     // Đặt giá trị mặc định cho selectedHour và selectedMinute
-    selectedHour = hours.isNotEmpty ? hours[0] : '00'; // Nếu hours không rỗng
+    selectedHour = hours.isNotEmpty ? hours[0] : widget.toDo.hour; // Nếu hours không rỗng
     selectedMinute =
-        minutes.isNotEmpty ? minutes[0] : '00'; // Nếu minutes không rỗng
+        minutes.isNotEmpty ? minutes[0] : widget.toDo.minute; // Nếu minutes không rỗng
+    tecTextToDo.text = widget.toDo.content;
   }
 
   @override
@@ -96,7 +97,7 @@ class _ItemToDoState extends State<ItemToDo> {
         ),
         GenerTextField(
           tec: tecTextToDo,
-          onChanged: (p0) => widget.toDo.content = tecTextToDo.text,
+          onChanged:(p0) => widget.toDo.content = tecTextToDo.text,
         ),
       ],
     );

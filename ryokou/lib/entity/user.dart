@@ -33,4 +33,31 @@ class User {
     this.numberphone,
     this.sex,
   });
+
+  // Convert User object to JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'password': password,
+      'fullName': fullName,
+      'numberphone': numberphone,
+      'email': email,
+      'sex': sex?.index, // Assuming ESex is an enum, store its index
+      'favoriteTour': _favoriteTour.map((tour) => tour.toJson()).toList(),
+    };
+  }
+
+  // Create a User object from JSON
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      password: json['password'],
+      fullName: json['fullName'],
+      numberphone: json['numberphone'],
+      email: json['email'],
+      sex: ESex.values[json['sex']], // Assuming sex is stored as an enum index
+    ).._favoriteTour = (json['favoriteTour'] as List)
+        .map((tour) => Tour.fromJson(tour))
+        .toList(); // Convert each tour in the list
+  }
 }
