@@ -19,10 +19,10 @@ class _ItemTourState extends State<ItemTour> {
     bool isFavourite = DataController().getUser == null
         ? false
         : DataController().getUser!.containsFavoriteTour(widget.tour);
-    return Container(
+    return SizedBox(
       height: 255,
-      width: 160,
-      padding: const EdgeInsets.only(right: 20),
+      width: 140,
+      // padding: const EdgeInsets.only(right: 20),
       child: InkWell(
         onTap: () {
           context.push('/tourDetail/${widget.tour.id}');
@@ -47,7 +47,7 @@ class _ItemTourState extends State<ItemTour> {
                     SizedBox(
                       height: 115,
                       child: Image.network(
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgUz7AtgrWT4yVZA-5Kx4QYZAFsoX1VeZBXKHDZ47MaT7njPxOqgWtD_XsGhGIyrdrpOU&usqp=CAU',
+                        widget.tour.lsFile[0],
                         fit: BoxFit.cover,
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) return child;
@@ -91,9 +91,9 @@ class _ItemTourState extends State<ItemTour> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Ngắm hoa anh đào tại Tokyo with Nguyen Huu Nien',
-                    style: TextStyle(
+                  Text(
+                    widget.tour.name,
+                    style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -125,9 +125,9 @@ class _ItemTourState extends State<ItemTour> {
                     ],
                   ),
                   const SizedBox(height: 3),
-                  const Text(
-                    '1.000.000đ',
-                    style: TextStyle(
+                  Text(
+                    widget.tour.cost,
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Colors.grey,
                       decoration: TextDecoration.lineThrough,

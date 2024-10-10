@@ -12,10 +12,10 @@ import 'package:ryokou/ui/page/account/acc_supportCenter.dart';
 import 'package:ryokou/ui/page/account/change_password.dart';
 import 'package:ryokou/ui/page/my_tour/tour_detail.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  DataController().LoadDataTour();
   runApp(const MyApp());
 }
 
@@ -52,11 +52,8 @@ class MyApp extends StatelessWidget {
       GoRoute(
         path: '/tourDetail/:id',
         builder: (context, state) {
-          final id = state.pathParameters['id'];
-          Tour tour = DataController().proposeTours.firstWhere(
-              (tour) => id == tour.id,
-              orElse: () => DataController().tour);
-          return TourDetail(tour: tour);
+          final String? id = state.pathParameters['id'];
+          return TourDetail(tour: DataController().findTour(id!));
         },
       ),
     ]);
@@ -66,6 +63,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
         useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
       ),
       routerConfig: router,
     );

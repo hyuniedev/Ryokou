@@ -39,7 +39,7 @@ class _FavoritePage extends State<FavoritePage> {
                           : favoriteIsNull(context),
                       const SizedBox(height: 50),
                       favoGridSection(
-                          'Đề xuất cho bạn', DataController().proposeTours)
+                          'Đề xuất cho bạn', DataController().lsTour)
                     ],
                   ),
                 ],
@@ -137,7 +137,7 @@ class _FavoritePage extends State<FavoritePage> {
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         mainAxisSpacing: 25,
-        crossAxisSpacing: 15,
+        crossAxisSpacing: 30,
         mainAxisExtent: 255,
       ),
       itemCount: tours.length,

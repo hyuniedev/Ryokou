@@ -65,14 +65,17 @@ class _FlashSaleState extends State<FlashSale> {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: [
-              ItemTour(tour: DataController().tour),
-              ItemTour(tour: DataController().tour),
-              ItemTour(tour: DataController().tour),
-              ItemTour(tour: DataController().tour),
-              ItemTour(tour: DataController().tour),
-              ItemTour(tour: DataController().tour),
-            ],
+            children: DataController()
+                .lsTour
+                .map((item) => Row(
+                      children: [
+                        item == DataController().lsTour.first
+                            ? Container()
+                            : const SizedBox(width: 20),
+                        ItemTour(tour: item)
+                      ],
+                    ))
+                .toList(),
           ),
         ),
         const SizedBox(height: 15),

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ryokou/controller/controller_data.dart';
+import 'package:ryokou/entity/company.dart';
+import 'package:ryokou/entity/rate.dart';
 import 'package:ryokou/entity/tour.dart';
+import 'package:ryokou/entity/user.dart';
+import 'package:ryokou/firebase/data_firebase.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 
 class TourDetail extends StatefulWidget {
@@ -17,7 +21,41 @@ class _TourDetailState extends State<TourDetail> {
   int indexRateTour = -1;
   DateTime _beginDate = DateTime.now();
   DateTime? _endDate;
+  String _companyName = '';
   bool moRong = false;
+  double _rateStar = 0;
+  String _levelRateString = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadCompany();
+    _beginDate = widget.tour.start;
+    _rateStar = widget.tour.getRateStar();
+    print('RATE STAR: $_rateStar');
+    if (_rateStar == 0) {
+      _levelRateString = 'Chưa có đánh giá nào.';
+    } else if (_rateStar < 1) {
+      _levelRateString = 'Tệ';
+    } else if (_rateStar < 2) {
+      _levelRateString = 'Xấu';
+    } else if (_rateStar < 3) {
+      _levelRateString = 'Khá';
+    } else if (_rateStar < 4) {
+      _levelRateString = 'Tốt';
+    } else {
+      _levelRateString = 'Tuyệt vời';
+    }
+  }
+
+  void loadCompany() async {
+    Company? com = await DataFirebase().getCompany(widget.tour.company);
+    setState(() {
+      _companyName = com?.name! ?? 'Ryokou Company';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isFavourite = DataController().getUser == null
@@ -64,7 +102,7 @@ class _TourDetailState extends State<TourDetail> {
                 child: Column(
                   children: [
                     Image.network(
-                      'https://i.pinimg.com/564x/c0/84/96/c084965248640ae5fd1eceb00044a0c7.jpg',
+                      widget.tour.lsFile[0],
                       fit: BoxFit.cover,
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.25,
@@ -260,29 +298,29 @@ class _TourDetailState extends State<TourDetail> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const Row(
+          Row(
             children: [
               Stack(
                 alignment: Alignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.star,
                     size: 70,
                     color: AppColors.primaryColor,
                   ),
                   Text(
-                    '4.2',
-                    style: TextStyle(
+                    widget.tour.getRateStar().toString(),
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                         fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
-              SizedBox(width: 6),
+              const SizedBox(width: 6),
               Text(
-                'Tuyệt vời ',
-                style: TextStyle(
+                _levelRateString,
+                style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: AppColors.primaryColor,
@@ -292,7 +330,22 @@ class _TourDetailState extends State<TourDetail> {
           ),
           const SizedBox(height: 15),
           Column(
-            children: [itemRate(context), itemRate(context)],
+            children: widget.tour.lsRate.map((rate) {
+              return FutureBuilder<Column>(
+                future: itemRate(context, rate), // Gọi hàm bất đồng bộ
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator(); // Hiển thị khi đang tải
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else if (snapshot.hasData) {
+                    return snapshot.data!; // Hiển thị khi có dữ liệu
+                  } else {
+                    return const Text('No data available');
+                  }
+                },
+              );
+            }).toList(),
           ),
           InkWell(
             onTap: () {},
@@ -402,23 +455,24 @@ class _TourDetailState extends State<TourDetail> {
     );
   }
 
-  Column itemRate(BuildContext context) {
+  Future<Column> itemRate(BuildContext context, Rate rate) async {
+    User userRate = await DataFirebase().getUser(rate.user);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Divider(height: 3, thickness: 1),
         const SizedBox(height: 10),
-        const Row(
+        Row(
           children: [
-            Icon(
+            const Icon(
               Icons.account_circle,
               size: 30,
               color: AppColors.primaryColor,
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Text(
-              'Ten nguoi dung',
-              style: TextStyle(
+              userRate.fullName ?? 'Tên người dùng',
+              style: const TextStyle(
                 color: Colors.black,
               ),
             ),
@@ -473,7 +527,7 @@ class _TourDetailState extends State<TourDetail> {
                     padding: const EdgeInsets.only(
                         left: 10.0, right: 10.0, bottom: 20),
                     child: Text(
-                      widget.tour.diemNoiBat,
+                      widget.tour.pointo,
                       maxLines: moRong ? null : 5,
                       style: const TextStyle(fontSize: 16),
                     )),
@@ -577,13 +631,13 @@ class _TourDetailState extends State<TourDetail> {
                       children: [
                         CalendarDatePicker(
                           initialDate: _beginDate,
-                          firstDate: DateTime.now(),
+                          firstDate: widget.tour.start,
                           lastDate: DateTime(2100),
                           onDateChanged: (value) {
                             setState(() {
                               _beginDate = value;
                               _endDate = _beginDate
-                                  .add(Duration(days: widget.tour.duration));
+                                  .add(Duration(days: widget.tour.durations));
                             });
                           },
                         ),
@@ -673,21 +727,21 @@ class _TourDetailState extends State<TourDetail> {
   }
 
   Row rateTour() {
-    return const Row(
+    return Row(
       children: [
         Text(
-          '4.2/5',
-          style: TextStyle(
+          '$_rateStar/5',
+          style: const TextStyle(
             letterSpacing: 1.2,
             fontSize: 16,
             color: AppColors.primaryColor,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(width: 6),
+        const SizedBox(width: 6),
         Text(
-          '( từ 198 đánh giá)',
-          style: TextStyle(
+          '( từ ${widget.tour.lsRate.length} đánh giá)',
+          style: const TextStyle(
             color: Colors.blueGrey,
             fontSize: 16,
             fontWeight: FontWeight.bold,
@@ -701,10 +755,10 @@ class _TourDetailState extends State<TourDetail> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Expanded(
+        Expanded(
           child: Text(
-            'Ngắm hoa anh đào tại Tokyo',
-            style: TextStyle(
+            tour.name,
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 22,
               fontWeight: FontWeight.bold,
@@ -750,9 +804,9 @@ class _TourDetailState extends State<TourDetail> {
           ),
         ),
         const SizedBox(width: 6),
-        const Text(
-          'Sakura Company',
-          style: TextStyle(
+        Text(
+          _companyName.isNotEmpty ? _companyName : 'Loading...',
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Colors.black,
@@ -763,58 +817,57 @@ class _TourDetailState extends State<TourDetail> {
   }
 
   Widget tongQuan() {
-    return const SizedBox(
+    return SizedBox(
       width: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Tổng quan',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
+              const Icon(
                 Icons.watch_later_outlined,
                 color: AppColors.primaryColor,
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Thời gian tour',
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
-                  Text('1 ngày'),
+                  Text('${widget.tour.durations.toString()} ngày'),
                 ],
               ),
             ],
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
+              const Icon(
                 Icons.tour_outlined,
                 color: AppColors.primaryColor,
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Tập họp tại địa điểm cụ thể',
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
-                  Text('Không có dịch vụ đưa đón miễn phí'),
-                  Text('Tập họp tại sân bay quốc tế Nội Bài'),
+                  Text(widget.tour.gatheringPlace),
                 ],
               ),
             ],
@@ -838,7 +891,7 @@ class _TourDetailState extends State<TourDetail> {
           ),
         ),
         Text(
-          widget.tour.titleTour,
+          widget.tour.name,
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,

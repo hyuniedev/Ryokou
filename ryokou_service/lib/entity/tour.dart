@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:ryokou_service/controller/account_controller.dart';
 import 'package:ryokou_service/entity/schedule.dart';
 
 class Tour {
@@ -165,6 +166,7 @@ class Tour {
       'kisoku' : _kisoku,
       'schedule' : _schedule.map((sche)=>sche.toJson()).toList(),
       'lsFile' : lsUrlImage,
+      'company' : AccountController().getCompany?.id
     };
   }
   Future<String?> uploadImage(File image) async{
