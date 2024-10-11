@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/entity/enumSex/e_sex.dart';
 import 'package:ryokou/entity/user.dart' as myuser;
+import 'package:ryokou/firebase/data_firebase.dart';
 
 class AuthService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -58,12 +59,12 @@ class AuthService {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: user.email, password: user.password!);
-      user.id = result.user!.uid;
-      saveData(user);
+      user.id = result.user?.uid;
       DataController().setUser = user;
+      DataFirebase().setUser();
       return result.user;
     } catch (e) {
-      print('Loi khi dang ky');
+      print('Loi khi dang ky: $e');
       return null;
     }
   }
@@ -72,22 +73,12 @@ class AuthService {
     try {
       UserCredential? userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      DocumentSnapshot doc = await _firestore
-          .collection('users')
-          .doc(userCredential.user!.uid)
-          .get();
-      if (doc.exists) {
-        Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
-        DataController().setUser = myuser.User(
-            password: password,
-            fullName: data?['fullname'],
-            email: email,
-            numberphone: data?['numberphone'],
-            sex: ESex.values[(data?['sex'])]);
-      } else {}
+
+      DataController().setUser =
+          await DataFirebase().getUser(userCredential.user!.uid);
       return userCredential.user;
     } catch (e) {
-      print('CO LOI TRONG KHI DANG NHAP');
+      print('CO LOI TRONG KHI DANG NHAP: $e');
       print(e.toString());
       return null;
     }

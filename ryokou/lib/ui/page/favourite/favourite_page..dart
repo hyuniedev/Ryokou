@@ -121,7 +121,7 @@ class _FavoritePage extends State<FavoritePage> {
 
   Container favoGridSection(String title, List<Tour> tours) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -147,7 +147,7 @@ class _FavoritePage extends State<FavoritePage> {
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         mainAxisSpacing: 25,
-        crossAxisSpacing: 30,
+        crossAxisSpacing: 15,
         mainAxisExtent: 255,
       ),
       itemCount: tours.length,
