@@ -152,7 +152,7 @@ class Register extends StatelessWidget {
 
                         try {
                           User? user = await authService.register(myUser);
-                          context.go('/');
+                          context.go('/login');
                         } catch (e) {
                           // Xử lý ngoại lệ và thông báo lỗi
                           ScaffoldMessenger.of(context).showSnackBar(

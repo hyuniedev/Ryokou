@@ -15,6 +15,21 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePage extends State<FavoritePage> {
+  List<Tour> lsTour = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getListFavorite();
+  }
+
+  Future<void> getListFavorite() async {
+    List<Tour> lsTourData = await DataController().getUser!.getFavoriteTours();
+    setState(() {
+      lsTour = lsTourData;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -29,13 +44,8 @@ class _FavoritePage extends State<FavoritePage> {
                   const SizedBox(height: 30),
                   Column(
                     children: [
-                      (DataController().getUser != null &&
-                              DataController()
-                                  .getUser!
-                                  .getFavoriteTours
-                                  .isNotEmpty)
-                          ? favoGridSection('Tour yêu thích của bạn ',
-                              DataController().getUser!.getFavoriteTours)
+                      (DataController().getUser != null && lsTour.isNotEmpty)
+                          ? favoGridSection('Tour yêu thích của bạn ', lsTour)
                           : favoriteIsNull(context),
                       const SizedBox(height: 50),
                       favoGridSection(

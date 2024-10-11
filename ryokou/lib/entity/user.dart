@@ -1,5 +1,6 @@
 import 'package:ryokou/entity/enumSex/e_sex.dart';
 import 'package:ryokou/entity/tour.dart';
+import 'package:ryokou/firebase/data_firebase.dart';
 
 class User {
   String? id;
@@ -8,11 +9,20 @@ class User {
   String? numberphone;
   String email;
   ESex? sex;
-  List<Tour> _favoriteTour = [];
-  List<Tour> get getFavoriteTours => _favoriteTour;
-  set setFavoriteTour(List<Tour> lsTour) => _favoriteTour = lsTour;
+  List<String> _favoriteTour = [];
+
+  Future<List<Tour>> getFavoriteTours() async {
+    List<Future<Tour?>> futureTours =
+        _favoriteTour.map((item) => DataFirebase().getTour(item)).toList();
+
+    List<Tour?> tours = await Future.wait(futureTours);
+
+    return tours.where((tour) => tour != null).cast<Tour>().toList();
+  }
+
+  set setFavoriteTour(List<String> lsTour) => _favoriteTour = lsTour;
   void addFavoriteTour(Tour newTour) {
-    _favoriteTour.add(newTour);
+    _favoriteTour.add(newTour.id!);
   }
 
   void removeFavoriteTour(Tour delTour) {
@@ -34,7 +44,6 @@ class User {
     this.sex,
   });
 
-  // Convert User object to JSON
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -42,8 +51,8 @@ class User {
       'fullName': fullName,
       'numberphone': numberphone,
       'email': email,
-      'sex': sex?.index, // Assuming ESex is an enum, store its index
-      'favoriteTour': _favoriteTour.map((tour) => tour.toJson()).toList(),
+      'sex': sex?.index,
+      'favoriteTour': _favoriteTour,
     };
   }
 
@@ -55,9 +64,7 @@ class User {
       fullName: json['fullName'],
       numberphone: json['numberphone'],
       email: json['email'],
-      sex: ESex.values[json['sex']], // Assuming sex is stored as an enum index
-    ).._favoriteTour = (json['favoriteTour'] as List)
-        .map((tour) => Tour.fromJson(tour))
-        .toList(); // Convert each tour in the list
+      sex: ESex.values[json['sex']],
+    ).._favoriteTour = (json['favoriteTour'] as List<String>);
   }
 }

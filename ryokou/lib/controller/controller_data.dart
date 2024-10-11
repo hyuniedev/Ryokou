@@ -2,10 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ryokou/entity/rate.dart';
 import 'package:ryokou/entity/user.dart';
 import 'package:ryokou/entity/tour.dart';
+import 'package:ryokou/firebase/data_firebase.dart';
 
 class DataController {
   static final DataController _instance = DataController._singleton();
-  DataController._singleton(); // contructor private
+  DataController._singleton();
   factory DataController() {
     return _instance;
   }
@@ -40,5 +41,10 @@ class DataController {
 
   Tour findTour(String id) {
     return lsTour.firstWhere((element) => element.id == id);
+  }
+
+  void addTourToFavorite(Tour newTour) {
+    _user?.addFavoriteTour(newTour);
+    DataFirebase().setUser();
   }
 }

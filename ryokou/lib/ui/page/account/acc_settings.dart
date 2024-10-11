@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ryokou/firebase/fire_accounts.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/item/itemAcc.dart';
+import 'package:ryokou/ui/main_layout.dart';
 import 'package:ryokou/ui/page/account/acc_container.dart';
 import 'package:ryokou/ui/progress_anim/loading.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
@@ -101,6 +102,7 @@ class AccSettings extends StatelessWidget {
                         Future.delayed(const Duration(seconds: 1), () {
                           auth.signOut();
                           context.pop();
+                          MainLayout.index = 0;
                           context.go('/');
                         });
                       },

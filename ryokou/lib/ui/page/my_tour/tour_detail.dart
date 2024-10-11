@@ -481,9 +481,9 @@ class _TourDetailState extends State<TourDetail> {
         Row(
           children: [
             SizedBox(width: MediaQuery.of(context).size.width * 0.1),
-            const Text(
-              '5.0/5',
-              style: TextStyle(
+            Text(
+              '${rate.star}/5',
+              style: const TextStyle(
                 color: AppColors.primaryColor,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -492,9 +492,9 @@ class _TourDetailState extends State<TourDetail> {
           ],
         ),
         const SizedBox(height: 7),
-        const Text(
-          'Tour nhu cut! Lua dao!',
-          style: TextStyle(
+        Text(
+          rate.comment,
+          style: const TextStyle(
             fontSize: 15,
             color: Colors.black,
           ),

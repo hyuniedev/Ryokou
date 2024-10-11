@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/entity/tour.dart';
+import 'package:ryokou/firebase/data_firebase.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 
 class ItemTour extends StatefulWidget {
@@ -67,9 +68,9 @@ class _ItemTourState extends State<ItemTour> {
                           color: AppColors.primaryColor,
                           borderRadius:
                               BorderRadius.only(topRight: Radius.circular(15))),
-                      child: const Text(
-                        '20%',
-                        style: TextStyle(
+                      child: Text(
+                        '${widget.tour.sale}%',
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
@@ -102,28 +103,37 @@ class _ItemTourState extends State<ItemTour> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 3),
-                  const Row(
-                    children: [
-                      Text(
-                        '4.2/5',
-                        style: TextStyle(
-                          letterSpacing: 1.2,
-                          fontSize: 13,
-                          color: AppColors.primaryColor,
-                          fontWeight: FontWeight.bold,
+                  widget.tour.lsRate.isEmpty
+                      ? const Text(
+                          'Chưa có đánh giá',
+                          style: TextStyle(
+                            color: Colors.blueGrey,
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      : Row(
+                          children: [
+                            Text(
+                              '${widget.tour.getRateStar()}/5',
+                              style: const TextStyle(
+                                letterSpacing: 1.2,
+                                fontSize: 13,
+                                color: AppColors.primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              '(${widget.tour.lsRate.length})',
+                              style: const TextStyle(
+                                color: Colors.blueGrey,
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      SizedBox(width: 6),
-                      Text(
-                        '(198)',
-                        style: TextStyle(
-                          color: Colors.blueGrey,
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
                   const SizedBox(height: 3),
                   Text(
                     widget.tour.cost,
@@ -138,9 +148,9 @@ class _ItemTourState extends State<ItemTour> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        '899.000đ',
-                        style: TextStyle(
+                      Text(
+                        '${widget.tour.cost}đ',
+                        style: const TextStyle(
                           fontSize: 18,
                           color: Colors.amber,
                           fontWeight: FontWeight.bold,
@@ -148,10 +158,11 @@ class _ItemTourState extends State<ItemTour> {
                       ),
                       InkWell(
                         customBorder: const CircleBorder(),
-                        onTap: () {
+                        onTap: () async {
                           if (DataController().getUser != null) {
                             setState(() {
                               isFavourite = !isFavourite;
+                              
                             });
                             isFavourite
                                 ? DataController()

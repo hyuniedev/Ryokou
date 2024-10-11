@@ -189,7 +189,7 @@ class Tour {
     );
   }
 
-  Future<Map<String, dynamic>> toJson() async {
+  Map<String, dynamic> toJson() {
     return {
       'name': _name,
       'city': _city,

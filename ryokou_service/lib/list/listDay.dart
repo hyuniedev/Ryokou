@@ -1,5 +1,5 @@
 
 const List<String> days = [
-  '14 ngày',
-  '30 ngày',
+  '6 tháng',
+  '1 năm',
 ];
