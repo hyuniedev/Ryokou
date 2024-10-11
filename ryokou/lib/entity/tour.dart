@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:ryokou/entity/rate.dart';
 import 'package:ryokou/entity/schedule.dart';
 
@@ -88,6 +89,18 @@ class Tour {
   List<String> get lsFile => _lsFile;
   List<Rate> get lsRate => _lsRate;
   String get company => _company;
+
+  String getPriceTour() {
+    int originalPrice = int.parse(_cost.replaceAll('.', ''));
+
+    double discountAmount = originalPrice * (_sale / 100);
+
+    final formatter = NumberFormat("#,##0", "en_US");
+
+    return formatter
+        .format((originalPrice - discountAmount))
+        .replaceAll(',', '.');
+  }
 
   // Setters
   set id(String? value) {

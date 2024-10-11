@@ -1,3 +1,4 @@
+import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/entity/enumSex/e_sex.dart';
 import 'package:ryokou/entity/tour.dart';
 import 'package:ryokou/firebase/data_firebase.dart';
@@ -22,7 +23,9 @@ class User {
 
   set setFavoriteTour(List<String> lsTour) => _favoriteTour = lsTour;
   void addFavoriteTour(Tour newTour) {
+    print('Them Tour');
     _favoriteTour.add(newTour.id!);
+    DataFirebase().setUser();
   }
 
   void removeFavoriteTour(Tour delTour) {
@@ -47,7 +50,6 @@ class User {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'password': password,
       'fullName': fullName,
       'numberphone': numberphone,
       'email': email,
@@ -59,12 +61,12 @@ class User {
   // Create a User object from JSON
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['id'],
-      password: json['password'],
-      fullName: json['fullName'],
-      numberphone: json['numberphone'],
-      email: json['email'],
-      sex: ESex.values[json['sex']],
-    ).._favoriteTour = (json['favoriteTour'] as List<String>);
+        id: json['id'] ?? '',
+        fullName: json['fullName'] ?? '',
+        numberphone: json['numberphone'] ?? '',
+        email: json['email'] ?? '',
+        sex: ESex.values[json['sex']] ?? ESex.none)
+      .._favoriteTour =
+          (json['favoriteTour'] as List<dynamic>? ?? []).cast<String>();
   }
 }

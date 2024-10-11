@@ -22,7 +22,7 @@ class _ItemTourState extends State<ItemTour> {
         : DataController().getUser!.containsFavoriteTour(widget.tour);
     return SizedBox(
       height: 255,
-      width: 140,
+      width: 150,
       // padding: const EdgeInsets.only(right: 20),
       child: InkWell(
         onTap: () {
@@ -149,7 +149,7 @@ class _ItemTourState extends State<ItemTour> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '${widget.tour.cost}đ',
+                        '${widget.tour.getPriceTour()}đ',
                         style: const TextStyle(
                           fontSize: 18,
                           color: Colors.amber,
@@ -158,11 +158,10 @@ class _ItemTourState extends State<ItemTour> {
                       ),
                       InkWell(
                         customBorder: const CircleBorder(),
-                        onTap: () async {
+                        onTap: () {
                           if (DataController().getUser != null) {
                             setState(() {
                               isFavourite = !isFavourite;
-                              
                             });
                             isFavourite
                                 ? DataController()

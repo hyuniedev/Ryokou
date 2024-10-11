@@ -43,8 +43,4 @@ class DataController {
     return lsTour.firstWhere((element) => element.id == id);
   }
 
-  void addTourToFavorite(Tour newTour) {
-    _user?.addFavoriteTour(newTour);
-    DataFirebase().setUser();
-  }
 }
