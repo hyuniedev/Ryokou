@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/page/account/account_page.dart';
 import 'package:ryokou/ui/page/favourite/favourite_page..dart';
 import 'package:ryokou/ui/page/home/home_page.dart';
 import 'package:ryokou/ui/page/my_tour/my_tour_page.dart';
-import 'package:ryokou/ui/page/my_tour/tour_detail.dart';
 import 'package:ryokou/ui/page/search/search_page.dart';
 
 class MainLayout extends StatefulWidget {
@@ -29,7 +27,6 @@ class _MainLayoutState extends State<MainLayout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: null,
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(

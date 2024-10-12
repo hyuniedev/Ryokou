@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ryokou/themes/colors_theme.dart';
 
 class SliderBar extends StatefulWidget {
-  const SliderBar({super.key, required this.numSlider});
-  final int numSlider;
+  const SliderBar({super.key});
 
   @override
   State<SliderBar> createState() => _SliderBarState();
@@ -25,7 +23,7 @@ class _SliderBarState extends State<SliderBar> {
   @override
   void initState() {
     super.initState();
-    _curPage = widget.numSlider ~/ 2;
+    _curPage = imagePaths.length ~/ 2;
     _pageController = PageController(
       initialPage: _curPage,
       viewportFraction: 0.8,

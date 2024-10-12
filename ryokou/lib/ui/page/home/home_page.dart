@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ryokou/controller/controller_data.dart';
-import 'package:ryokou/entity/tour.dart';
 import 'package:ryokou/ui/page/home/enumTag/e_month.dart';
 import 'package:ryokou/ui/page/home/enumTag/e_province.dart';
 import 'package:ryokou/ui/page/home/flash_sale.dart';
@@ -29,7 +27,7 @@ class _HomePageState extends State<HomePage> {
               childAppBarMainPages(),
               isHome: true,
             ),
-            SliderBar(numSlider: 10),
+            const SliderBar(),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: Column(
@@ -54,7 +52,8 @@ class _HomePageState extends State<HomePage> {
                       EProvince.Tokyo,
                       EProvince.Mie,
                     ],
-                  )
+                  ),
+                  SizedBox(height: 30),
                 ],
               ),
             ),

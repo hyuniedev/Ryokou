@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ryokou/entity/enumSex/e_sex.dart';
 import 'package:ryokou/entity/user.dart' as myuser;
-import 'package:ryokou/firebase/fire_accounts.dart';
+import 'package:ryokou/firebase/data_firebase.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/item/itemField.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
@@ -18,8 +18,6 @@ class Register extends StatelessWidget {
   Register({super.key});
   @override
   Widget build(BuildContext context) {
-    AuthService authService = AuthService();
-
     return Scaffold(
       body: SafeArea(
           child: GestureDetector(
@@ -151,7 +149,7 @@ class Register extends StatelessWidget {
                                 : ESex.female);
 
                         try {
-                          User? user = await authService.register(myUser);
+                          User? user = await DataFirebase().register(myUser);
                           context.go('/login');
                         } catch (e) {
                           // Xử lý ngoại lệ và thông báo lỗi
@@ -187,14 +185,8 @@ class Register extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       onTap: () async {
                         User? user =
-                            await authService.signinWithGoogleAccount();
-                        if (user != null) {
-                          context.push('/');
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text('Dang ky that bai')));
-                        }
+                            await DataFirebase().signinWithGoogleAccount();
+                        context.push('/');
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 7),

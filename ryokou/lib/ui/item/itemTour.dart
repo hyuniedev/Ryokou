@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/entity/tour.dart';
-import 'package:ryokou/firebase/data_firebase.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 
 class ItemTour extends StatefulWidget {
@@ -15,11 +14,18 @@ class ItemTour extends StatefulWidget {
 }
 
 class _ItemTourState extends State<ItemTour> {
+  bool isFavourite = false;
+
   @override
-  Widget build(BuildContext context) {
-    bool isFavourite = DataController().getUser == null
+  void initState() {
+    super.initState();
+    isFavourite = DataController().getUser == null
         ? false
         : DataController().getUser!.containsFavoriteTour(widget.tour);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       height: 255,
       width: 150,

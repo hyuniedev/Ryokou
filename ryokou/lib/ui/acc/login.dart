@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ryokou/controller/controller_data.dart';
-import 'package:ryokou/firebase/fire_accounts.dart';
+import 'package:ryokou/firebase/data_firebase.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/item/itemField.dart';
 import 'package:ryokou/ui/progress_anim/loading.dart';
@@ -23,8 +20,6 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    AuthService authService = AuthService();
-
     return SafeArea(
       child: Scaffold(
         body: GestureDetector(
@@ -83,8 +78,8 @@ class _LoginState extends State<Login> {
                               return const Loading();
                             },
                           );
-                          User? user = await authService.signIn(
-                              tecUsername.text, tecPassword.text);
+                          User? user = await DataFirebase()
+                              .signIn(tecUsername.text, tecPassword.text);
                           if (user != null) {
                             context.pop();
                             await AlertSucess(context);
@@ -137,7 +132,7 @@ class _LoginState extends State<Login> {
                         borderRadius: BorderRadius.circular(10),
                         onTap: () async {
                           User? user =
-                              await authService.signinWithGoogleAccount();
+                              await DataFirebase().signinWithGoogleAccount();
                           showDialog(
                             context: context,
                             barrierDismissible: false,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ryokou/firebase/fire_accounts.dart';
+import 'package:ryokou/firebase/data_firebase.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/item/itemAcc.dart';
 import 'package:ryokou/ui/main_layout.dart';
@@ -13,7 +13,6 @@ class AccSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AuthService auth = AuthService();
     return SafeArea(
         child: Scaffold(
       body: SingleChildScrollView(
@@ -100,7 +99,7 @@ class AccSettings extends StatelessWidget {
                           },
                         );
                         Future.delayed(const Duration(seconds: 1), () {
-                          auth.signOut();
+                          DataFirebase().signOut();
                           context.pop();
                           MainLayout.index = 0;
                           context.go('/');

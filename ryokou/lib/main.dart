@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ryokou/controller/controller_data.dart';
-import 'package:ryokou/entity/tour.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/acc/login.dart';
 import 'package:ryokou/ui/acc/register.dart';
@@ -15,7 +14,7 @@ import 'package:ryokou/ui/page/my_tour/tour_detail.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  DataController().LoadDataTour();
+  DataController().loadDataTour();
   runApp(const MyApp());
 }
 
@@ -40,7 +39,8 @@ class MyApp extends StatelessWidget {
             const end = Offset.zero;
             const curve = Curves.easeInOut;
 
-            var tween =Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            var tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
             var offsetAnimation = animation.drive(tween);
 
             return SlideTransition(

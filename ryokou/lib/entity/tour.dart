@@ -221,23 +221,23 @@ class Tour {
     };
   }
 
-  Future<String?> uploadImage(File image) async {
-    try {
-      FirebaseStorage storage = FirebaseStorage.instance;
-      Reference ref = storage
-          .ref()
-          .child('images/${DateTime.now().microsecondsSinceEpoch}.jpg');
+  // Future<String?> uploadImage(File image) async {
+  //   try {
+  //     FirebaseStorage storage = FirebaseStorage.instance;
+  //     Reference ref = storage
+  //         .ref()
+  //         .child('images/${DateTime.now().microsecondsSinceEpoch}.jpg');
 
-      UploadTask upload = ref.putFile(image);
-      TaskSnapshot taskSnapshot = await upload;
+  //     UploadTask upload = ref.putFile(image);
+  //     TaskSnapshot taskSnapshot = await upload;
 
-      String urlDownload = await taskSnapshot.ref.getDownloadURL();
-      return urlDownload;
-    } catch (e) {
-      print('Error uploading image: $e');
-      return null;
-    }
-  }
+  //     String urlDownload = await taskSnapshot.ref.getDownloadURL();
+  //     return urlDownload;
+  //   } catch (e) {
+  //     print('Error uploading image: $e');
+  //     return null;
+  //   }
+  // }
 
   double getRateStar() {
     double rate = 0;

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ryokou/controller/controller_data.dart';
-import 'package:ryokou/entity/tour.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/item/itemTag.dart';
 import 'package:ryokou/ui/item/itemTour.dart';
@@ -58,22 +57,53 @@ class _SuggetSectionState extends State<SuggetSection> {
             ),
           ),
         ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: DataController()
-                .lsTour
-                .map((item) => Row(
-                      children: [
-                        item == DataController().lsTour.first
-                            ? Container()
-                            : const SizedBox(width: 20),
-                        ItemTour(tour: item)
-                      ],
-                    ))
-                .toList(),
-          ),
-        ),
+        FutureBuilder(
+          future: DataController().getListTour(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: 150,
+                child: const Center(
+                  child: Text(
+                    'Has Error on Loading Data, Pls Reload app',
+                    style: TextStyle(fontSize: 21),
+                  ),
+                ),
+              );
+            } else if (!snapshot.hasData) {
+              return SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: 150,
+                child: const Center(
+                  child: Text(
+                    'No Data, Try again!',
+                    style: TextStyle(fontSize: 21),
+                  ),
+                ),
+              );
+            } else {
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: DataController()
+                      .lsTour
+                      .map((item) => Row(
+                            children: [
+                              item == DataController().lsTour.first
+                                  ? Container()
+                                  : const SizedBox(width: 20),
+                              ItemTour(tour: item)
+                            ],
+                          ))
+                      .toList(),
+                ),
+              );
+            }
+          },
+        )
       ],
     );
   }

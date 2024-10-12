@@ -456,7 +456,7 @@ class _TourDetailState extends State<TourDetail> {
   }
 
   Future<Column> itemRate(BuildContext context, Rate rate) async {
-    User userRate = await DataFirebase().getUser(rate.user);
+    User userRate = DataFirebase().getUser(rate.user);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

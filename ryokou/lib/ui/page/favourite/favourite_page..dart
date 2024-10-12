@@ -23,8 +23,8 @@ class _FavoritePage extends State<FavoritePage> {
     getListFavorite();
   }
 
-  Future<void> getListFavorite() async {
-    List<Tour> lsTourData = await DataController().getUser!.getFavoriteTours();
+  void getListFavorite() {
+    List<Tour> lsTourData = DataController().getUser?.getFavoriteTours() ?? [];
     setState(() {
       lsTour = lsTourData;
     });
@@ -32,89 +32,86 @@ class _FavoritePage extends State<FavoritePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  getAppBar(context, childAppBarMainPages()),
-                  const SizedBox(height: 30),
-                  Column(
-                    children: [
-                      (DataController().getUser != null && lsTour.isNotEmpty)
-                          ? favoGridSection('Tour yêu thích của bạn ', lsTour)
-                          : favoriteIsNull(context),
-                      const SizedBox(height: 50),
-                      favoGridSection(
-                          'Đề xuất cho bạn', DataController().lsTour)
-                    ],
-                  ),
-                ],
-              ),
+    return Scaffold(
+      body: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                getAppBar(context, childAppBarMainPages()),
+                const SizedBox(height: 30),
+                Column(
+                  children: [
+                    (DataController().getUser != null && lsTour.isNotEmpty)
+                        ? favoGridSection('Tour yêu thích của bạn ', lsTour)
+                        : favoriteIsNull(context),
+                    const SizedBox(height: 50),
+                    favoGridSection('Đề xuất cho bạn', DataController().lsTour)
+                  ],
+                ),
+              ],
             ),
-            // Nut Dang nhap - Dang ky neu chua dang nhap
-            DataController().getUser == null
-                ? Container(
-                    color: Colors.white.withOpacity(0.95),
-                    height: 100,
-                    padding: const EdgeInsets.symmetric(vertical: 25),
-                    width: double.infinity,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        InkWell(
+          ),
+          // Nut Dang nhap - Dang ky neu chua dang nhap
+          DataController().getUser == null
+              ? Container(
+                  color: Colors.white.withOpacity(0.95),
+                  height: 100,
+                  padding: const EdgeInsets.symmetric(vertical: 25),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      InkWell(
+                        borderRadius: BorderRadius.circular(10),
+                        onTap: () {
+                          context.go('/login');
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width / 2.5,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              border:
+                                  Border.all(color: AppColors.primaryColor)),
+                          child: const Center(
+                            child: Text(
+                              'Đăng nhập',
+                              style: TextStyle(
+                                  fontSize: 21,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primaryColor),
+                            ),
+                          ),
+                        ),
+                      ),
+                      InkWell(
                           borderRadius: BorderRadius.circular(10),
                           onTap: () {
-                            context.go('/login');
+                            context.push('/register');
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width / 2.5,
                             decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                border:
-                                    Border.all(color: AppColors.primaryColor)),
+                              borderRadius: BorderRadius.circular(10),
+                              color: AppColors.primaryColor,
+                            ),
                             child: const Center(
                               child: Text(
-                                'Đăng nhập',
+                                'Đăng ký',
                                 style: TextStyle(
                                     fontSize: 21,
                                     fontWeight: FontWeight.bold,
-                                    color: AppColors.primaryColor),
+                                    color: Colors.white),
                               ),
                             ),
-                          ),
-                        ),
-                        InkWell(
-                            borderRadius: BorderRadius.circular(10),
-                            onTap: () {
-                              context.push('/register');
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width / 2.5,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: AppColors.primaryColor,
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  'Đăng ký',
-                                  style: TextStyle(
-                                      fontSize: 21,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                              ),
-                            )),
-                      ],
-                    ),
-                  )
-                : Container(),
-          ],
-        ),
+                          )),
+                    ],
+                  ),
+                )
+              : Container(),
+        ],
       ),
     );
   }

@@ -8,34 +8,31 @@ class User {
   String? password;
   String? fullName;
   String? numberphone;
-  String email;
+  String? email;
   ESex? sex;
   List<String> _favoriteTour = [];
 
-  Future<List<Tour>> getFavoriteTours() async {
-    List<Future<Tour?>> futureTours =
-        _favoriteTour.map((item) => DataFirebase().getTour(item)).toList();
-
-    List<Tour?> tours = await Future.wait(futureTours);
-
-    return tours.where((tour) => tour != null).cast<Tour>().toList();
+  List<Tour> getFavoriteTours() {
+    return _favoriteTour
+        .map((item) => DataController().findTour(item))
+        .toList();
   }
 
   set setFavoriteTour(List<String> lsTour) => _favoriteTour = lsTour;
   void addFavoriteTour(Tour newTour) {
-    print('Them Tour');
     _favoriteTour.add(newTour.id!);
     DataFirebase().setUser();
   }
 
   void removeFavoriteTour(Tour delTour) {
-    if (_favoriteTour.contains(delTour)) {
-      _favoriteTour.remove(delTour);
+    if (containsFavoriteTour(delTour)) {
+      _favoriteTour.remove(delTour.id);
+      DataFirebase().setUser();
     }
   }
 
   bool containsFavoriteTour(Tour findTour) {
-    return _favoriteTour.contains(findTour);
+    return _favoriteTour.contains(findTour.id);
   }
 
   User({
@@ -65,7 +62,7 @@ class User {
         fullName: json['fullName'] ?? '',
         numberphone: json['numberphone'] ?? '',
         email: json['email'] ?? '',
-        sex: ESex.values[json['sex']] ?? ESex.none)
+        sex: ESex.values[json['sex'] ?? 2])
       .._favoriteTour =
           (json['favoriteTour'] as List<dynamic>? ?? []).cast<String>();
   }
