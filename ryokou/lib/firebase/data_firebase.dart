@@ -24,7 +24,6 @@ class DataFirebase {
       if (ggAccount == null) {
         return null;
       }
-
       final GoogleSignInAuthentication ggAuth = await ggAccount.authentication;
 
       final OAuthCredential credential = GoogleAuthProvider.credential(
@@ -47,7 +46,7 @@ class DataFirebase {
       }
       return userCredential.user;
     } catch (e) {
-      print('Error on signin: $e');
+      print('Error on signin by google: $e');
       return null;
     }
   }
@@ -121,14 +120,12 @@ class DataFirebase {
   }
 
   Future<void> setUser() async {
-    print('Set Data ne');
     if (DataController().getUser == null) return;
     try {
       await _firestore
           .collection('users')
           .doc(DataController().getUser!.id)
           .set(DataController().getUser!.toJson());
-      print('Set xong roi nay');
     } catch (e) {
       print('Error set data user: $e');
     }

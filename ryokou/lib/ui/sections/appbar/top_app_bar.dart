@@ -24,7 +24,7 @@ PreferredSizeWidget getAppBar(BuildContext context, Widget childAppBar,
             leading: haveLeading
                 ? IconButton(
                     onPressed: () {
-                      context.go('/');
+                      context.pop();
                     },
                     icon: const Icon(
                       Icons.arrow_back_ios_outlined,

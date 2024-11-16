@@ -88,7 +88,7 @@ class AccSettings extends StatelessWidget {
                   ),
                   Center(
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         showDialog(
                           context: context,
                           barrierDismissible: false,
@@ -98,12 +98,11 @@ class AccSettings extends StatelessWidget {
                             );
                           },
                         );
-                        Future.delayed(const Duration(seconds: 1), () {
-                          DataFirebase().signOut();
-                          context.pop();
-                          MainLayout.index = 0;
-                          context.go('/');
-                        });
+                        await DataFirebase().signOut();
+                        await Future.delayed(const Duration(seconds: 2));
+                        context.pop();
+                        MainLayout.index = 0;
+                        context.go('/');
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white, // Nền trắng

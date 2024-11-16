@@ -1,20 +1,26 @@
+import 'package:ryokou/controller/controller_data.dart';
+import 'package:ryokou/firebase/data_firebase.dart';
+
 class Rate {
   String? _id;
   late final String _tour; // YK8pRRMNdJEYqRO5W616
   late final String _user; // 95pOm9s2gVZtOU2TMrKykzXmsPt1
   late final int _star; // 4
   late final String _comment; //
+  String? _nameUser;
 
   set id(String? value) => _id = value;
   set tour(String value) => _tour = value;
   set user(String value) => _user = value;
   set comment(String value) => _comment = value;
+  set nameUser(String? value) => _nameUser = value;
 
   String? get id => _id;
   String get tour => _tour;
   String get user => _user;
   int get star => _star;
   String get comment => _comment;
+  String? get nameUser => _nameUser;
 
   Rate({
     required String user,
@@ -24,7 +30,10 @@ class Rate {
   })  : _user = user,
         _tour = tour,
         _star = star,
-        _comment = comment;
+        _comment = comment {
+    _nameUser = DataFirebase().getUser(_user).fullName;
+    DataController().findTour(tour).lsRate.add(this);
+  }
 
   Map<String, dynamic> toJson() {
     return {

@@ -131,24 +131,9 @@ class _FavoritePage extends State<FavoritePage> {
             ),
           ),
           const SizedBox(height: 10),
-          gridTour(tours),
+          GridTour(tours: tours),
         ],
       ),
-    );
-  }
-
-  GridView gridTour(List<Tour> tours) {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 25,
-        crossAxisSpacing: 15,
-        mainAxisExtent: 255,
-      ),
-      itemCount: tours.length,
-      itemBuilder: (context, index) => ItemTour(tour: tours[index]),
     );
   }
 
@@ -178,6 +163,31 @@ class _FavoritePage extends State<FavoritePage> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class GridTour extends StatelessWidget {
+  const GridTour({
+    super.key,
+    required this.tours,
+  });
+
+  final List<Tour> tours;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 25,
+        crossAxisSpacing: 15,
+        mainAxisExtent: 255,
+      ),
+      itemCount: tours.length,
+      itemBuilder: (context, index) => ItemTour(tour: tours[index]),
     );
   }
 }

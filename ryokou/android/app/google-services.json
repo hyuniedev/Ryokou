@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "118820860176-qtnlh91lrur6i75btsf7clmth2e2igs4.apps.googleusercontent.com",
+          "client_id": "118820860176-rlddbukkp3bmvundjtkma1pkfm1q3k6r.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.ryokou",
-            "certificate_hash": "c422e5182f6372fb439e825bc0792605d375dc69"
+            "certificate_hash": "43386e0a28dccc783f66c3f639ca8656a96ad60f"
           }
         },
         {
@@ -57,6 +57,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "118820860176-t02fj6i0f02bh5b0qj0cr8goo83kt3fh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ryokou_service",
+            "certificate_hash": "c422e5182f6372fb439e825bc0792605d375dc69"
+          }
+        },
         {
           "client_id": "118820860176-9kgsk4v5kklok0deii2nko95a71go2pg.apps.googleusercontent.com",
           "client_type": 3

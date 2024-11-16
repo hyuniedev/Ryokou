@@ -11,6 +11,7 @@ class User {
   String? email;
   ESex? sex;
   List<String> _favoriteTour = [];
+  List<String> _myTour = [];
 
   List<Tour> getFavoriteTours() {
     return _favoriteTour
@@ -18,7 +19,14 @@ class User {
         .toList();
   }
 
+  List<Tour> getMyTour() {
+    return _myTour.map((item) => DataController().findTour(item)).toList();
+  }
+
+  set setMyTour(List<String> lsTour) => _myTour = lsTour;
+
   set setFavoriteTour(List<String> lsTour) => _favoriteTour = lsTour;
+
   void addFavoriteTour(Tour newTour) {
     _favoriteTour.add(newTour.id!);
     DataFirebase().setUser();
@@ -31,8 +39,24 @@ class User {
     }
   }
 
+  void addMyTour(Tour newTour) {
+    _myTour.add(newTour.id!);
+    DataFirebase().setUser();
+  }
+
+  void removeMyTour(Tour delTour) {
+    if (containsFavoriteTour(delTour)) {
+      _myTour.remove(delTour.id);
+      DataFirebase().setUser();
+    }
+  }
+
   bool containsFavoriteTour(Tour findTour) {
     return _favoriteTour.contains(findTour.id);
+  }
+
+  bool containsMyTour(Tour findTour) {
+    return _myTour.contains(findTour.id);
   }
 
   User({
@@ -52,6 +76,7 @@ class User {
       'email': email,
       'sex': sex?.index,
       'favoriteTour': _favoriteTour,
+      'myTour': _myTour,
     };
   }
 
@@ -64,6 +89,7 @@ class User {
         email: json['email'] ?? '',
         sex: ESex.values[json['sex'] ?? 2])
       .._favoriteTour =
-          (json['favoriteTour'] as List<dynamic>? ?? []).cast<String>();
+          (json['favoriteTour'] as List<dynamic>? ?? []).cast<String>()
+      .._myTour = (json['muTour'] as List<dynamic>? ?? []).cast<String>();
   }
 }

@@ -12,9 +12,16 @@ class DataController {
   List<Tour> lsTour = [];
   List<String> lsIdTours = [];
 
+  Tour? tourGoing;
+  List<Tour> lsTourBought = [];
+  List<Tour> lsTourGone = [];
+
   User? _user;
   User? get getUser => _user;
-  set setUser(User? initUser) => _user = initUser;
+  set setUser(User? initUser) {
+    _user = initUser;
+    _divisionOfTour();
+  }
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -56,4 +63,28 @@ class DataController {
   Tour findTour(String id) {
     return lsTour.firstWhere((element) => element.id == id);
   }
+
+  void _divisionOfTour() {
+    if (_user == null) {
+      return;
+    } else {
+      for (var index in _user!.getMyTour()) {
+        DateTime endDate = index.start.add(Duration(days: index.durations));
+        if (endDate.isAfter(DateTime.now())) {
+          lsTourGone.add(index);
+        } else if (index.start.isBefore(DateTime.now())) {
+          lsTourBought.add(index);
+        } else {
+          tourGoing = index;
+        }
+      }
+    }
+  }
+
+  //------------------RATE--------------------------
+  void addNewRate(Rate newRate) async {
+    DocumentReference querySnapshot =
+        await firestore.collection('rates').add(newRate.toJson());
+  }
+  //------------------RATE--------------------------
 }

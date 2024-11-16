@@ -5,6 +5,7 @@ import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/acc/login.dart';
 import 'package:ryokou/ui/acc/register.dart';
+import 'package:ryokou/ui/booking/pay.dart';
 import 'package:ryokou/ui/main_layout.dart';
 import 'package:ryokou/ui/page/account/acc_settings.dart';
 import 'package:ryokou/ui/page/account/acc_supportCenter.dart';
@@ -53,6 +54,10 @@ class MyApp extends StatelessWidget {
       GoRoute(
         path: '/register',
         builder: (context, state) => Register(),
+      ),
+      GoRoute(
+        path: '/pay',
+        builder: (context, state) => const Pay(),
       ),
       GoRoute(
         path: '/support',

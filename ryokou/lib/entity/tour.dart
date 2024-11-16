@@ -244,6 +244,8 @@ class Tour {
     for (var item in _lsRate) {
       rate += item.star;
     }
-    return rate == 0 ? 0 : rate / (_lsRate.length * 1.0);
+    return rate == 0
+        ? 0
+        : double.parse((rate / (_lsRate.length * 1.0)).toStringAsFixed(1));
   }
 }

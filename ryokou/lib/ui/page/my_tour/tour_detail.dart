@@ -18,6 +18,7 @@ class TourDetail extends StatefulWidget {
 }
 
 class _TourDetailState extends State<TourDetail> {
+  int numRateDisplay = 2;
   int indexRateTour = -1;
   DateTime _beginDate = DateTime.now();
   DateTime? _endDate;
@@ -25,6 +26,14 @@ class _TourDetailState extends State<TourDetail> {
   bool moRong = false;
   double _rateStar = 0;
   String _levelRateString = '';
+  final TextEditingController _tecComment = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -33,7 +42,6 @@ class _TourDetailState extends State<TourDetail> {
     loadCompany();
     _beginDate = widget.tour.start;
     _rateStar = widget.tour.getRateStar();
-    print('RATE STAR: $_rateStar');
     if (_rateStar == 0) {
       _levelRateString = 'Chưa có đánh giá nào.';
     } else if (_rateStar < 1) {
@@ -93,7 +101,7 @@ class _TourDetailState extends State<TourDetail> {
         ),
         body: GestureDetector(
           onTap: () {
-            FocusScope.of(context).unfocus();
+            _focusNode.unfocus();
           },
           child: Stack(
             alignment: Alignment.bottomCenter,
@@ -229,7 +237,9 @@ class _TourDetailState extends State<TourDetail> {
                                 ),
                                 backgroundColor: AppColors.primaryColor,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                context.push('/pay');
+                              },
                               child: const Text(
                                 'Chọn',
                                 style: TextStyle(
@@ -330,7 +340,8 @@ class _TourDetailState extends State<TourDetail> {
           ),
           const SizedBox(height: 15),
           Column(
-            children: widget.tour.lsRate.map((rate) {
+            children:
+                widget.tour.lsRate.getRange(0, numRateDisplay).map((rate) {
               return FutureBuilder<Column>(
                 future: itemRate(context, rate), // Gọi hàm bất đồng bộ
                 builder: (context, snapshot) {
@@ -348,7 +359,14 @@ class _TourDetailState extends State<TourDetail> {
             }).toList(),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              setState(() {
+                numRateDisplay += 2;
+                if (numRateDisplay > widget.tour.lsRate.length) {
+                  numRateDisplay = widget.tour.lsRate.length;
+                }
+              });
+            },
             child: Container(
               alignment: Alignment.center,
               child: const Text(
@@ -391,11 +409,11 @@ class _TourDetailState extends State<TourDetail> {
                                         customBorder: const StarBorder(),
                                         onTap: () {
                                           setState(() {
-                                            indexRateTour = index;
+                                            indexRateTour = index + 1;
                                           });
                                         },
                                         child: Icon(
-                                          indexRateTour < index
+                                          indexRateTour < index + 1
                                               ? Icons.star_outline_rounded
                                               : Icons.star_rounded,
                                           color: AppColors.primaryColor,
@@ -409,12 +427,35 @@ class _TourDetailState extends State<TourDetail> {
                             ),
                             const SizedBox(height: 5),
                             TextField(
+                              controller: _tecComment,
+                              focusNode: _focusNode,
                               maxLines: 1,
                               keyboardType: TextInputType.text,
                               style: const TextStyle(fontSize: 21),
                               decoration: InputDecoration(
                                 suffixIcon: IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    if (indexRateTour <= 0) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  'Please select number of stars')));
+                                      return;
+                                    }
+                                    if (_tecComment.text.isNotEmpty) {
+                                      DataController().addNewRate(Rate(
+                                          user: DataController().getUser!.id!,
+                                          tour: widget.tour.id!,
+                                          star: indexRateTour,
+                                          comment: _tecComment.text));
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  'Please enter your comment')));
+                                      return;
+                                    }
+                                  },
                                   icon: const Icon(
                                     Icons.send,
                                     color: AppColors.primaryColor,
@@ -492,12 +533,22 @@ class _TourDetailState extends State<TourDetail> {
           ],
         ),
         const SizedBox(height: 7),
-        Text(
-          rate.comment,
-          style: const TextStyle(
-            fontSize: 15,
-            color: Colors.black,
-          ),
+        Row(
+          children: [
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                rate.comment,
+                maxLines: 10,
+                overflow: TextOverflow.ellipsis,
+                softWrap: true,
+                style: const TextStyle(
+                  fontSize: 15,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 10),
       ],
