@@ -18,7 +18,6 @@ class TourDetail extends StatefulWidget {
 }
 
 class _TourDetailState extends State<TourDetail> {
-  int numRateDisplay = 2;
   int indexRateTour = -1;
   DateTime _beginDate = DateTime.now();
   DateTime? _endDate;
@@ -57,6 +56,7 @@ class _TourDetailState extends State<TourDetail> {
     }
   }
 
+  int numRateDisplay = 1;
   void loadCompany() async {
     Company? com = await DataFirebase().getCompany(widget.tour.company);
     setState(() {
@@ -340,22 +340,10 @@ class _TourDetailState extends State<TourDetail> {
           ),
           const SizedBox(height: 15),
           Column(
-            children:
-                widget.tour.lsRate.getRange(0, numRateDisplay).map((rate) {
-              return FutureBuilder<Column>(
-                future: itemRate(context, rate), // Gọi hàm bất đồng bộ
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator(); // Hiển thị khi đang tải
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else if (snapshot.hasData) {
-                    return snapshot.data!; // Hiển thị khi có dữ liệu
-                  } else {
-                    return const Text('No data available');
-                  }
-                },
-              );
+            children: widget.tour.lsRate
+                .getRange(0, widget.tour.lsRate.isEmpty ? 0 : numRateDisplay)
+                .map((rate) {
+              return itemRate(context, rate);
             }).toList(),
           ),
           InkWell(
@@ -443,11 +431,15 @@ class _TourDetailState extends State<TourDetail> {
                                       return;
                                     }
                                     if (_tecComment.text.isNotEmpty) {
-                                      DataController().addNewRate(Rate(
+                                      widget.tour.addRate(Rate(
+                                          id: '',
                                           user: DataController().getUser!.id!,
                                           tour: widget.tour.id!,
                                           star: indexRateTour,
                                           comment: _tecComment.text));
+
+                                      _focusNode.unfocus();
+                                      _tecComment.text = '';
                                     } else {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(const SnackBar(
@@ -496,8 +488,7 @@ class _TourDetailState extends State<TourDetail> {
     );
   }
 
-  Future<Column> itemRate(BuildContext context, Rate rate) async {
-    User userRate = DataFirebase().getUser(rate.user);
+  Column itemRate(BuildContext context, Rate rate) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -512,7 +503,7 @@ class _TourDetailState extends State<TourDetail> {
             ),
             const SizedBox(width: 10),
             Text(
-              userRate.fullName ?? 'Tên người dùng',
+              rate.nameUser ?? 'Tên người dùng',
               style: const TextStyle(
                 color: Colors.black,
               ),

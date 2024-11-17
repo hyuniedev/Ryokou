@@ -75,6 +75,7 @@ class MyApp extends StatelessWidget {
         path: '/tourDetail/:id',
         builder: (context, state) {
           final String? id = state.pathParameters['id'];
+          print('$id');
           return TourDetail(tour: DataController().findTour(id!));
         },
       ),

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ryokou/entity/rate.dart';
 import 'package:ryokou/entity/user.dart';
 import 'package:ryokou/entity/tour.dart';
+import 'package:ryokou/firebase/data_firebase.dart';
 
 class DataController {
   static final DataController _instance = DataController._singleton();
@@ -37,13 +38,19 @@ class DataController {
           newTour.id = doc.id;
           lsIdTours.add(doc.id);
         }
+        // Lấy các rate của tour
         QuerySnapshot queryRate = await firestore
             .collection('rates')
-            .where('idTour', isEqualTo: newTour.id)
+            .where('tour', isEqualTo: newTour.id)
             .get();
+        // Thêm các Rate vào tour
         newTour.lsRate = queryRate.docs
             .map((item) => Rate.fromJson((item.data() as Map<String, dynamic>)))
             .toList();
+        // Duyệt các tour để lấy tên của người viết rate
+        newTour.lsRate.forEach((iRate) async {
+          iRate.nameUser = (await DataFirebase().getUser(iRate.user))?.fullName;
+        });
         lsTour.contains(newTour) ? null : lsTour.add(newTour);
       }
     } catch (e) {
@@ -83,8 +90,11 @@ class DataController {
 
   //------------------RATE--------------------------
   void addNewRate(Rate newRate) async {
-    DocumentReference querySnapshot =
-        await firestore.collection('rates').add(newRate.toJson());
+    DocumentReference querySnapshot = firestore.collection('rates').doc();
+
+    newRate.id = querySnapshot.id;
+
+    await querySnapshot.set(newRate.toJson());
   }
   //------------------RATE--------------------------
 }

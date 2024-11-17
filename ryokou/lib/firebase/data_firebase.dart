@@ -33,16 +33,16 @@ class DataFirebase {
       final UserCredential userCredential =
           await _auth.signInWithCredential(credential);
       User? user = userCredential.user;
-      _doc = await _firestore.collection('users').doc(user?.uid).get();
-      if (_doc!.exists) {
-        DataController().setUser = getUser(_doc!.id);
-      } else {
+      var fetchedUser = await getUser(user!.uid);
+      if (fetchedUser == null) {
         DataController().setUser = myuser.User(
             id: _doc!.id,
-            email: user!.email ?? '',
+            email: user.email ?? '',
             fullName: user.displayName ?? '',
             numberphone: user.phoneNumber ?? '');
         await setUser();
+      } else {
+        DataController().setUser = fetchedUser;
       }
       return userCredential.user;
     } catch (e) {
@@ -69,13 +69,7 @@ class DataFirebase {
     try {
       UserCredential? userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      _doc = await _firestore
-          .collection('users')
-          .doc(userCredential.user!.uid)
-          .get();
-      if (_doc != null) {
-        DataController().setUser = getUser(_doc!.id);
-      }
+      DataController().setUser = await getUser(userCredential.user!.uid);
       return userCredential.user;
     } catch (e) {
       print('CO LOI TRONG KHI DANG NHAP: $e');
@@ -115,8 +109,13 @@ class DataFirebase {
   //   }
   // }
 
-  myuser.User getUser(String id) {
-    return myuser.User.fromJson(_doc!.data() as Map<String, dynamic>);
+  Future<myuser.User?> getUser(String id) async {
+    _doc = await _firestore.collection('users').doc(id).get();
+    if (_doc != null) {
+      return myuser.User.fromJson(_doc!.data() as Map<String, dynamic>);
+    } else {
+      return null;
+    }
   }
 
   Future<void> setUser() async {

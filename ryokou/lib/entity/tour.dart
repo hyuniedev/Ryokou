@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/entity/rate.dart';
 import 'package:ryokou/entity/schedule.dart';
 
@@ -173,6 +174,14 @@ class Tour {
 
   void removeSchedule(Schedule oldSchedule) {
     _schedule.remove(oldSchedule);
+  }
+
+  void addRate(Rate newRate) {
+    newRate.nameUser = DataController()
+        .getUser!
+        .fullName; // thêm tên người dùng hiện tại để hiển thị luôn trong phiên đăng nhập này
+    lsRate.add(newRate);
+    DataController().addNewRate(newRate);
   }
 
   factory Tour.fromJson(Map<String, dynamic> json) {

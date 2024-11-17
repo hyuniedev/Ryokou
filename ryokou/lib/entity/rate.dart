@@ -21,20 +21,17 @@ class Rate {
   int get star => _star;
   String get comment => _comment;
   String? get nameUser => _nameUser;
-
   Rate({
+    required String id,
     required String user,
     required String tour,
     required int star,
     required String comment,
-  })  : _user = user,
+  })  : _id = id,
+        _user = user,
         _tour = tour,
         _star = star,
-        _comment = comment {
-    _nameUser = DataFirebase().getUser(_user).fullName;
-    DataController().findTour(tour).lsRate.add(this);
-  }
-
+        _comment = comment;
   Map<String, dynamic> toJson() {
     return {
       'id': _id,
@@ -47,6 +44,7 @@ class Rate {
 
   factory Rate.fromJson(Map<String, dynamic> json) {
     return Rate(
+        id: json['id'],
         user: json['user'],
         tour: json['tour'],
         star: json['star'],

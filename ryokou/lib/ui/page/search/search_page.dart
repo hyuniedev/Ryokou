@@ -10,65 +10,72 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  final TextEditingController _tecSearch = TextEditingController();
+  final FocusNode _focusNodeSearch = FocusNode();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: getAppBar(
-        context,
-        Container(
-          margin: const EdgeInsets.only(bottom: 10),
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: SizedBox(
-            height: 50.0,
-            child: TextField(
-              style: const TextStyle(
-                fontSize: 20,
-                decoration: TextDecoration.none,
-              ),
-              decoration: InputDecoration(
-                hintText: 'Search...',
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                filled: true,
-                fillColor: Colors.white,
-                suffixIcon: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.search,
-                    size: 30,
-                    color: AppColors.primaryColor,
-                  ),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: getAppBar(
+          context,
+          Container(
+            margin: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: SizedBox(
+              height: 50.0,
+              child: TextField(
+                focusNode: _focusNodeSearch,
+                controller: _tecSearch,
+                style: const TextStyle(
+                  fontSize: 20,
+                  decoration: TextDecoration.none,
                 ),
-                border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                    borderSide: BorderSide.none),
+                decoration: InputDecoration(
+                  hintText: 'Search...',
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                  filled: true,
+                  fillColor: Colors.white,
+                  suffixIcon: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.search,
+                      size: 30,
+                      color: AppColors.primaryColor,
+                    ),
+                  ),
+                  border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(50)),
+                      borderSide: BorderSide.none),
+                ),
               ),
             ),
           ),
         ),
-      ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14),
-        child: SizedBox(
-          height: 300,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  boxSuggest(context, 'Địa điểm hot'),
-                  boxSuggest(context, 'Được đánh giá cao'),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  boxSuggest(context, 'Mới nhất của tháng'),
-                  boxSuggest(context, 'Tour ưu đãi sâu'),
-                ],
-              ),
-            ],
+        body: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14),
+          child: SizedBox(
+            height: 300,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    boxSuggest(context, 'Địa điểm hot'),
+                    boxSuggest(context, 'Được đánh giá cao'),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    boxSuggest(context, 'Mới nhất của tháng'),
+                    boxSuggest(context, 'Tour ưu đãi sâu'),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
