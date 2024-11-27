@@ -89,6 +89,7 @@ class AccSettings extends StatelessWidget {
                   Center(
                     child: ElevatedButton(
                       onPressed: () async {
+                        MainLayout.index = 0;
                         showDialog(
                           context: context,
                           barrierDismissible: false,
@@ -101,7 +102,6 @@ class AccSettings extends StatelessWidget {
                         await DataFirebase().signOut();
                         await Future.delayed(const Duration(seconds: 2));
                         context.pop();
-                        MainLayout.index = 0;
                         context.go('/');
                       },
                       style: ElevatedButton.styleFrom(

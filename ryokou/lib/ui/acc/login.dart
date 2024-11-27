@@ -67,6 +67,7 @@ class _LoginState extends State<Login> {
                       ItemField(
                         title: 'Password',
                         tec: tecPassword,
+                        isPassword: true,
                       ),
                       const SizedBox(height: 21),
                       InkWell(

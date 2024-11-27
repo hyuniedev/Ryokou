@@ -4,7 +4,7 @@ import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/entity/company.dart';
 import 'package:ryokou/entity/rate.dart';
 import 'package:ryokou/entity/tour.dart';
-import 'package:ryokou/entity/user.dart';
+import 'package:ryokou/entity/tour_booked.dart';
 import 'package:ryokou/firebase/data_firebase.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 
@@ -20,13 +20,15 @@ class TourDetail extends StatefulWidget {
 class _TourDetailState extends State<TourDetail> {
   int indexRateTour = -1;
   DateTime _beginDate = DateTime.now();
-  DateTime? _endDate;
+  DateTime _endDate = DateTime.now();
   String _companyName = '';
   bool moRong = false;
   double _rateStar = 0;
   String _levelRateString = '';
   final TextEditingController _tecComment = TextEditingController();
   final FocusNode _focusNode = FocusNode();
+
+  int numPerson = 1;
 
   @override
   void dispose() {
@@ -39,7 +41,7 @@ class _TourDetailState extends State<TourDetail> {
     // TODO: implement initState
     super.initState();
     loadCompany();
-    _beginDate = widget.tour.start;
+    _endDate = _endDate.add(Duration(days: widget.tour.durations));
     _rateStar = widget.tour.getRateStar();
     if (_rateStar == 0) {
       _levelRateString = 'Chưa có đánh giá nào.';
@@ -56,7 +58,7 @@ class _TourDetailState extends State<TourDetail> {
     }
   }
 
-  int numRateDisplay = 1;
+  int numRateDisplay = 0;
   void loadCompany() async {
     Company? com = await DataFirebase().getCompany(widget.tour.company);
     setState(() {
@@ -131,12 +133,6 @@ class _TourDetailState extends State<TourDetail> {
                           tongQuan(),
                           const SizedBox(height: 15),
                           const Divider(height: 3, thickness: 3),
-                          const SizedBox(height: 15),
-                          chooseDay(context),
-                          (_beginDate.difference(DateTime.now()) <
-                                  const Duration(seconds: 10))
-                              ? Container()
-                              : displayDay_Begin_End(context),
                           const SizedBox(height: 15),
                           showScheduleDetail(context),
                           const SizedBox(height: 20),
@@ -222,9 +218,9 @@ class _TourDetailState extends State<TourDetail> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
-                              '899.000đ',
-                              style: TextStyle(
+                            Text(
+                              '${tour.getPriceTour()}đ',
+                              style: const TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.borderDeal_Home,
@@ -238,7 +234,11 @@ class _TourDetailState extends State<TourDetail> {
                                 backgroundColor: AppColors.primaryColor,
                               ),
                               onPressed: () {
-                                context.push('/pay');
+                                if (DataController().getUser != null) {
+                                  datVe(context);
+                                } else {
+                                  context.push('/login');
+                                }
                               },
                               child: const Text(
                                 'Chọn',
@@ -259,6 +259,117 @@ class _TourDetailState extends State<TourDetail> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<dynamic> datVe(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    chooseDay(context),
+                    displayDay_Begin_End(context),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Số lượng vé: ',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        Row(
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  if (numPerson > 1) {
+                                    setState(() {
+                                      numPerson--;
+                                    });
+                                  }
+                                },
+                                icon: const Icon(Icons.remove_circle_outline)),
+                            Text(' $numPerson '),
+                            IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    numPerson++;
+                                  });
+                                },
+                                icon: const Icon(Icons.add_circle_outline))
+                          ],
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Giá:',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold)),
+                        Text('${widget.tour.getPriceTour(soLuong: numPerson)}đ',
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold))
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        backgroundColor: AppColors.primaryColor,
+                      ),
+                      onPressed: () {
+                        TourBooked checkTour = TourBooked(
+                            idTour: widget.tour.id!,
+                            numPerson: numPerson,
+                            startDay: _beginDate.toString());
+                        if (DataController().checkDuplicateTour(checkTour)) {
+                          context.push(
+                              '/pay/${widget.tour.id}/$numPerson/${_beginDate.toString()}');
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Đặt lịch thất bại'),
+                                content: const Text(
+                                    'Thời gian này đã bị trùng lịch với tour khác.'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      context.pop(context);
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      },
+                      child: const Text(
+                        'Thanh toán',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
@@ -340,9 +451,8 @@ class _TourDetailState extends State<TourDetail> {
           ),
           const SizedBox(height: 15),
           Column(
-            children: widget.tour.lsRate
-                .getRange(0, widget.tour.lsRate.isEmpty ? 0 : numRateDisplay)
-                .map((rate) {
+            children:
+                widget.tour.lsRate.getRange(0, numRateDisplay).map((rate) {
               return itemRate(context, rate);
             }).toList(),
           ),
@@ -357,9 +467,11 @@ class _TourDetailState extends State<TourDetail> {
             },
             child: Container(
               alignment: Alignment.center,
-              child: const Text(
-                'Xem them',
-                style: TextStyle(
+              child: Text(
+                numRateDisplay == 0
+                    ? 'See comment (${widget.tour.lsRate.length}/${widget.tour.lsRate.length})'
+                    : 'See more (${widget.tour.lsRate.length - numRateDisplay}/${widget.tour.lsRate.length})',
+                style: const TextStyle(
                   color: AppColors.primaryColor,
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
@@ -437,7 +549,11 @@ class _TourDetailState extends State<TourDetail> {
                                           tour: widget.tour.id!,
                                           star: indexRateTour,
                                           comment: _tecComment.text));
-
+                                      if (numRateDisplay == 0) {
+                                        setState(() {
+                                          numRateDisplay++;
+                                        });
+                                      }
                                       _focusNode.unfocus();
                                       _tecComment.text = '';
                                     } else {
@@ -641,7 +757,7 @@ class _TourDetailState extends State<TourDetail> {
             style: const TextStyle(fontSize: 14),
           ),
           Text(
-            'Ngày kết thúc:          ${_endDate!.day}/${_endDate!.month}/${_endDate!.year}',
+            'Ngày kết thúc:          ${_endDate.day}/${_endDate.month}/${_endDate.year}',
             style: const TextStyle(fontSize: 14),
           ),
         ],
@@ -654,11 +770,12 @@ class _TourDetailState extends State<TourDetail> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         const Text(
-          'Chọn ngày bắt đầu đi',
+          'Chọn ngày bắt đầu đi:',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         IconButton(
           onPressed: () {
+            context.pop(context);
             showModalBottomSheet(
               context: context,
               builder: (context) {
@@ -673,7 +790,9 @@ class _TourDetailState extends State<TourDetail> {
                       children: [
                         CalendarDatePicker(
                           initialDate: _beginDate,
-                          firstDate: widget.tour.start,
+                          firstDate: widget.tour.start.isBefore(DateTime.now())
+                              ? DateTime.now()
+                              : widget.tour.start,
                           lastDate: DateTime(2100),
                           onDateChanged: (value) {
                             setState(() {
@@ -687,6 +806,7 @@ class _TourDetailState extends State<TourDetail> {
                           child: ElevatedButton(
                             onPressed: () {
                               context.pop(context);
+                              datVe(context);
                             },
                             style: const ButtonStyle(
                                 backgroundColor: WidgetStatePropertyAll(

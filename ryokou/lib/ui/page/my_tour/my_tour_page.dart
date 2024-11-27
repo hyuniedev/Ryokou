@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ryokou/controller/controller_data.dart';
-import 'package:ryokou/entity/tour.dart';
+import 'package:ryokou/entity/tour_booked.dart';
 import 'package:ryokou/themes/colors_theme.dart';
-import 'package:ryokou/ui/page/favourite/favourite_page.dart';
 import 'package:ryokou/ui/sections/appbar/child_app_bar_main_pages.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
+import 'package:ryokou/ui/sections/grid_tour/grid_tour.dart';
+import 'package:ryokou/ui/sections/grid_tour/grid_tour_booked.dart';
 
 class MyTourPage extends StatefulWidget {
   const MyTourPage({super.key});
@@ -20,6 +21,12 @@ class _MyTourPageState extends State<MyTourPage> {
     setState(() {
       indexSection == newIndex ? indexSection = 0 : indexSection = newIndex;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    DataController().divisionOfTour();
   }
 
   @override
@@ -165,8 +172,8 @@ class _MyTourPageState extends State<MyTourPage> {
     );
   }
 
-  Widget sectionGroupTour(
-      String title, List<Tour> lsTour, bool isExpanded, Function()? onTap) {
+  Widget sectionGroupTour(String title, List<TourBooked> lsTour,
+      bool isExpanded, Function()? onTap) {
     return Column(
       children: [
         Container(
@@ -204,7 +211,7 @@ class _MyTourPageState extends State<MyTourPage> {
         isExpanded
             ? Container(
                 padding: const EdgeInsets.only(top: 10),
-                child: GridTour(tours: lsTour),
+                child: GridTourBooked(tours: lsTour),
               )
             : Container()
       ],

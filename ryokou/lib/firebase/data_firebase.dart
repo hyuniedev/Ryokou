@@ -25,7 +25,6 @@ class DataFirebase {
         return null;
       }
       final GoogleSignInAuthentication ggAuth = await ggAccount.authentication;
-
       final OAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: ggAuth.accessToken,
         idToken: ggAuth.idToken,
@@ -86,10 +85,8 @@ class DataFirebase {
     DocumentSnapshot docCompany =
         await _firestore.collection('companys').doc(id).get();
     if (docCompany.exists) {
-      // Nếu tài liệu tồn tại, trả về đối tượng Company
       return Company.fromJson(docCompany.data() as Map<String, dynamic>);
     } else {
-      // Nếu tài liệu không tồn tại, trả về null hoặc một giá trị mặc định
       print('No company found for the given ID');
       return null;
     }
@@ -111,7 +108,7 @@ class DataFirebase {
 
   Future<myuser.User?> getUser(String id) async {
     _doc = await _firestore.collection('users').doc(id).get();
-    if (_doc != null) {
+    if (_doc!.exists && _doc!.data() != null) {
       return myuser.User.fromJson(_doc!.data() as Map<String, dynamic>);
     } else {
       return null;

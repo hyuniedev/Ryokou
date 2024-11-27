@@ -6,6 +6,7 @@ import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/item/itemTour.dart';
 import 'package:ryokou/ui/sections/appbar/child_app_bar_main_pages.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
+import 'package:ryokou/ui/sections/grid_tour/grid_tour.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
@@ -46,8 +47,9 @@ class _FavoritePage extends State<FavoritePage> {
                     (DataController().getUser != null && lsTour.isNotEmpty)
                         ? favoGridSection('Tour yêu thích của bạn ', lsTour)
                         : favoriteIsNull(context),
-                    const SizedBox(height: 50),
-                    favoGridSection('Đề xuất cho bạn', DataController().lsTour)
+                    const SizedBox(height: 20),
+                    favoGridSection('Đề xuất cho bạn', DataController().lsTour),
+                    const SizedBox(height: 20),
                   ],
                 ),
               ],
@@ -122,9 +124,9 @@ class _FavoritePage extends State<FavoritePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Đề xuất cho bạn',
-            style: TextStyle(
+          Text(
+            title,
+            style: const TextStyle(
               fontSize: 21,
               color: AppColors.primaryColor,
               fontWeight: FontWeight.bold,
@@ -163,31 +165,6 @@ class _FavoritePage extends State<FavoritePage> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class GridTour extends StatelessWidget {
-  const GridTour({
-    super.key,
-    required this.tours,
-  });
-
-  final List<Tour> tours;
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 25,
-        crossAxisSpacing: 15,
-        mainAxisExtent: 255,
-      ),
-      itemCount: tours.length,
-      itemBuilder: (context, index) => ItemTour(tour: tours[index]),
     );
   }
 }

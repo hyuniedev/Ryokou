@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 
 class ItemField extends StatelessWidget {
+  final bool isPassword;
   final String title;
   final bool isRequired;
   final bool isSexField;
@@ -11,6 +12,7 @@ class ItemField extends StatelessWidget {
     required this.title,
     this.isRequired = false,
     this.isSexField = false,
+    this.isPassword = false,
     required this.tec,
   });
   @override
@@ -52,6 +54,7 @@ class ItemField extends StatelessWidget {
                   TextField(
                     controller: tec,
                     maxLines: 1,
+                    obscureText: isPassword,
                     keyboardType: TextInputType.text,
                     style: const TextStyle(fontSize: 21),
                     decoration: const InputDecoration(

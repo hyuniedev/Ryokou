@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
+import 'package:ryokou/controller/controller_data.dart';
+import 'package:ryokou/entity/tour_booked.dart';
+import 'package:ryokou/main.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
 
 class Pay extends StatefulWidget {
-  const Pay({super.key});
-
+  const Pay({super.key, required this.tour});
+  final TourBooked tour;
   @override
   State<Pay> createState() => _PayState();
 }
@@ -52,32 +57,32 @@ class _PayState extends State<Pay> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Ngắm hoa anh đào tại Tokyo',
+                              widget.tour.name,
                               style: generalFontsize,
                             ),
                             Text(
-                              'Thời gian: 28/08/2024',
-                              style: generalFontsize,
-                            ),
-                            Text(
-                              'Số lượng khách: 1',
+                              'Thời gian: ${DateFormat('dd/MM/yyyy').format(widget.tour.start)}',
                               style: generalFontsize,
                             ),
                             Row(
                               children: [
                                 Text(
-                                  'Tổng tiền:',
+                                  'Giá tour: ',
                                   style: generalFontsize,
                                 ),
-                                const Text(
-                                  '1.205.000đ',
-                                  style: TextStyle(
+                                Text(
+                                  '${widget.tour.getPriceTour()}đ',
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
                                   ),
                                 )
                               ],
-                            )
+                            ),
+                            Text(
+                              'Số lượng khách: ${widget.tour.numPerson}',
+                              style: generalFontsize,
+                            ),
                           ],
                         ),
                       ),
@@ -134,71 +139,130 @@ class _PayState extends State<Pay> {
                           ],
                         ),
                       ),
-                      Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 24),
-                            Text(
-                              'Chi phí',
-                              style: generalBoss,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 16),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    'Giá tour',
-                                    style: generalFontsize,
-                                  ),
-                                  Text(
-                                    '1.205.000đ',
-                                    style: generalFontsize,
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 16),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    'VAT 5%',
-                                    style: generalFontsize,
-                                  ),
-                                  Text(
-                                    '60.250đ',
-                                    style: generalFontsize,
-                                  )
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            Row(
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 24),
+                          Text(
+                            'Chi phí',
+                            style: generalBoss,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 16),
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
                               children: [
-                                Text(
-                                  'Tổng',
-                                  style: generalBoss,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Giá tour',
+                                      style: generalFontsize,
+                                    ),
+                                    Text(
+                                      '${widget.tour.cost}đ',
+                                      style: generalFontsize,
+                                    )
+                                  ],
                                 ),
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 140),
-                                  child: Text(
-                                    '1.265.250đ',
-                                    style: TextStyle(
-                                        color: AppColors.borderDeal_Home,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 22),
-                                  ),
-                                )
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Giảm giá',
+                                      style: generalFontsize,
+                                    ),
+                                    Text(
+                                      '${widget.tour.sale}%',
+                                      style: generalFontsize,
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Số vé',
+                                      style: generalFontsize,
+                                    ),
+                                    Text(
+                                      '${widget.tour.numPerson} vé',
+                                      style: generalFontsize,
+                                    ),
+                                  ],
+                                ),
                               ],
-                            )
-                          ],
-                        ),
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Tổng',
+                                style: generalBoss,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 140),
+                                child: Text(
+                                  '${widget.tour.getPriceTour(soLuong: widget.tour.numPerson)}đ',
+                                  style: const TextStyle(
+                                      color: AppColors.borderDeal_Home,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22),
+                                ),
+                              )
+                            ],
+                          ),
+                          Center(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                backgroundColor: AppColors.primaryColor,
+                              ),
+                              onPressed: () {
+                                DataController()
+                                    .getUser!
+                                    .addMyTour(widget.tour);
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Đặt lịch thành công'),
+                                      content: const Text(
+                                        'Chúc mừng bạn đã đặt lịch thành công!.  Sẽ có nhân viên gọi cho bạn sớm nhất có thể. Cảm ơn bạn!',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () {
+                                            context.go('/');
+                                          },
+                                          child: const Text('Trở về trang chủ'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                              child: const Text(
+                                'Thanh toán',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                        ],
                       )
                     ],
                   ),

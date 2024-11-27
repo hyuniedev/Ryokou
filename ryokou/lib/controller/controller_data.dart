@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ryokou/entity/rate.dart';
+import 'package:ryokou/entity/tour_booked.dart';
 import 'package:ryokou/entity/user.dart';
 import 'package:ryokou/entity/tour.dart';
 import 'package:ryokou/firebase/data_firebase.dart';
@@ -13,15 +14,15 @@ class DataController {
   List<Tour> lsTour = [];
   List<String> lsIdTours = [];
 
-  Tour? tourGoing;
-  List<Tour> lsTourBought = [];
-  List<Tour> lsTourGone = [];
+  TourBooked? tourGoing;
+  List<TourBooked> lsTourBought = [];
+  List<TourBooked> lsTourGone = [];
 
   User? _user;
   User? get getUser => _user;
   set setUser(User? initUser) {
     _user = initUser;
-    _divisionOfTour();
+    divisionOfTour();
   }
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -71,21 +72,38 @@ class DataController {
     return lsTour.firstWhere((element) => element.id == id);
   }
 
-  void _divisionOfTour() {
+  void divisionOfTour() {
+    lsTourBought = [];
+    lsTourGone = [];
     if (_user == null) {
       return;
     } else {
       for (var index in _user!.getMyTour()) {
-        DateTime endDate = index.start.add(Duration(days: index.durations));
-        if (endDate.isAfter(DateTime.now())) {
+        if (index.end.isBefore(DateTime.now())) {
+          print('${index.name}: ${index.end.toString()} - ${index.durations}');
           lsTourGone.add(index);
-        } else if (index.start.isBefore(DateTime.now())) {
+        } else if (index.start.isAfter(DateTime.now())) {
           lsTourBought.add(index);
         } else {
           tourGoing = index;
         }
       }
     }
+  }
+
+  bool checkDuplicateTour(Tour checkTour) {
+    if (tourGoing != null && checkTour.start.isBefore(tourGoing!.end)) {
+      return false;
+    }
+    for (Tour i in lsTourBought) {
+      print('CheckTour: ${checkTour.start} - ${checkTour.end}');
+      print('Tour ${i.name}: ${i.start} - ${i.end}');
+      if (!(checkTour.start.isAfter(i.end) ||
+          checkTour.end.isBefore(i.start))) {
+        return false;
+      }
+    }
+    return true;
   }
 
   //------------------RATE--------------------------

@@ -1,6 +1,7 @@
 import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/entity/enumSex/e_sex.dart';
 import 'package:ryokou/entity/tour.dart';
+import 'package:ryokou/entity/tour_booked.dart';
 import 'package:ryokou/firebase/data_firebase.dart';
 
 class User {
@@ -11,7 +12,7 @@ class User {
   String? email;
   ESex? sex;
   List<String> _favoriteTour = [];
-  List<String> _myTour = [];
+  List<TourBooked> _myTour = [];
 
   List<Tour> getFavoriteTours() {
     return _favoriteTour
@@ -19,11 +20,16 @@ class User {
         .toList();
   }
 
-  List<Tour> getMyTour() {
-    return _myTour.map((item) => DataController().findTour(item)).toList();
+  List<TourBooked> getMyTour() {
+    return _myTour
+        .map((item) => TourBooked(
+            idTour: item.idTour,
+            numPerson: item.numPerson,
+            startDay: item.startDay))
+        .toList();
   }
 
-  set setMyTour(List<String> lsTour) => _myTour = lsTour;
+  set setMyTour(List<TourBooked> lsTour) => _myTour = lsTour;
 
   set setFavoriteTour(List<String> lsTour) => _favoriteTour = lsTour;
 
@@ -39,14 +45,14 @@ class User {
     }
   }
 
-  void addMyTour(Tour newTour) {
-    _myTour.add(newTour.id!);
+  void addMyTour(TourBooked newTour) {
+    _myTour.add(newTour);
     DataFirebase().setUser();
   }
 
-  void removeMyTour(Tour delTour) {
+  void removeMyTour(TourBooked delTour) {
     if (containsFavoriteTour(delTour)) {
-      _myTour.remove(delTour.id);
+      _myTour.remove(delTour);
       DataFirebase().setUser();
     }
   }
@@ -55,8 +61,8 @@ class User {
     return _favoriteTour.contains(findTour.id);
   }
 
-  bool containsMyTour(Tour findTour) {
-    return _myTour.contains(findTour.id);
+  bool containsMyTour(TourBooked findTour) {
+    return _myTour.contains(findTour);
   }
 
   User({
@@ -76,7 +82,7 @@ class User {
       'email': email,
       'sex': sex?.index,
       'favoriteTour': _favoriteTour,
-      'myTour': _myTour,
+      'myTour': _myTour.map((tour) => tour.toJson()).toList(),
     };
   }
 
@@ -90,6 +96,8 @@ class User {
         sex: ESex.values[json['sex'] ?? 2])
       .._favoriteTour =
           (json['favoriteTour'] as List<dynamic>? ?? []).cast<String>()
-      .._myTour = (json['muTour'] as List<dynamic>? ?? []).cast<String>();
+      .._myTour = (json['myTour'] as List<dynamic>? ?? [])
+          .map((tour) => TourBooked.fromJson(tour as Map<String, dynamic>))
+          .toList();
   }
 }

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ryokou/controller/controller_data.dart';
+import 'package:ryokou/entity/tour_booked.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/acc/login.dart';
 import 'package:ryokou/ui/acc/register.dart';
@@ -56,8 +57,15 @@ class MyApp extends StatelessWidget {
         builder: (context, state) => Register(),
       ),
       GoRoute(
-        path: '/pay',
-        builder: (context, state) => const Pay(),
+        path: '/pay/:idTour/:numPerson/:startDay',
+        builder: (context, state) {
+          final String id = state.pathParameters['idTour']!;
+          final int numPerson = int.parse(state.pathParameters['numPerson']!);
+          final String startDay = state.pathParameters['startDay']!;
+          return Pay(
+              tour: TourBooked(
+                  idTour: id, numPerson: numPerson, startDay: startDay));
+        },
       ),
       GoRoute(
         path: '/support',
@@ -75,7 +83,6 @@ class MyApp extends StatelessWidget {
         path: '/tourDetail/:id',
         builder: (context, state) {
           final String? id = state.pathParameters['id'];
-          print('$id');
           return TourDetail(tour: DataController().findTour(id!));
         },
       ),

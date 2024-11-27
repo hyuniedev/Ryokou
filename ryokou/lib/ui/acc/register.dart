@@ -78,11 +78,13 @@ class Register extends StatelessWidget {
                     ItemField(
                       title: 'Mật khẩu',
                       isRequired: true,
+                      isPassword: true,
                       tec: tecPassword,
                     ),
                     ItemField(
                       title: 'Xác nhận mật khẩu',
                       isRequired: true,
+                      isPassword: true,
                       tec: tecCheckPassword,
                     ),
                     const SizedBox(height: 45),

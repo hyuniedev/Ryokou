@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/entity/rate.dart';
@@ -24,7 +21,7 @@ class Tour {
   List<String> _lsFile = [];
   List<Rate> _lsRate = [];
   late String _company;
-
+  late DateTime _end;
   Tour({
     required String name,
     required String city,
@@ -53,7 +50,9 @@ class Tour {
         _kisoku = kisoku,
         _schedule = schedule,
         _lsFile = lsFile,
-        _company = company;
+        _company = company {
+    _end = start.add(Duration(days: durations));
+  }
 
   Tour.empty() {
     _id = '';
@@ -71,6 +70,7 @@ class Tour {
     _schedule = [];
     _lsFile = [];
     _company = '';
+    _end = start;
   }
 
   // Getters
@@ -79,6 +79,7 @@ class Tour {
   String get city => _city;
   int get durations => _durations;
   DateTime get start => _start;
+  DateTime get end => _end;
   int get maintainTime => _maintainTime;
   String get cost => _cost;
   int get sale => _sale;
@@ -91,7 +92,7 @@ class Tour {
   List<Rate> get lsRate => _lsRate;
   String get company => _company;
 
-  String getPriceTour() {
+  String getPriceTour({int soLuong = 1}) {
     int originalPrice = int.parse(_cost.replaceAll('.', ''));
 
     double discountAmount = originalPrice * (_sale / 100);
@@ -99,7 +100,7 @@ class Tour {
     final formatter = NumberFormat("#,##0", "en_US");
 
     return formatter
-        .format((originalPrice - discountAmount))
+        .format((originalPrice - discountAmount) * soLuong)
         .replaceAll(',', '.');
   }
 
@@ -122,6 +123,11 @@ class Tour {
 
   set start(DateTime value) {
     _start = value;
+    _end = _start.add(Duration(days: _durations));
+  }
+
+  set end(DateTime value) {
+    _end = value;
   }
 
   set maintainTime(int value) {
@@ -229,24 +235,6 @@ class Tour {
       'company': _company,
     };
   }
-
-  // Future<String?> uploadImage(File image) async {
-  //   try {
-  //     FirebaseStorage storage = FirebaseStorage.instance;
-  //     Reference ref = storage
-  //         .ref()
-  //         .child('images/${DateTime.now().microsecondsSinceEpoch}.jpg');
-
-  //     UploadTask upload = ref.putFile(image);
-  //     TaskSnapshot taskSnapshot = await upload;
-
-  //     String urlDownload = await taskSnapshot.ref.getDownloadURL();
-  //     return urlDownload;
-  //   } catch (e) {
-  //     print('Error uploading image: $e');
-  //     return null;
-  //   }
-  // }
 
   double getRateStar() {
     double rate = 0;
