@@ -32,7 +32,7 @@ class _SearchPageState extends State<SearchPage> {
                   decoration: TextDecoration.none,
                 ),
                 decoration: InputDecoration(
-                  hintText: 'Search...',
+                  hintText: 'Tìm kiếm...',
                   contentPadding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                   filled: true,

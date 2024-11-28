@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ryokou/controller/controller_data.dart';
+import 'package:ryokou/controller/controller_page.dart';
 import 'package:ryokou/entity/tour.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 
@@ -177,6 +178,7 @@ class _ItemTourState extends State<ItemTour> {
                                     .getUser!
                                     .removeFavoriteTour(widget.tour);
                           }
+                          MyPageController().RefreshPage();
                         },
                         child: Icon(
                           isFavourite

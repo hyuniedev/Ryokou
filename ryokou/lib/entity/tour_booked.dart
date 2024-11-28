@@ -17,6 +17,8 @@ class TourBooked extends Tour {
     super.cost = tour.cost;
     super.sale = tour.sale;
     super.lsFile = tour.lsFile;
+    super.gatheringPlace = tour.gatheringPlace;
+    super.schedule = tour.schedule;
   }
 
   factory TourBooked.fromJson(Map<String, dynamic> json) {

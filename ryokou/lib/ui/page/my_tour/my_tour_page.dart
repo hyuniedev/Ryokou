@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ryokou/controller/IDataRefresh.dart';
 import 'package:ryokou/controller/controller_data.dart';
+import 'package:ryokou/controller/controller_page.dart';
 import 'package:ryokou/entity/tour_booked.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/sections/appbar/child_app_bar_main_pages.dart';
@@ -8,11 +10,21 @@ import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
 import 'package:ryokou/ui/sections/grid_tour/grid_tour.dart';
 import 'package:ryokou/ui/sections/grid_tour/grid_tour_booked.dart';
 
-class MyTourPage extends StatefulWidget {
-  const MyTourPage({super.key});
+class MyTourPage extends StatefulWidget implements IDataRefresh {
+  MyTourPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _MyTourPageState();
+
+  @override
+  Function? funLoadData;
+
+  @override
+  void RefreshPage() {
+    if (funLoadData != null) {
+      funLoadData!();
+    }
+  }
 }
 
 class _MyTourPageState extends State<MyTourPage> {
@@ -23,10 +35,30 @@ class _MyTourPageState extends State<MyTourPage> {
     });
   }
 
+  List<TourBooked> _lsTourBought = [];
+  List<TourBooked> _lsTourGone = [];
+  TourBooked? _tourGoing;
+  void loadDataMyTour() {
+    DataController().divisionOfTour();
+    setState(() {
+      _tourGoing = DataController().tourGoing;
+      _lsTourBought = DataController().lsTourBought;
+      _lsTourGone = DataController().lsTourGone;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    DataController().divisionOfTour();
+    MyPageController().CurrentPage = widget;
+    widget.funLoadData = loadDataMyTour;
+    loadDataMyTour();
+  }
+
+  @override
+  void dispose() {
+    MyPageController().CurrentPage = null;
+    super.dispose();
   }
 
   @override
@@ -124,25 +156,24 @@ class _MyTourPageState extends State<MyTourPage> {
                       children: [
                         sectionGroupTour(
                             'Tour đang diễn ra',
-                            DataController().tourGoing == null
+                            _tourGoing == null
                                 ? []
                                 : List.generate(
                                     1,
-                                    (index) => DataController().tourGoing!,
+                                    (index) => _tourGoing!,
                                   ),
                             indexSection == 1, () {
                           changeSectionExpanded(1);
                         }),
                         const SizedBox(height: 15),
                         sectionGroupTour(
-                            'Tour đã đặt',
-                            DataController().lsTourBought,
-                            indexSection == 2, () {
+                            'Tour đã đặt', _lsTourBought, indexSection == 2,
+                            () {
                           changeSectionExpanded(2);
                         }),
                         const SizedBox(height: 15),
-                        sectionGroupTour('Tour đã hoàn thành',
-                            DataController().lsTourGone, indexSection == 3, () {
+                        sectionGroupTour('Tour đã hoàn thành', _lsTourGone,
+                            indexSection == 3, () {
                           changeSectionExpanded(3);
                         }),
                         const SizedBox(height: 20),

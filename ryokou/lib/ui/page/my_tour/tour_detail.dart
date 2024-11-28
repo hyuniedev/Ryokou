@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ryokou/controller/controller_data.dart';
+import 'package:ryokou/controller/controller_page.dart';
 import 'package:ryokou/entity/company.dart';
 import 'package:ryokou/entity/rate.dart';
 import 'package:ryokou/entity/tour.dart';
 import 'package:ryokou/entity/tour_booked.dart';
 import 'package:ryokou/firebase/data_firebase.dart';
 import 'package:ryokou/themes/colors_theme.dart';
+import 'package:ryokou/ui/sections/bottom_sheet/bottom_sheet.dart';
 
 class TourDetail extends StatefulWidget {
   final Tour tour;
@@ -854,25 +856,7 @@ class _TourDetailState extends State<TourDetail> {
             showModalBottomSheet(
               context: context,
               builder: (context) {
-                return Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.7,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                  color: Colors.white,
-                  child: const SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.calendar_month,
-                          color: AppColors.primaryColor,
-                          size: 30,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+                return BSScheduleTour(tour: widget.tour);
               },
             );
           },
@@ -939,6 +923,7 @@ class _TourDetailState extends State<TourDetail> {
                   ? DataController().getUser!.addFavoriteTour(tour)
                   : DataController().getUser!.removeFavoriteTour(tour);
             }
+            MyPageController().RefreshPage();
           },
           icon: Icon(
             isFavourite ? Icons.favorite_rounded : Icons.favorite_outline,

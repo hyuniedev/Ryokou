@@ -1,33 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ryokou/controller/IDataRefresh.dart';
 import 'package:ryokou/controller/controller_data.dart';
+import 'package:ryokou/controller/controller_page.dart';
 import 'package:ryokou/entity/tour.dart';
 import 'package:ryokou/themes/colors_theme.dart';
-import 'package:ryokou/ui/item/itemTour.dart';
 import 'package:ryokou/ui/sections/appbar/child_app_bar_main_pages.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
 import 'package:ryokou/ui/sections/grid_tour/grid_tour.dart';
 
-class FavoritePage extends StatefulWidget {
-  const FavoritePage({super.key});
+class FavoritePage extends StatefulWidget implements IDataRefresh {
+  FavoritePage({super.key});
 
   @override
   State<StatefulWidget> createState() => _FavoritePage();
+
+  @override
+  void RefreshPage() {
+    if (funLoadData != null) {
+      funLoadData!();
+    }
+  }
+
+  @override
+  Function? funLoadData;
 }
 
 class _FavoritePage extends State<FavoritePage> {
   List<Tour> lsTour = [];
+  List<Tour> lsTourRecomment = [];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    MyPageController().CurrentPage = widget;
+    widget.funLoadData = getListFavorite;
     getListFavorite();
   }
 
+  @override
+  void dispose() {
+    MyPageController().CurrentPage = null;
+    super.dispose();
+  }
+
   void getListFavorite() {
-    List<Tour> lsTourData = DataController().getUser?.getFavoriteTours() ?? [];
     setState(() {
-      lsTour = lsTourData;
+      lsTour = DataController().getUser?.getFavoriteTours() ?? [];
+      lsTourRecomment = DataController().lsTour;
     });
   }
 
@@ -48,7 +67,7 @@ class _FavoritePage extends State<FavoritePage> {
                         ? favoGridSection('Tour yêu thích của bạn ', lsTour)
                         : favoriteIsNull(context),
                     const SizedBox(height: 20),
-                    favoGridSection('Đề xuất cho bạn', DataController().lsTour),
+                    favoGridSection('Đề xuất cho bạn', lsTourRecomment),
                     const SizedBox(height: 20),
                   ],
                 ),

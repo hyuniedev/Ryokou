@@ -18,9 +18,9 @@ class _MainLayoutState extends State<MainLayout> {
   final List<Widget> _arrPage = [
     const HomePage(),
     const SearchPage(),
-    const FavoritePage(),
+    FavoritePage(),
     // const MyHomePage(), // thoi tiet
-    const MyTourPage(),
+    MyTourPage(),
     const AccountPage()
   ];
 
@@ -31,23 +31,23 @@ class _MainLayoutState extends State<MainLayout> {
         items: const [
           BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: 'Home',
+              label: 'Trang chủ',
               backgroundColor: AppColors.primaryColor),
           BottomNavigationBarItem(
               icon: Icon(Icons.search),
-              label: 'Search',
+              label: 'Tìm kiếm',
               backgroundColor: AppColors.primaryColor),
           BottomNavigationBarItem(
               icon: Icon(Icons.favorite),
-              label: 'Favorite',
+              label: 'Yêu thích',
               backgroundColor: AppColors.primaryColor),
           BottomNavigationBarItem(
               icon: Icon(Icons.tour),
-              label: 'My Tour',
+              label: 'Tour của tôi',
               backgroundColor: AppColors.primaryColor),
           BottomNavigationBarItem(
               icon: Icon(Icons.person),
-              label: 'Account',
+              label: 'Tài khoản',
               backgroundColor: AppColors.primaryColor),
         ],
         currentIndex: MainLayout.index,

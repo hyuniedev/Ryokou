@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:ryokou/controller/controller_data.dart';
+import 'package:ryokou/controller/controller_page.dart';
 import 'package:ryokou/entity/tour_booked.dart';
 import 'package:ryokou/main.dart';
 import 'package:ryokou/themes/colors_theme.dart';
@@ -251,6 +252,7 @@ class _PayState extends State<Pay> {
                                     );
                                   },
                                 );
+                                MyPageController().RefreshPage();
                               },
                               child: const Text(
                                 'Thanh toán',

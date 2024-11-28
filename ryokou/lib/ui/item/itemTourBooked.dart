@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:ryokou/controller/controller_data.dart';
 import 'package:ryokou/entity/tour_booked.dart';
 import 'package:ryokou/themes/colors_theme.dart';
+import 'package:ryokou/ui/sections/bottom_sheet/bottom_sheet.dart';
 
 class ItemTourBooked extends StatefulWidget {
   final TourBooked tour;
@@ -29,10 +30,11 @@ class _ItemTourBookedState extends State<ItemTourBooked> {
     return SizedBox(
       height: 255,
       width: 150,
-      // padding: const EdgeInsets.only(right: 20),
       child: InkWell(
         onTap: () {
-          // context.push('/tourDetail/${widget.tour.id}');
+          showModalBottomSheet(
+              context: context,
+              builder: (context) => BSScheduleTour(tour: widget.tour));
         },
         child: Column(
           children: [
