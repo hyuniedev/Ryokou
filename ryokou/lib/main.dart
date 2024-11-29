@@ -70,28 +70,29 @@ class MyApp extends StatelessWidget {
         },
       ),
       GoRoute(
-        path: '/searchTour/:text?/:from/:to/:province?',
+        path: '/searchTour/:text/:from/:to/:province',
         builder: (context, state) {
-          var text = state.pathParameters['text'];
+          var text = state.pathParameters['text']!;
           var from = int.parse(state.pathParameters['from']!);
           var to = int.parse(state.pathParameters['to']!);
-          var province = state.pathParameters['province'];
+          var province = state.pathParameters['province']!;
           List<Tour> lsTour = [];
-          DataController().lsTour.map((tour) {
-            if (text == null || text!.isEmpty) {
+          for (var tour in DataController().lsTour) {
+            if (text == 'null') {
               text = '';
             }
-            if (province == null || province!.isEmpty) {
+            if (province == 'null') {
               province = '';
             }
-            if (tour.name.contains(text!) &&
-                tour.city.contains(province!) &&
-                int.parse(tour.cost) > from &&
-                int.parse(tour.cost) < to) {
+            if (tour.name.contains(text) &&
+                tour.city.contains(province) &&
+                int.parse(tour.getPriceTour().replaceAll('.', '')) > from &&
+                int.parse(tour.getPriceTour().replaceAll('.', '')) < to) {
               lsTour.add(tour);
             }
-          });
-          return ResultSearch(lsTour: lsTour);
+          }
+          return ResultSearch(
+              lsTour: lsTour, textSearch: text.isEmpty ? 'null' : text);
         },
       ),
       GoRoute(

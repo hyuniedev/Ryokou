@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:ryokou/main.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/item/generalDropDown.dart';
 import 'package:ryokou/ui/page/home/enumTag/e_province.dart';
@@ -17,7 +17,7 @@ class _SearchPageState extends State<SearchPage> {
   final TextEditingController _tecSearch = TextEditingController();
   final FocusNode _focusNodeSearch = FocusNode();
 
-  String? curProvince;
+  String curProvince = '';
   RangeValues curRangeValue = const RangeValues(0, 20000000);
   final int step = 100000;
 
@@ -47,7 +47,10 @@ class _SearchPageState extends State<SearchPage> {
                   filled: true,
                   fillColor: Colors.white,
                   suffixIcon: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.push(
+                          '/searchTour/${_tecSearch.text.isEmpty ? 'null' : _tecSearch.text}/${curRangeValue.start.toInt().toString()}/${curRangeValue.end.toInt().toString()}/${curProvince.isEmpty ? 'null' : curProvince}');
+                    },
                     icon: const Icon(
                       Icons.search,
                       size: 30,
@@ -109,7 +112,7 @@ class _SearchPageState extends State<SearchPage> {
             hintText: 'Tỉnh/thành phố',
             onChanged: (String? value) {
               setState(() {
-                curProvince = value;
+                curProvince = value!;
               });
             }),
         const SizedBox(height: 10),
@@ -154,7 +157,10 @@ class _SearchPageState extends State<SearchPage> {
         const SizedBox(height: 10),
         Center(
           child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                context.push(
+                    '/searchTour/${_tecSearch.text.isEmpty ? 'null' : _tecSearch.text}/${curRangeValue.start.toInt().toString()}/${curRangeValue.end.toInt().toString()}/${curProvince.isEmpty ? 'null' : curProvince}');
+              },
               child: const Text(
                 'Xác nhận',
                 style: TextStyle(
