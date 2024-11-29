@@ -60,7 +60,7 @@ class _NewTourState extends State<NewTour> {
   @override
   void initState() {
     super.initState();
-    _curTour.addSchedule(Schedule(day: Eday.values[0].toString(), todo: []));
+    _curTour.addSchedule(Schedule(day: Eday.values[0].text, todo: []));
     // selectedSchedule = _curTour.schedule[0];
   }
 

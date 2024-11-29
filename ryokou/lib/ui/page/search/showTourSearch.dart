@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:ryokou/main.dart';
+import 'package:ryokou/entity/tour.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/item/generalDropDown.dart';
 import 'package:ryokou/ui/page/home/enumTag/e_province.dart';
 import 'package:ryokou/ui/sections/appbar/top_app_bar.dart';
+import 'package:ryokou/ui/sections/grid_tour/grid_tour.dart';
 
-class SearchPage extends StatefulWidget {
-  const SearchPage({super.key});
-
+class ResultSearch extends StatefulWidget {
+  ResultSearch({super.key, required this.lsTour});
+  List<Tour> lsTour;
   @override
-  State<StatefulWidget> createState() => _SearchPageState();
+  State<StatefulWidget> createState() => _ResultSearchState();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class _ResultSearchState extends State<ResultSearch> {
   final TextEditingController _tecSearch = TextEditingController();
   final FocusNode _focusNodeSearch = FocusNode();
 
   String? curProvince;
-  RangeValues curRangeValue = const RangeValues(0, 20000000);
+  RangeValues curRangeValue = const RangeValues(0, 10000000);
   final int step = 100000;
 
   @override
@@ -66,25 +67,14 @@ class _SearchPageState extends State<SearchPage> {
           padding: const EdgeInsets.symmetric(horizontal: 14),
           child: SizedBox(
             height: MediaQuery.of(context).size.height,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    boxSuggest(context, 'Địa điểm hot'),
-                    boxSuggest(context, 'Được đánh giá cao'),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    boxSuggest(context, 'Mới nhất của tháng'),
-                    boxSuggest(context, 'Tour ưu đãi sâu'),
-                  ],
-                ),
-                filterTour(),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  filterTour(),
+                  GridTour(tours: widget.lsTour),
+                ],
+              ),
             ),
           ),
         ),
@@ -124,7 +114,7 @@ class _SearchPageState extends State<SearchPage> {
         RangeSlider(
           values: curRangeValue,
           min: 0,
-          max: 20000000,
+          max: 10000000,
           divisions: 1000000,
           onChanged: (RangeValues values) {
             setState(() {
@@ -177,33 +167,5 @@ class _SearchPageState extends State<SearchPage> {
     } catch (e) {
       return 'Invalid input';
     }
-  }
-
-  Widget boxSuggest(BuildContext context, String text) {
-    return InkWell(
-      onTap: () {},
-      child: Container(
-        width: MediaQuery.of(context).size.width / 2.3,
-        height: 100,
-        padding: const EdgeInsets.symmetric(horizontal: 32),
-        decoration: BoxDecoration(
-            border: Border.all(
-              color: AppColors.primaryColor,
-              width: 1.5,
-            ),
-            borderRadius: const BorderRadius.all(Radius.circular(10))),
-        child: Center(
-          child: Text(
-            text,
-            style: const TextStyle(
-              color: AppColors.primaryColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-      ),
-    );
   }
 }

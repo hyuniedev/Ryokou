@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ryokou/controller/controller_data.dart';
+import 'package:ryokou/entity/tour.dart';
 import 'package:ryokou/entity/tour_booked.dart';
 import 'package:ryokou/themes/colors_theme.dart';
 import 'package:ryokou/ui/acc/login.dart';
@@ -12,6 +13,7 @@ import 'package:ryokou/ui/page/account/acc_settings.dart';
 import 'package:ryokou/ui/page/account/acc_supportCenter.dart';
 import 'package:ryokou/ui/page/account/change_password.dart';
 import 'package:ryokou/ui/page/my_tour/tour_detail.dart';
+import 'package:ryokou/ui/page/search/showTourSearch.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -65,6 +67,31 @@ class MyApp extends StatelessWidget {
           return Pay(
               tour: TourBooked(
                   idTour: id, numPerson: numPerson, startDay: startDay));
+        },
+      ),
+      GoRoute(
+        path: '/searchTour/:text?/:from/:to/:province?',
+        builder: (context, state) {
+          var text = state.pathParameters['text'];
+          var from = int.parse(state.pathParameters['from']!);
+          var to = int.parse(state.pathParameters['to']!);
+          var province = state.pathParameters['province'];
+          List<Tour> lsTour = [];
+          DataController().lsTour.map((tour) {
+            if (text == null || text!.isEmpty) {
+              text = '';
+            }
+            if (province == null || province!.isEmpty) {
+              province = '';
+            }
+            if (tour.name.contains(text!) &&
+                tour.city.contains(province!) &&
+                int.parse(tour.cost) > from &&
+                int.parse(tour.cost) < to) {
+              lsTour.add(tour);
+            }
+          });
+          return ResultSearch(lsTour: lsTour);
         },
       ),
       GoRoute(
